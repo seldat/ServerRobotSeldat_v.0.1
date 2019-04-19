@@ -1,0 +1,8 @@
+0:0:0:0:0:0:0:1 - - [31/Dec/2018:20:58:35 +0700] "POST /robot/rest/reportRobot/getListCharge HTTP/1.1" 200 293 http-bio-8081-exec-1 265
+0:0:0:0:0:0:0:1 - - [31/Dec/2018:21:06:15 +0700] "POST /robot/rest/reportRobot/insertCharge HTTP/1.1" 404 949 http-bio-8081-exec-1 99
+0:0:0:0:0:0:0:1 - - [31/Dec/2018:21:06:35 +0700] "POST /robot/rest/reportRobot/insertCharge HTTP/1.1" 404 949 http-bio-8081-exec-3 4
+0:0:0:0:0:0:0:1 - - [31/Dec/2018:21:06:36 +0700] "POST /robot/rest/reportRobot/insertCharge HTTP/1.1" 404 949 http-bio-8081-exec-5 2
+0:0:0:0:0:0:0:1 - - [31/Dec/2018:21:07:42 +0700] "POST /robot/rest/reportRobot/insertUpdateListCharge HTTP/1.1" 200 11 http-bio-8081-exec-1 13949
+0:0:0:0:0:0:0:1 - - [31/Dec/2018:21:07:49 +0700] "POST /robot/rest/reportRobot/getListCharge HTTP/1.1" 200 433 http-bio-8081-exec-3 24
+0:0:0:0:0:0:0:1 - - [31/Dec/2018:21:10:31 +0700] "POST /robot/rest/reportRobot/getListRobotCharge HTTP/1.1" 200 12 http-bio-8081-exec-5 5
+0:0:0:0:0:0:0:1 - - [31/Dec/2018:21:10:41 +0700] "POST /robot/rest/reportRobot/getListRobotCharge HTTP/1.1" 200 12 http-bio-8081-exec-7 2

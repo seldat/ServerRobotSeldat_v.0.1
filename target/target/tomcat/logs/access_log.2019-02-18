@@ -1,0 +1,12 @@
+127.0.0.1 - - [18/Feb/2019:21:37:29 +0700] "POST /robot/rest/plan/getListPlanPallet HTTP/1.1" 200 12 http-bio-8081-exec-1 218
+127.0.0.1 - - [18/Feb/2019:21:37:36 +0700] "POST /robot/rest/plan/getListPlanPallet HTTP/1.1" 200 12 http-bio-8081-exec-3 3
+127.0.0.1 - - [18/Feb/2019:21:37:57 +0700] "POST /robot/rest/plan/getListPlanPallet HTTP/1.1" 200 21390 http-bio-8081-exec-5 78
+127.0.0.1 - - [18/Feb/2019:21:38:22 +0700] "POST /robot/rest/plan/getListPlanPallet HTTP/1.1" 200 12 http-bio-8081-exec-7 4
+127.0.0.1 - - [18/Feb/2019:21:38:26 +0700] "POST /robot/rest/plan/getListPlanPallet HTTP/1.1" 200 12 http-bio-8081-exec-9 5
+127.0.0.1 - - [18/Feb/2019:21:38:36 +0700] "POST /robot/rest/plan/getListPlanPallet HTTP/1.1" 200 12 http-bio-8081-exec-1 4
+127.0.0.1 - - [18/Feb/2019:21:38:40 +0700] "POST /robot/rest/plan/getListPlanPallet HTTP/1.1" 200 21390 http-bio-8081-exec-3 26
+127.0.0.1 - - [18/Feb/2019:21:38:52 +0700] "POST /robot/rest/plan/getListPlanPallet HTTP/1.1" 200 12 http-bio-8081-exec-5 3
+127.0.0.1 - - [18/Feb/2019:21:39:00 +0700] "POST /robot/rest/plan/getListPlanPallet HTTP/1.1" 200 21390 http-bio-8081-exec-7 17
+127.0.0.1 - - [18/Feb/2019:21:40:18 +0700] "POST /robot/rest/plan/getListPlanPallet HTTP/1.1" 200 12 http-bio-8081-exec-9 4
+127.0.0.1 - - [18/Feb/2019:21:45:02 +0700] "POST /robot/rest/plan/getListPlanPallet HTTP/1.1" 200 21390 http-bio-8081-exec-1 226
+127.0.0.1 - - [18/Feb/2019:21:45:17 +0700] "POST /robot/rest/plan/getListPlanPallet HTTP/1.1" 200 1140 http-bio-8081-exec-3 4

@@ -1,0 +1,1 @@
+0:0:0:0:0:0:0:1 - - [06/Apr/2019:08:53:24 +0700] POST /robot/rest/device/getListDevicePallet HTTP/1.1 200 3463 http-bio-8081-exec-1 379

@@ -1,0 +1,13 @@
+127.0.0.1 - - [20/Jan/2019:21:08:57 +0700] "POST /robot/rest/plan/createPlanPallet HTTP/1.1" 200 12 http-bio-8081-exec-1 58138
+127.0.0.1 - - [20/Jan/2019:21:15:43 +0700] "POST /robot/rest/plan/createPlanPallet HTTP/1.1" 200 12 http-bio-8081-exec-1 6534
+127.0.0.1 - - [20/Jan/2019:21:16:34 +0700] "POST /robot/rest/plan/createPlanPallet HTTP/1.1" 200 12 http-bio-8081-exec-3 39446
+127.0.0.1 - - [20/Jan/2019:21:17:48 +0700] "GET /robot/rest/user/getUserInfo HTTP/1.1" 405 1045 http-bio-8081-exec-5 13
+127.0.0.1 - - [20/Jan/2019:21:17:55 +0700] "GET /robot/rest/user/getUserInfo HTTP/1.1" 405 1045 http-bio-8081-exec-7 4
+127.0.0.1 - - [20/Jan/2019:21:18:25 +0700] "POST /robot/rest/user/getUserInfo HTTP/1.1" 200 234 http-bio-8081-exec-9 28
+127.0.0.1 - - [20/Jan/2019:22:05:36 +0700] "POST /robot/rest/device/getUserInfo HTTP/1.1" 404 949 http-bio-8081-exec-1 8
+127.0.0.1 - - [20/Jan/2019:22:05:42 +0700] "POST /robot/rest/device/getProductDetailInBuffer HTTP/1.1" 404 949 http-bio-8081-exec-3 2
+127.0.0.1 - - [20/Jan/2019:22:06:26 +0700] "POST /robot/rest/device/getProductDetailInBuffer HTTP/1.1" 200 759 http-bio-8081-exec-1 308
+127.0.0.1 - - [20/Jan/2019:22:09:38 +0700] "POST /robot/rest/plan/getPlanByShift HTTP/1.1" 200 12 http-bio-8081-exec-3 27
+127.0.0.1 - - [20/Jan/2019:22:11:17 +0700] "POST /robot/rest/plan/getPlanByShift HTTP/1.1" 200 433 http-bio-8081-exec-5 8
+127.0.0.1 - - [20/Jan/2019:22:12:26 +0700] "POST /robot/rest/plan/getPlanByShift HTTP/1.1" 200 454 http-bio-8081-exec-7 4
+127.0.0.1 - - [20/Jan/2019:22:16:42 +0700] "POST /robot/rest/device/getListProductDetailInBuffer HTTP/1.1" 200 759 http-bio-8081-exec-1 179

@@ -1,0 +1,775 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{100C6339-45DE-4D19-A768-D9C1E9A24AE1}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>SeldatUnilever_Ver1._02</RootNamespace>
+    <AssemblyName>SeldatUnilever_Ver1.02</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>mainicon_YRB_icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
+    </Reference>
+    <Reference Include="Cyotek.Drawing.BitmapFont, Version=1.0.0.0, Culture=neutral, PublicKeyToken=58daa28b0b2de221, processorArchitecture=MSIL">
+      <HintPath>..\packages\Cyotek.Drawing.BitmapFont.1.3.4\lib\net46\Cyotek.Drawing.BitmapFont.dll</HintPath>
+    </Reference>
+    <Reference Include="Dragablz, Version=0.0.3.203, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dragablz.0.0.3.203\lib\net45\Dragablz.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.UI, Version=3.4.3.3016, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <HintPath>..\packages\EMGU.CV.3.4.3.3016\lib\net35\Emgu.CV.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.World, Version=3.4.3.3016, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <HintPath>..\packages\EMGU.CV.3.4.3.3016\lib\net35\Emgu.CV.World.dll</HintPath>
+    </Reference>
+    <Reference Include="HelixToolkit, Version=2.6.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
+      <HintPath>..\packages\HelixToolkit.2.6.0\lib\netstandard1.1\HelixToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="HelixToolkit.Wpf, Version=2.6.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
+      <HintPath>..\packages\HelixToolkit.Wpf.2.6.0\lib\net45\HelixToolkit.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="HelixToolkit.Wpf.SharpDX, Version=2.6.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
+      <HintPath>..\packages\HelixToolkit.Wpf.SharpDX.2.6.0\lib\net45\HelixToolkit.Wpf.SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro.IconPacks, Version=2.3.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.2.3.0\lib\net46\MahApps.Metro.IconPacks.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.0.0.14576, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.1.1\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.5.0.1205, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.5.0.1205\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenCvSharp, Version=2.0.3961.42360, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\OpenCvSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenCvSharp.UserInterface, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fc3ac129c3689b45, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\OpenCvSharp.UserInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.4.2.0\lib\net45\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.D3DCompiler, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.D3DCompiler.4.2.0\lib\net45\SharpDX.D3DCompiler.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct2D1, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.Direct2D1.4.2.0\lib\net45\SharpDX.Direct2D1.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.Direct3D11.4.2.0\lib\net45\SharpDX.Direct3D11.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D9, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.Direct3D9.4.2.0\lib\net45\SharpDX.Direct3D9.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DXGI, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.DXGI.4.2.0\lib\net45\SharpDX.DXGI.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Mathematics, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.Mathematics.4.2.0\lib\net45\SharpDX.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="websocket-sharp, Version=1.0.2.59611, Culture=neutral, PublicKeyToken=5660b08a1845a91e, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebSocketSharp.1.0.3-rc11\lib\websocket-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.MetroAccent, Version=3.7.18313.20590, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.AvalonDock.Themes.MetroAccent.3.7.18313.20590\lib\net40\Xceed.Wpf.AvalonDock.Themes.MetroAccent.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Office2007, Version=3.7.18313.20590, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.AvalonDock.Themes.Office2007.3.7.18313.20590\lib\net40\Xceed.Wpf.AvalonDock.Themes.Office2007.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Windows10, Version=3.7.18313.20590, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.AvalonDock.Themes.Windows10.3.7.18313.20590\lib\net40\Xceed.Wpf.AvalonDock.Themes.Windows10.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid.Themes.Metro, Version=3.7.18313.20590, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.DataGrid.Themes.Metro.3.7.18313.20590\lib\net40\Xceed.Wpf.DataGrid.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid.Themes.Office2007, Version=3.7.18313.20590, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.DataGrid.Themes.Office2007.3.7.18313.20590\lib\net40\Xceed.Wpf.DataGrid.Themes.Office2007.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid.Themes.Windows10, Version=3.7.18313.20590, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.DataGrid.Themes.Windows10.3.7.18313.20590\lib\net40\Xceed.Wpf.DataGrid.Themes.Windows10.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.ListBox, Version=3.7.18313.20590, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.ListBox.3.7.18313.20590\lib\net40\Xceed.Wpf.ListBox.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.ListBox.Themes.LiveExplorer, Version=3.7.18313.20590, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.ListBox.Themes.LiveExplorer.3.7.18313.20590\lib\net40\Xceed.Wpf.ListBox.Themes.LiveExplorer.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.ListBox.Themes.Metro, Version=3.7.18313.20590, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.ListBox.Themes.Metro.3.7.18313.20590\lib\net40\Xceed.Wpf.ListBox.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.ListBox.Themes.Office2007, Version=3.7.18313.20590, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.ListBox.Themes.Office2007.3.7.18313.20590\lib\net40\Xceed.Wpf.ListBox.Themes.Office2007.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.ListBox.Themes.Windows10, Version=3.7.18313.20590, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.ListBox.Themes.Windows10.3.7.18313.20590\lib\net40\Xceed.Wpf.ListBox.Themes.Windows10.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.ListBox.Themes.WMP11, Version=3.7.18313.20590, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.ListBox.Themes.WMP11.3.7.18313.20590\lib\net40\Xceed.Wpf.ListBox.Themes.WMP11.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Themes, Version=3.7.18313.20590, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.Themes.3.7.18313.20590\lib\net40\Xceed.Wpf.Themes.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Themes.Metro, Version=3.7.18313.20590, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.Themes.Metro.3.7.18313.20590\lib\net40\Xceed.Wpf.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Themes.Office2007, Version=3.7.18313.20590, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.Themes.Office2007.3.7.18313.20590\lib\net40\Xceed.Wpf.Themes.Office2007.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Themes.Windows10, Version=3.7.18313.20590, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.Themes.Windows10.3.7.18313.20590\lib\net40\Xceed.Wpf.Themes.Windows10.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit.Themes.Metro, Version=3.7.18313.20590, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.Toolkit.Themes.Metro.3.7.18313.20590\lib\net40\Xceed.Wpf.Toolkit.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit.Themes.Office2007, Version=3.7.18313.20590, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.Toolkit.Themes.Office2007.3.7.18313.20590\lib\net40\Xceed.Wpf.Toolkit.Themes.Office2007.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit.Themes.Windows10, Version=3.7.18313.20590, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.Toolkit.Themes.Windows10.3.7.18313.20590\lib\net40\Xceed.Wpf.Toolkit.Themes.Windows10.dll</HintPath>
+    </Reference>
+    <Reference Include="ZedGraph, Version=5.1.7.430, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZedGraph.5.1.7\lib\net35-Client\ZedGraph.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Communication\BridgeNodeServerCtrl.cs" />
+    <Compile Include="Communication\HttpBridge\BridgeClientRequest.cs" />
+    <Compile Include="Communication\HttpServerRounter\BridgeServer.cs" />
+    <Compile Include="Communication\HttpServerRounter\HttpProcessor.cs" />
+    <Compile Include="Communication\HttpServerRounter\HttpServer.cs" />
+    <Compile Include="Communication\JObjectExtensions.cs" />
+    <Compile Include="Communication\Message.cs" />
+    <Compile Include="Communication\MessageTypes.cs" />
+    <Compile Include="Communication\Operation.cs" />
+    <Compile Include="Communication\RosSocket.cs" />
+    <Compile Include="CtrlRobot.xaml.cs">
+      <DependentUpon>CtrlRobot.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DTO\dtBuffer.cs" />
+    <Compile Include="DTO\dtDevice.cs" />
+    <Compile Include="DTO\dtDeviceBuffer.cs" />
+    <Compile Include="DTO\dtDevicePallet.cs" />
+    <Compile Include="DTO\dtDeviceProduct.cs" />
+    <Compile Include="DTO\dtOperationType.cs" />
+    <Compile Include="DTO\dtPallet.cs" />
+    <Compile Include="DTO\dtPlan.cs" />
+    <Compile Include="DTO\dtProduct.cs" />
+    <Compile Include="DTO\dtProductDetail.cs" />
+    <Compile Include="DTO\dtRobotCharge.cs" />
+    <Compile Include="DTO\dtRobotProcess.cs" />
+    <Compile Include="DTO\dtTimeWork.cs" />
+    <Compile Include="DTO\RptProcessChargeDTO.cs" />
+    <Compile Include="DTO\RptProcessRobotDTO.cs" />
+    <Compile Include="Global_Mouse.cs" />
+    <Compile Include="Management\ChargerCtrl\ChargerCtrl.cs" />
+    <Compile Include="Management\ChargerCtrl\ChargerManagementService.cs" />
+    <Compile Include="Management\ChargerCtrl\ConfigureCharger.xaml.cs">
+      <DependentUpon>ConfigureCharger.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Management\ComSocket\RouterComPort.cs" />
+    <Compile Include="Management\ComSocket\TranferData.cs" />
+    <Compile Include="Management\DeviceManagement\DeviceItem.cs" />
+    <Compile Include="Management\DeviceManagement\DeviceRegistrationService.cs" />
+    <Compile Include="Management\DoorServices\DoorConfigure.xaml.cs">
+      <DependentUpon>DoorConfigure.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Management\DoorServices\DoorElevator.cs" />
+    <Compile Include="Management\DoorServices\DoorManagementService.cs" />
+    <Compile Include="Management\DoorServices\DoorService.cs" />
+    <Compile Include="Management\ExtensionService.cs" />
+    <Compile Include="Management\McuCom\McuCtrl.cs" />
+    <Compile Include="Management\NotifyUIBase.cs" />
+    <Compile Include="Management\ProcedureServices\CollectionDataService.cs" />
+    <Compile Include="Management\ProcedureServices\ControlService.cs" />
+    <Compile Include="Management\ProcedureServices\DBProcedureService.cs" />
+    <Compile Include="Management\ProcedureServices\ProcedureBufferToMachine.cs" />
+    <Compile Include="Management\ProcedureServices\ProcedureBufferToReturn.cs" />
+    <Compile Include="Management\ProcedureServices\ProcedureControlServices.cs" />
+    <Compile Include="Management\ProcedureServices\ProcedureForkLiftToBuffer.cs" />
+    <Compile Include="Management\ProcedureServices\ProcedureForkLiftToMachine.cs" />
+    <Compile Include="Management\ProcedureServices\ProcedureMachineToReturn.cs" />
+    <Compile Include="Management\ProcedureServices\ProcedureManagementService.cs" />
+    <Compile Include="Management\ProcedureServices\ProcedureMessages.cs" />
+    <Compile Include="Management\ProcedureServices\ProcedureReturnToGate.cs" />
+    <Compile Include="Management\ProcedureServices\ProcedureRobotToChargeReady.cs" />
+    <Compile Include="Management\ProcedureServices\RegisterProcedureService.cs" />
+    <Compile Include="Management\ProcedureServices\SolvedProblem.xaml.cs">
+      <DependentUpon>SolvedProblem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Management\RobotManagent\ConfigureRobotUnity.xaml.cs">
+      <DependentUpon>ConfigureRobotUnity.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Management\RobotManagent\RobotBaseService.cs" />
+    <Compile Include="Management\RobotManagent\RobotLogOut.xaml.cs">
+      <DependentUpon>RobotLogOut.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Management\RobotManagent\RobotManagementService.cs" />
+    <Compile Include="Management\RobotManagent\RobotUnity.cs" />
+    <Compile Include="Management\RobotManagent\RobotUnityControl.cs" />
+    <Compile Include="Management\RobotManagent\RobotUnityService.cs" />
+    <Compile Include="Management\RobotManagent\TrafficRobotUnity.cs" />
+    <Compile Include="Management\Statistics\Statistics.xaml.cs">
+      <DependentUpon>Statistics.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Management\Statistics\StatisticsModel.cs" />
+    <Compile Include="Management\TrafficManager\ConfigureArea.xaml.cs">
+      <DependentUpon>ConfigureArea.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Management\TrafficManager\ConfigureRiskZone.xaml.cs">
+      <DependentUpon>ConfigureRiskZone.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Management\TrafficManager\TrafficManagementService.cs" />
+    <Compile Include="Management\TrafficManager\TrafficRounterService.cs" />
+    <Compile Include="Management\UnityService\AssigmentTaskService.cs" />
+    <Compile Include="Management\UnityService\TaskRounterService.cs" />
+    <Compile Include="Management\UnityService\UnityManagementService.cs" />
+    <Compile Include="MusicPlayerOld.cs" />
+    <Compile Include="ObjectDumper.cs" />
+    <Compile Include="PixelRuler.cs" />
+    <Compile Include="RobotView\ConnectBridge.cs" />
+    <Compile Include="RobotView\ControlRobotInterface.cs" />
+    <Compile Include="RobotView\CreatePallet.cs" />
+    <Compile Include="RobotView\CurveInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RobotView\CurveInfo.Designer.cs">
+      <DependentUpon>CurveInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RobotView\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RobotView\Form1.designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RobotView\Form2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RobotView\Form2.Designer.cs">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RobotView\GlobalVariables.cs" />
+    <Compile Include="RobotView\Map.cs" />
+    <Compile Include="RobotView\MapSettingF.xaml.cs">
+      <DependentUpon>MapSettingF.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RobotView\Node.cs" />
+    <Compile Include="RobotView\Path\CreateRobotPathPlan.cs" />
+    <Compile Include="RobotView\Path\ExportPaths.cs" />
+    <Compile Include="RobotView\Path\GroupPaths.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RobotView\Path\GroupPaths.Designer.cs">
+      <DependentUpon>GroupPaths.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RobotView\Path\ImportPaths.cs" />
+    <Compile Include="RobotView\Path\PathStrategicForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RobotView\Path\PathStrategicForm.Designer.cs">
+      <DependentUpon>PathStrategicForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RobotView\Path\SetCurveParams.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RobotView\Path\SetCurveParams.Designer.cs">
+      <DependentUpon>SetCurveParams.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RobotView\Path\SetLineParams.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RobotView\Path\SetLineParams.Designer.cs">
+      <DependentUpon>SetLineParams.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RobotView\Robot3D.cs" />
+    <Compile Include="RobotView\RobotView3D.xaml.cs">
+      <DependentUpon>RobotView3D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Shape\CanvasControlService.cs" />
+    <Compile Include="Shape\PalletShape.cs" />
+    <Compile Include="Shape\RobotShape.cs" />
+    <Compile Include="Shape\StationShape.cs" />
+    <Page Include="CtrlRobot.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Form\ChangePassForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Form\LoginForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Lang\English.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Lang\Vietnamese.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DTO\dtUser.cs" />
+    <Compile Include="DTO\dtUserDevice.cs" />
+    <Compile Include="DTO\userModel.cs" />
+    <Compile Include="Form\ChangePassForm.xaml.cs">
+      <DependentUpon>ChangePassForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Form\LoginForm.xaml.cs">
+      <DependentUpon>LoginForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DTO\NotifyUIBase.cs" />
+    <Compile Include="Form\SimpleUser.cs" />
+    <Compile Include="Form\UserAuthorCollection.cs" />
+    <Compile Include="Global_Object.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Management\ChargerCtrl\ConfigureCharger.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Management\DoorServices\DoorConfigure.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Management\ProcedureServices\SolvedProblem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Management\RobotManagent\ConfigureRobotUnity.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Management\RobotManagent\RobotLogOut.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Management\Statistics\Statistics.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Management\TrafficManager\ConfigureArea.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Management\TrafficManager\ConfigureRiskZone.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RobotView\MapSettingF.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="RobotView\RobotView3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RobotView\CurveInfo.resx">
+      <DependentUpon>CurveInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RobotView\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RobotView\Form2.resx">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RobotView\Path\GroupPaths.resx">
+      <DependentUpon>GroupPaths.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RobotView\Path\PathStrategicForm.resx">
+      <DependentUpon>PathStrategicForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RobotView\Path\SetCurveParams.resx">
+      <DependentUpon>SetCurveParams.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RobotView\Path\SetLineParams.resx">
+      <DependentUpon>SetLineParams.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Communication\Communication.zip" />
+    <None Include="Management\DeviceManagement\Machine.Json" />
+    <None Include="Management\DoorServices\DoorServices.zip" />
+    <None Include="Management\Media\8400001A_small5M2.stl" />
+    <None Include="Management\TrafficManager\Configure.xlsx" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="RobotView\Media\8400001A_small5M2.stl" />
+    <None Include="RobotView\Media\FULLFRAME.3mf" />
+    <None Include="RobotView\Media\FULLFRAME.stl" />
+    <None Include="RobotView\Media\pallet.stl" />
+    <None Include="RobotView\Media\pallet2.stl" />
+    <None Include="RobotView\Media\pallet3.stl" />
+    <None Include="RobotView\Media\pallet4.stl" />
+    <None Include="RobotView\Media\pallet6.stl" />
+    <None Include="RobotView\Media\ROBOT P4 updated 14-13222Mar.3mf" />
+    <None Include="RobotView\Media\ROBOT P4 updated 14-Mar.3mf" />
+    <None Include="RobotView\Media\ROBOT P4 updated 14-Mar.stl" />
+    <None Include="RobotView\Media\ROBOT P4 updated 14-Marold.stl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\seldat_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_item.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bobo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Group.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_clear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-line-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mainIcon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Map.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mapbackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pallet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pallet0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pallet1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pallet2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pallet3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pallet4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pallet5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PalletEmpty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PalletError.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_joinpath.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_joinpath_off.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_joinpath_on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_mapExtend.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_mapShrink.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_straightpath.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_straightpath_off.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_straightpath_on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Picture1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh_item.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\remove_item.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Robot2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Robotpixel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ssss.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Unknow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Yellow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\unilever_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Log\" />
+    <Folder Include="Management\OrderService\" />
+    <Folder Include="Management\RobotManagent\old\" />
+    <Folder Include="Management\Store\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Resources\Map\Map.jpg" />
+    <Content Include="cv210.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="cvaux210.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="cxcore210.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FluorineFx.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="highgui210.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ml210.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCvSharp - Copy.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCvSharp.CPlusPlus.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCvSharp.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCvSharp.MachineLearning.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCvSharp.UserInterface.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCvSharpExtern.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="opencv_ffmpeg210.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\test3.png" />
+    <None Include="Resources\path2.png" />
+    <None Include="Resources\phat_draw.png" />
+    <None Include="Resources\phat_measure.png" />
+    <None Include="Resources\phat_zoom.png" />
+    <None Include="Resources\test3.jpg" />
+    <None Include="Resources\ALARM.wav" />
+    <None Include="Resources\Map_aTan - Copy2.jpg" />
+    <Content Include="sharpdx_direct3d11_1_effects_arm.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sharpdx_direct3d11_1_effects_x64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sharpdx_direct3d11_1_effects_x86.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="RobotView\Map\robot.jpg" />
+    <Resource Include="RobotView\Media\3d.png" />
+    <Resource Include="RobotView\Media\arrow.gif" />
+    <Resource Include="RobotView\Media\connect.png" />
+    <Resource Include="RobotView\Media\disconnect.png" />
+    <Resource Include="RobotView\Media\go.png" />
+    <Resource Include="RobotView\Media\joystick.png" />
+    <Resource Include="RobotView\Media\location.png" />
+    <Resource Include="RobotView\Media\measure.png" />
+    <Resource Include="RobotView\Media\navigation.png" />
+    <Resource Include="RobotView\Media\navigation2.png" />
+    <Resource Include="RobotView\Media\New Text Document.txt" />
+    <Resource Include="RobotView\Media\pallet.png" />
+    <Resource Include="RobotView\Media\remove.png" />
+    <Resource Include="RobotView\Media\reset.png" />
+    <Resource Include="RobotView\Media\seldat.png" />
+    <Resource Include="RobotView\Media\selecticon2.png" />
+    <Resource Include="RobotView\Media\selectmap.png" />
+    <Resource Include="RobotView\Media\Setting.png" />
+    <Resource Include="RobotView\Media\stop.png" />
+    <Resource Include="RobotView\Media\Zoom.png" />
+    <Resource Include="readme.txt" />
+    <Resource Include="Management\Media\3d.png" />
+    <Resource Include="License-LGPL.txt" />
+    <Resource Include="mainicon_YRB_icon.ico" />
+    <Content Include="Management\RobotManagent\SelfDriving.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\EMGU.CV.3.4.3.3016\build\EMGU.CV.targets" Condition="Exists('..\packages\EMGU.CV.3.4.3.3016\build\EMGU.CV.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EMGU.CV.3.4.3.3016\build\EMGU.CV.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EMGU.CV.3.4.3.3016\build\EMGU.CV.targets'))" />
+  </Target>
+</Project>

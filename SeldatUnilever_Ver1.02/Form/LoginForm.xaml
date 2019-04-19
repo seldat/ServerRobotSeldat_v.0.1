@@ -1,0 +1,104 @@
+﻿<Window x:Class="SeldatUnilever_Ver1._02.Form.LoginForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SeldatUnilever_Ver1._02.Form"
+        mc:Ignorable="d"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        WindowStartupLocation="CenterOwner"
+        Title="{DynamicResource LoginForm_Title}"
+        Height="230" 
+        Width="300"
+        ResizeMode="NoResize">
+    <Window.Resources>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid Margin="0,5,0,5">
+                <Image Source="pack://siteoforigin:,,,/Resources/seldat_logo.png"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <StackPanel  Orientation="Vertical" 
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Top"
+                         Margin="0,10,0,0">
+                <StackPanel Margin="0 0 0 10"
+                            Orientation="Horizontal" 
+                            HorizontalAlignment="Center">
+                    <iconPacks:PackIconMaterial Kind="Account" Margin="5 0"/>
+                    <TextBox Name="userNametb" 
+                             Width="170"
+                             CharacterCasing="Upper"
+                             PreviewKeyDown="UserNametb_PreviewKeyDown">
+                        SELDATADMIN
+                    </TextBox>
+                </StackPanel>
+                <StackPanel Margin="0 0 0 10"
+                            Orientation="Horizontal" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <iconPacks:PackIconMaterial Kind="Key" Margin="5 0"/>
+                    <PasswordBox Name="passwordtb" 
+                                 Width="170"
+                                 PreviewKeyDown="Passwordtb_PreviewKeyDown"
+                                 Password="seldat">
+                    </PasswordBox>
+
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <StackPanel 
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                    <Grid>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Grid Margin="5 0">
+                                <Button Name="btn_login"
+                                    Width="70"
+                                    Height="20"
+                                    Content="{DynamicResource LoginForm_Enter}"
+                                    Margin="0,0,0,0"
+                                    Click="btn_login_Click">
+                                </Button>
+                            </Grid>
+                            <Grid Margin="5 0">
+                                <Button Name="btn_exit"
+                                    Width="70"
+                                    Height="20"
+                                    Content="{DynamicResource LoginForm_Exit}"
+                                    Click="btn_exit_Click"></Button>
+                            </Grid>
+                        </StackPanel>
+
+                    </Grid>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <StackPanel 
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <Label 
+                        Name="PingTestlb" 
+                        Foreground="Red">
+                    </Label>
+                </StackPanel>
+            </Grid>
+            
+
+        </Grid>
+    </Grid>
+</Window>

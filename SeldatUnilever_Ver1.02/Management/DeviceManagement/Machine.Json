@@ -1,0 +1,46 @@
+﻿{
+  "DeviceID": "M-1123",
+   "Tasks": [
+    {
+      "PalletID": "1234",
+      "BufferID": "B-1234",
+      "ProductID":"O-123",
+	  "TypeReq":"BM" //MC: Machine// RT: Return
+	  "DateTime": 12345
+      "Position": {
+        "X": 12,
+        "Y": 12,
+        "Angle": 90
+      }
+    },
+    {
+      "PalletID": "12345",
+      "BufferID": "B-1234",
+      "ProductID":"O-123",
+	  "TypeReq":"BM" //MC: Machine// RT: Return
+	  "DateTime": 12346
+      "Position": {
+        "X": 12,
+        "Y": 12,
+        "Angle": 90
+      }
+    }
+  ]
+}
+
+{
+  "DeviceID": "M-1123",
+   "Tasks": [
+    {
+      "PalletID": "1234",
+	  "TypeReq":"RT": Return
+	  "DateTime": 12345
+      "Position": {
+        "X": 12,
+        "Y": 12,
+        "Angle": 90
+      }
+    }
+    }
+  ]
+}

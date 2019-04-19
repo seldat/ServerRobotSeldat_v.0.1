@@ -1,0 +1,4 @@
+0:0:0:0:0:0:0:1 - - [07/Jan/2019:21:29:48 +0700] "POST /robot/rest/pallet/updatePalletStatus HTTP/1.1" 200 11 http-bio-8081-exec-1 180
+0:0:0:0:0:0:0:1 - - [07/Jan/2019:21:30:52 +0700] "POST /robot/rest/buffer/getListBufferReturn HTTP/1.1" 200 162718 http-bio-8081-exec-3 59
+0:0:0:0:0:0:0:1 - - [07/Jan/2019:21:33:46 +0700] "POST /robot/rest/plan/getListPlanPallet HTTP/1.1" 200 12 http-bio-8081-exec-5 11
+0:0:0:0:0:0:0:1 - - [07/Jan/2019:21:34:34 +0700] "POST /robot/rest/pallet/getListPalletBufferId HTTP/1.1" 200 4559 http-bio-8081-exec-7 4

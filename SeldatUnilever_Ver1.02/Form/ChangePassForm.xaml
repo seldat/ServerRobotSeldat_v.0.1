@@ -1,0 +1,100 @@
+﻿<Window x:Class="SeldatUnilever_Ver1._02.Form.ChangePassForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SeldatUnilever_Ver1._02.Form"
+        mc:Ignorable="d"
+        Title="{DynamicResource ChangePassForm_Title}"
+        Height="350" 
+        Width="400" 
+        ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid Margin="0,5,0,5">
+                <Image Source="pack://siteoforigin:,,,/Resources/seldat_logo.png"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <StackPanel Orientation="Vertical" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            Margin="0,6,0,0">
+                <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+                    <Label VerticalAlignment="Center" 
+                               Content="{DynamicResource ChangePassForm_UserName}"
+                               FontSize="12"></Label>
+                    <TextBox Name="userNametb" 
+                             Width="200"
+                             Margin="10"
+                             IsReadOnly="True"
+                             CharacterCasing="Upper"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+                    <Label VerticalAlignment="Center" 
+                               Content="{DynamicResource ChangePassForm_Password}"
+                               FontSize="12"></Label>
+                    <PasswordBox Name="passwordCurrenttb" 
+                             Width="200" 
+                             Margin="10"
+                             PreviewKeyDown="PasswordCurrenttb_PreviewKeyDown"></PasswordBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+                    <Label VerticalAlignment="Center" 
+                               Content="{DynamicResource ChangePassForm_NewPassword}"
+                               FontSize="12"></Label>
+                    <PasswordBox Name="passwordNewtb" 
+                             Width="200" 
+                             Margin="10"
+                             PreviewKeyDown="PasswordNewtb_PreviewKeyDown"></PasswordBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+                    <Label VerticalAlignment="Center" 
+                               Content="{DynamicResource ChangePassForm_ConfirmNewPassword}"
+                               FontSize="12"></Label>
+                    <PasswordBox Name="passwordNewConfirmtb" 
+                             Width="200" 
+                             Margin="10"
+                             PreviewKeyDown="PasswordNewConfirmtb_PreviewKeyDown"></PasswordBox>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2">
+            <StackPanel Width="230" 
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Button Name="btn_save" Width="80" 
+                                FontSize="13"
+                                Content="{DynamicResource ChangePassForm_Save}"
+                                Foreground="Black"
+                                Click="btn_save_Click">
+                        </Button>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Button Name="btn_exit" Width="80" 
+                                FontSize="13"
+                                Content="{DynamicResource ChangePassForm_Exit}"
+                                Foreground="Black"
+                                Click="btn_exit_Click"></Button>
+                    </Grid>
+                </Grid>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+</Window>

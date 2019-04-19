@@ -1,0 +1,9 @@
+0:0:0:0:0:0:0:1 - - [01/Jan/2019:08:46:29 +0700] "POST /robot/rest/reportRobot/insertUpdateListRobotProcess HTTP/1.1" 400 968 http-bio-8081-exec-1 147
+0:0:0:0:0:0:0:1 - - [01/Jan/2019:08:46:45 +0700] "POST /robot/rest/reportRobot/insertUpdateListRobotProcess HTTP/1.1" 400 968 http-bio-8081-exec-2 3
+0:0:0:0:0:0:0:1 - - [01/Jan/2019:08:47:18 +0700] "POST /robot/rest/reportRobot/insertUpdateListRobotProcess HTTP/1.1" 200 11 http-bio-8081-exec-3 55
+0:0:0:0:0:0:0:1 - - [01/Jan/2019:08:47:35 +0700] "POST /robot/rest/reportRobot/getListRobotProcess HTTP/1.1" 200 364 http-bio-8081-exec-5 22
+0:0:0:0:0:0:0:1 - - [01/Jan/2019:08:47:54 +0700] "POST /robot/rest/reportRobot/getListRobotProcess HTTP/1.1" 400 968 http-bio-8081-exec-7 2
+0:0:0:0:0:0:0:1 - - [01/Jan/2019:08:48:23 +0700] "POST /robot/rest/reportRobot/getListRobotProcess HTTP/1.1" 400 968 http-bio-8081-exec-8 2
+0:0:0:0:0:0:0:1 - - [01/Jan/2019:08:48:55 +0700] "POST /robot/rest/reportRobot/getListRobotProcess HTTP/1.1" 200 364 http-bio-8081-exec-9 3
+0:0:0:0:0:0:0:1 - - [01/Jan/2019:08:49:29 +0700] "DELETE /robot/rest/reportRobot/deleteListRobotProcess HTTP/1.1" 200 11 http-bio-8081-exec-1 9
+0:0:0:0:0:0:0:1 - - [01/Jan/2019:08:49:38 +0700] "POST /robot/rest/reportRobot/getListRobotProcess HTTP/1.1" 200 12 http-bio-8081-exec-3 2

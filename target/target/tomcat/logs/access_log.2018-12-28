@@ -1,0 +1,2 @@
+0:0:0:0:0:0:0:1 - - [28/Dec/2018:20:48:55 +0700] "POST /robot/rest/plan/getListPlanPallet HTTP/1.1" 200 12 http-bio-8081-exec-1 183
+0:0:0:0:0:0:0:1 - - [28/Dec/2018:20:49:01 +0700] "GET /robot/rest/device/getListDevice HTTP/1.1" 200 244 http-bio-8081-exec-3 30

@@ -1,0 +1,152 @@
+﻿<Window x:Class="SeldatMRMS.SolvedProblem"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SeldatMRMS"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        mc:Ignorable="d"
+        Title="SolvedProblem" Height="600" Width="700" IsVisibleChanged="Window_IsVisibleChanged" Closing="Window_Closing">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid Margin="0">
+                <Image Margin="0,0" Source="pack://siteoforigin:,,,/Resources/seldat_logo.png"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Grid>
+                        <iconPacks:PackIconMaterial Kind="AlertCircle" Width="50" Height="50"></iconPacks:PackIconMaterial>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="1">
+                <StackPanel VerticalAlignment="Center">
+                    <Image/>
+                    <StackPanel Orientation="Horizontal">
+                        <Label 
+                        Content="{DynamicResource SolvedProblem_RobotNameID}" 
+                        FontWeight="DemiBold"/>
+                        <Label x:Name="txt_robotname" Content=""/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label 
+                        Content="{DynamicResource SolvedProblem_ProcedureNameID}"
+                        FontWeight="DemiBold"/>
+                        <Label x:Name="txt_procedurecode" Content=""/>
+                    </StackPanel>
+                    
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="2">
+                <StackPanel VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <Label 
+                        Content="{DynamicResource SolvedProblem_ErrorCode}"
+                        FontWeight="DemiBold"
+                        />
+                        <Label x:Name="txt_errorcode" Content=""/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label  
+                        Content="{DynamicResource SolvedProblem_Date}"
+                        FontWeight="DemiBold"
+                        />
+                        <Label Name="txt_datetime" Content=""/>
+                    </StackPanel>
+
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2">
+            <GroupBox Header="{DynamicResource SolvedProblem_ProblemDescription}" FontSize="18" FontWeight="DemiBold">
+                <Grid>
+                    <RichTextBox 
+                        IsReadOnly="True"
+                        Name="detailInfo" 
+                        FontSize="12" 
+                        FontWeight="Normal">
+                        <FlowDocument>
+                            <Paragraph >
+                                <Run Text="điền đầy đủ thông tin "/>
+                            </Paragraph>
+
+                        </FlowDocument>
+                    </RichTextBox>
+
+                </Grid>
+            </GroupBox>
+        </Grid>
+        <Grid Grid.Row="3">
+            <GroupBox Header="{DynamicResource SolvedProblem_ProblemSolvingDetail}" FontSize="18" FontWeight="DemiBold">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <RichTextBox FontSize="12" FontWeight="Normal" Name="problemInfo">
+                        <FlowDocument>
+                            <Paragraph>
+                                <Run Text="điền đầy đủ thông tin"/>
+                            </Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+
+                </Grid>
+            </GroupBox>
+        </Grid>
+        <Grid Grid.Row="4">
+            <GroupBox Header="{DynamicResource SolvedProblem_ProblemSolvingSolution}" FontSize="18" FontWeight="DemiBold">
+                <Grid>
+                    <RichTextBox FontSize="12" FontWeight="Normal" Name="solvedProblemInfo">
+                        <FlowDocument>
+                            <Paragraph>
+                                <Run Text="điền đầy đủ thông tin"/>
+                            </Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+
+                </Grid>
+            </GroupBox>
+        </Grid>
+        <Grid Grid.Row="5">
+            <StackPanel 
+                Orientation="Horizontal" 
+                VerticalAlignment="Center" 
+                HorizontalAlignment="Center">
+                <Button 
+                    Name="destroyProcBtn" 
+                    Margin="5"
+                    Padding="5 0"
+                    Width="Auto"
+                    Height="20"
+                    Click="destroyProcBtn_Click"  
+                    Content="{DynamicResource SolvedProblem_Button_CancelProcess}"/>
+                <Button 
+                    Name="contProcBtn"
+                    Margin="5"
+                    Padding="5 0"
+                    Width="Auto"
+                    Height="20"
+                    Click="contProcBtn_Click"
+                    Content="{DynamicResource SolvedProblem_Button_ContinueProcess}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

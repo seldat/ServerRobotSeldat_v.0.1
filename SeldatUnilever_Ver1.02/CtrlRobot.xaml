@@ -1,0 +1,26 @@
+﻿<Window x:Class="SeldatUnilever_Ver1._02.CtrlRobot"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SeldatUnilever_Ver1._02"
+        mc:Ignorable="d"
+        Title="CtrlRobot" Height="450" Width="135">
+    <Grid HorizontalAlignment="Left" Width="170">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="11*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="cmdCamePoint" Content="CamePoint" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Width="107" Click="Button_Click" FontSize="10"/>
+        <Button x:Name="cmdPalletUp" Content="PalletUp" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top" Width="107" Click="CmdPalletUp_Click" FontSize="10"/>
+        <Button x:Name="cmdPalletDown" Content="PallerDown" HorizontalAlignment="Left" Margin="10,104,0,0" VerticalAlignment="Top" Width="107" Click="CmdPalletDown_Click" FontSize="10"/>
+        <Button x:Name="cmdBatLevel" Content="BatLevel" HorizontalAlignment="Left" Margin="10,215,0,0" VerticalAlignment="Top" Width="107" Click="CmdBatLevel_Click" RenderTransformOrigin="0.507,1.51" FontSize="10"/>
+        <Button x:Name="cmdBackFrontLine" Content="BackFrontLine" HorizontalAlignment="Left" Margin="10,141,0,0" VerticalAlignment="Top" Width="107" Click="CmdBackFrontLine_Click" FontSize="10"/>
+        <Button x:Name="cmdError" Content="Error" HorizontalAlignment="Left" Margin="10,178,0,0" VerticalAlignment="Top" Width="107" RenderTransformOrigin="-2.2,2.35" Click="CmdError_Click" FontSize="10"/>
+        <TextBox x:Name="txtBat" HorizontalAlignment="Right" Height="23" Margin="0,263,8,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="107" FontSize="10"/>
+        <Button x:Name="cmdGetInCharger" Content="GetInCharger" HorizontalAlignment="Left" Margin="10,300,0,0" VerticalAlignment="Top" Width="107" FontSize="10" Click="CmdGetInCharger_Click"/>
+        <Button x:Name="cmdGetOutCharger" Content="GetOutCharger" HorizontalAlignment="Left" Margin="10,337,0,0" VerticalAlignment="Top" Width="107" FontSize="10" Click="CmdGetOutCharger_Click"/>
+        <Button x:Name="LineCamePoint" Content="LineCamePoint" HorizontalAlignment="Left" Margin="11,374,0,0" VerticalAlignment="Top" Width="107" FontSize="10" Click="LineCamePoint_Click"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,2 @@
+127.0.0.1 - - [16/Feb/2019:09:54:39 +0700] "POST /robot/rest/plan/getListPlanPallet HTTP/1.1" 200 2603 http-bio-8081-exec-1 11950
+127.0.0.1 - - [16/Feb/2019:09:56:19 +0700] "POST /robot/rest/plan/getListPlanPallet HTTP/1.1" 200 12 http-bio-8081-exec-3 7687

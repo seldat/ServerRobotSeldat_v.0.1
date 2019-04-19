@@ -1,0 +1,91 @@
+﻿<Window x:Class="SeldatUnilever_Ver1._02.Management.TrafficManager.ConfigureRiskZone"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SeldatUnilever_Ver1._02.Management.TrafficManager"
+        mc:Ignorable="d"
+        Title="ConfigureRiskZone" Height="450" Width="800"
+        Closing="Window_Closing"
+        IsVisibleChanged="Window_IsVisibleChanged"
+        >
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid Margin="0 5" Background="#f5f5f5">
+                <Image Margin="0,0" Source="pack://siteoforigin:,,,/Resources/seldat_logo.png"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <DataGrid Name="MainDataGrid"
+                      ItemsSource="{Binding Grouped_PropertiesRiskZoneList}"
+                      CanUserAddRows="False"
+                          AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" Header="Name" 
+                                        Binding="{Binding Path=NameId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <DataGridTextColumn Width="*" Header="Index" 
+                                        Binding="{Binding Path=Index, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <DataGridTextColumn Width="*" Header="Point1" 
+                                        Binding="{Binding Path=Point1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <DataGridTextColumn Width="*" Header="Point2" 
+                                        Binding="{Binding Path=Point2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <DataGridTextColumn Width="*" Header="Point3" 
+                                        Binding="{Binding Path=Point3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+                    <DataGridTextColumn Width="*" Header="Point4" 
+                                        Binding="{Binding Path=Point4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <DataGridTextColumn Width="*" Header="L1" 
+                                        Binding="{Binding Path=L1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <DataGridTextColumn Width="*" Header="L2" 
+                                        Binding="{Binding Path=L2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <DataGridTextColumn Width="*" Header="WS" 
+                                        Binding="{Binding Path=WS, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <DataGridTextColumn Width="*" Header="Distance" 
+                                        Binding="{Binding Path=Distance, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <DataGridTextColumn Width="*" Header="Speed" 
+                                        Binding="{Binding Path=Speed, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <DataGridTextColumn Width="*" Header="Detail" 
+                                        Binding="{Binding Path=Detail, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+                    <DataGridTemplateColumn Header="Fixed" x:Name="btnFixed">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="FixedBtn" Click="FixedBtn_Click" Content="{DynamicResource ConfigureRiskZone_Button_Fix}"></Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Remove" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate x:Name="btnRemove">
+                                <Button Name="RemoveBtn" Click="RemoveBtn_Click"
+                                        Content="{DynamicResource ConfigureRiskZone_Button_Remove}"></Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Row="2">
+            <StackPanel 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center" 
+                Orientation="Horizontal">
+                <Button 
+                    Content="{DynamicResource ConfigureRiskZone_Button_Add}" 
+                    Height="20"
+                    Margin="5 0"
+                    Padding="5 0"
+                    Name="btn_addItem" 
+                    Click="btn_addItem_Click"/>
+            </StackPanel>
+        </Grid>
+
+
+    </Grid>
+</Window>
