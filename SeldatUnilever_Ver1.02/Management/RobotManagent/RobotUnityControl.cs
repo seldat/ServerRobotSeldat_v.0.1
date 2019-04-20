@@ -116,7 +116,7 @@ namespace SeldatMRMS.Management.RobotManagent
             public String ipMcuCtrl{ get => _ipMcuCtrl; set { _ipMcuCtrl = value; RaisePropertyChanged("IpMCU"); } }
             private int _portMcuCtrl;
             public int portMcuCtrl{ get => _portMcuCtrl; set {_portMcuCtrl = value; RaisePropertyChanged("PortMCU"); } }
-            public double speedInSpecicalArea =(double) RobotSpeedLevel.ROBOT_SPEED_NORMAL;
+            public RobotSpeedLevel speedInSpecicalArea = RobotSpeedLevel.ROBOT_SPEED_NORMAL;
             public double errorVx=0.0001;
             public double errorVy=0.0001;
 		    public double errorW=0.0001;
@@ -141,11 +141,12 @@ namespace SeldatMRMS.Management.RobotManagent
             REQUEST_TURN_LEFT = 1210,
             REQUEST_TURN_RIGHT = 1211,
             REQUEST_FORWARD_DIRECTION = 1212,
-            REQUEST_GOBACK_FRONTLINE = 1213,
+            // REQUEST_GOBACK_FRONTLINE = 1213,
+            REQUEST_GOBACK_FRONTLINE_TURN_RIGHT = 1213,
             REQUEST_TURNOFF_PC = 1214,
             REQUEST_DROPDOWN_PALLET = 1216,
             REQUEST_GOBACK_FRONTLINE_TURN_LEFT = 1217,
-            REQUEST_GOBACK_FRONTLINE_TURN_RIGHT
+            //REQUEST_GOBACK_FRONTLINE_TURN_RIGHT =
         }
 
         public enum ResponseCommand
@@ -340,6 +341,7 @@ namespace SeldatMRMS.Management.RobotManagent
                 StandardInt32 standard = (StandardInt32)message;
                 robotLogOut.ShowText(this.properties.Label,"Finished State [" + standard.data + "]");
                 FinishStatesCallBack(standard.data);
+        
                
             }
             catch {
@@ -507,6 +509,7 @@ namespace SeldatMRMS.Management.RobotManagent
 
             try
             {
+                properties.speedInSpecicalArea = robotspeed;
                 StandardInt32 msg = new StandardInt32();
                 msg.data = Convert.ToInt32(robotspeed);
                 this.Publish(paramsRosSocket.publication_ctrlrobotdriving, msg);

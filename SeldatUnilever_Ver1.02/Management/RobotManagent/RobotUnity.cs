@@ -306,7 +306,7 @@ namespace SeldatMRMS.Management.RobotManagent
             canvas.Children.Add(BlueCircleArea);
 
             YellowCircleArea = new Ellipse();
-            YellowCircleArea.Stroke = new SolidColorBrush(Colors.GreenYellow);
+            YellowCircleArea.Stroke = new SolidColorBrush(Colors.OrangeRed);
             canvas.Children.Add(YellowCircleArea);
             new Thread(() => {
                 while (true)
@@ -387,12 +387,13 @@ namespace SeldatMRMS.Management.RobotManagent
                 double angle = -properties.pose.Angle;
                 Point position = Global_Object.CoorLaser(properties.pose.Position);
                 border.ToolTip = "Name: " + properties.Label + Environment.NewLine + "Zone: " + typezone +
-                    Environment.NewLine + "Location: " + position.X.ToString("0.00") + " / " +
+                    Environment.NewLine + " Location: " + position.X.ToString("0.00") + " / " +
                     position.Y.ToString("0.00") + " / " + angle.ToString("0.00") + Environment.NewLine +
-                    "Working Zone:" + robotRegistryToWorkingZone.WorkingZone +
+                    "Working Zone: " + robotRegistryToWorkingZone.WorkingZone + Environment.NewLine +
                     "Radius _S" + Radius_S + Environment.NewLine +
                     "Radius _Y" + Radius_Y + Environment.NewLine +
-                    "Radius _B" + Radius_B + Environment.NewLine;
+                    "Radius _B" + Radius_B + Environment.NewLine +
+                    "Speed Set :"+ properties.speedInSpecicalArea;
                 ;
             }
             catch { }
@@ -454,6 +455,13 @@ namespace SeldatMRMS.Management.RobotManagent
                 connectItem.IsEnabled = false;
                 disconnectItem.IsEnabled = true;
                 MessageBox.Show("Để robot có thể tiếp tục hãy add Robot vào Ready Mode hoặc TaskWait Mode !");
+                Radius_S = 4 * properties.Scale;
+                Radius_B = 4 * properties.Scale;
+                Radius_Y = 4 * properties.Scale;
+                Center_S = 0;
+                Center_B = 2 * properties.Scale;
+                Center_Y = 2 * properties.Scale;
+                SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
             }
         }
         private void DisConnectMenu(object sender, RoutedEventArgs e)
@@ -481,6 +489,12 @@ namespace SeldatMRMS.Management.RobotManagent
             robotService.RemoveRobotUnityWaitTaskList(this);
             robotRegistryToWorkingZone.Release();
             setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_DISCONNECT);
+            Radius_S =0;
+            Radius_B = 0;
+            Radius_Y = 0;
+            Center_S = 0;
+            Center_B = 0;
+            Center_Y = 0;
         }
         public void SetOnOffTrafficMenu(object sender, RoutedEventArgs e)
         {
@@ -598,8 +612,8 @@ namespace SeldatMRMS.Management.RobotManagent
                         else
                         {
 
-                            SmallCircleArea.Width = 0;
-                            SmallCircleArea.Height = 0;
+                            SmallCircleArea.Width = Radius_S;
+                            SmallCircleArea.Height = Radius_S;
 
                             TranslateTransform tr = new TranslateTransform(0, 0);
                             SmallCircleArea.RenderTransform = tr;
@@ -616,8 +630,8 @@ namespace SeldatMRMS.Management.RobotManagent
                         }
                         else
                         {
-                            YellowCircleArea.Width = 0;
-                            YellowCircleArea.Height = 0;
+                            YellowCircleArea.Width = Radius_Y;
+                            YellowCircleArea.Height = Radius_Y;
 
                             Point cc = CenterOnLineCv(30);
                             TranslateTransform tr = new TranslateTransform(0, 0);
@@ -635,8 +649,8 @@ namespace SeldatMRMS.Management.RobotManagent
                         }
                         else
                         {
-                            BlueCircleArea.Width = 0;
-                            BlueCircleArea.Height = 0;
+                            BlueCircleArea.Width = Radius_B;
+                            BlueCircleArea.Height = Radius_B;
 
                             Point cc = CenterOnLineCv(30);
                             TranslateTransform tr = new TranslateTransform(0, 0);
