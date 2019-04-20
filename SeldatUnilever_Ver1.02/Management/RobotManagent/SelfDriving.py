@@ -35,7 +35,7 @@ class SelfDriving():
         	rospy.init_node("SelfDriving")
         	self.nodename = rospy.get_name()
         	print("%s started" % self.nodename)
-		self.rate=rospy.get_param('~rate',1);
+		self.rate=rospy.get_param('~rate',50);
 		self.amclpose_posX=0;
 		self.amclpose_posY=0;
 		self.amclpose_posthetaW=0.0;
