@@ -13,9 +13,9 @@ using static SelDatUnilever_Ver1._00.Management.DeviceManagement.DeviceItem;
 
 namespace SelDatUnilever_Ver1._00.Management.UnityService
 {
-    public class AssigmentTaskService:TaskRounterService
+    public class AssigmentTaskService : TaskRounterService
     {
-       
+
         public AssigmentTaskService() { }
         public void FinishTask(String userName)
         {
@@ -27,8 +27,8 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
             Alive = true;
             processAssignAnTaskWait = ProcessAssignAnTaskWait.PROC_ANY_GET_ANROBOT_IN_WAITTASKLIST;
             processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_GET_ANROBOT_INREADYLIST;
-            Task threadprocessAssignAnTaskWait=new Task(AssignTask);
-            Task threadprocessAssignTaskReady =new Task(AssignTaskAtReady);
+            Task threadprocessAssignAnTaskWait = new Task(AssignTask);
+            Task threadprocessAssignTaskReady = new Task(AssignTaskAtReady);
             threadprocessAssignAnTaskWait.Start();
             threadprocessAssignTaskReady.Start();
         }
@@ -40,7 +40,7 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
         {
             OrderItem orderItem = null;
             RobotUnity robot = null;
-            int cntOrderNull=1;
+            int cntOrderNull = 1;
             while (Alive)
             {
 
@@ -97,38 +97,38 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                         break;
                     case ProcessAssignAnTaskWait.PROC_ANY_CHECK_HAS_ANTASK:
 
-                            orderItem = Gettask();
+                        orderItem = Gettask();
 
-                            if (orderItem != null)
-                            {
-                                processAssignAnTaskWait = ProcessAssignAnTaskWait.PROC_ANY_ASSIGN_ANTASK;
-                                orderItem.robot = robot.properties.Label;
-                                cntOrderNull = 0;
-                                break;
-                            }
-                            else
-                            {
-                                MoveElementToEnd();
-                                cntOrderNull++;
-                            }
-                            if (cntOrderNull > deviceItemsList.Count) // khi robot không còn nhận duoc task
-                            {
-                                    //processAssignAnTaskWait = ProcessAssignAnTaskWait.PROC_ANY_GET_ANROBOT_IN_WAITTASKLIST; // remove
-                                    processAssignAnTaskWait = ProcessAssignAnTaskWait.PROC_ANY_CHECK_ROBOT_GOTO_READY; // mở lại 
-                                        cntOrderNull = 0;
-                            }
-                            else
-                            {
-                                processAssignAnTaskWait = ProcessAssignAnTaskWait.PROC_ANY_GET_ANROBOT_IN_WAITTASKLIST;
-                            }
+                        if (orderItem != null)
+                        {
+                            processAssignAnTaskWait = ProcessAssignAnTaskWait.PROC_ANY_ASSIGN_ANTASK;
+                            orderItem.robot = robot.properties.Label;
+                            cntOrderNull = 0;
+                            break;
+                        }
+                        else
+                        {
+                            MoveElementToEnd();
+                            cntOrderNull++;
+                        }
+                        if (cntOrderNull > deviceItemsList.Count) // khi robot không còn nhận duoc task
+                        {
+                            //processAssignAnTaskWait = ProcessAssignAnTaskWait.PROC_ANY_GET_ANROBOT_IN_WAITTASKLIST; // remove
+                            processAssignAnTaskWait = ProcessAssignAnTaskWait.PROC_ANY_CHECK_ROBOT_GOTO_READY; // mở lại 
+                            cntOrderNull = 0;
+                        }
+                        else
+                        {
+                            processAssignAnTaskWait = ProcessAssignAnTaskWait.PROC_ANY_GET_ANROBOT_IN_WAITTASKLIST;
+                        }
                         break;
-                case ProcessAssignAnTaskWait.PROC_ANY_CHECK_ROBOT_GOTO_READY:
+                    case ProcessAssignAnTaskWait.PROC_ANY_CHECK_ROBOT_GOTO_READY:
                         robot.TurnOnSupervisorTraffic(true);
                         procedureService.Register(ProcedureItemSelected.PROCEDURE_ROBOT_TO_READY, robot, null);
                         robotManageService.RemoveRobotUnityWaitTaskList(robot);
                         processAssignAnTaskWait = ProcessAssignAnTaskWait.PROC_ANY_GET_ANROBOT_IN_WAITTASKLIST;
-                    break;
-                case ProcessAssignAnTaskWait.PROC_ANY_ASSIGN_ANTASK:
+                        break;
+                    case ProcessAssignAnTaskWait.PROC_ANY_ASSIGN_ANTASK:
                         robot.TurnOnSupervisorTraffic(true);
                         SelectProcedureItem(robot, orderItem);
                         // xoa order đầu tiên trong danh sach devicelist[0] sau khi gán task
@@ -144,7 +144,7 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                 Thread.Sleep(500);
             }
         }
-        public void SelectProcedureItem(RobotUnity robot,OrderItem orderItem)
+        public void SelectProcedureItem(RobotUnity robot, OrderItem orderItem)
         {
             if (orderItem.typeReq == DeviceItem.TyeRequest.TYPEREQUEST_FORLIFT_TO_BUFFER)
             {
@@ -170,17 +170,17 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
         }
         public void AssignTaskAtReady()
         {
-            OrderItem orderItem=null;
+            OrderItem orderItem = null;
             RobotUnity robot = null;
-                while (Alive)
+            while (Alive)
+            {
+
+                //Console.WriteLine(processAssignTaskReady);
+                switch (processAssignTaskReady)
                 {
-                
-                    //Console.WriteLine(processAssignTaskReady);
-                    switch (processAssignTaskReady)
-                    {
-                        case ProcessAssignTaskReady.PROC_READY_IDLE:
-                            break;
-                        case ProcessAssignTaskReady.PROC_READY_GET_ANROBOT_INREADYLIST:
+                    case ProcessAssignTaskReady.PROC_READY_IDLE:
+                        break;
+                    case ProcessAssignTaskReady.PROC_READY_GET_ANROBOT_INREADYLIST:
 
                         if (robotManageService.RobotUnityReadyList.Count > 0)
                         {
@@ -203,51 +203,51 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                                 }
                             }
                         }
-                            break;
-                        case ProcessAssignTaskReady.PROC_READY_CHECK_HAS_ANTASK:
-                            orderItem = Gettask();
-                            if (orderItem != null)
-                            {
-                                Console.WriteLine(processAssignTaskReady);
-                                orderItem.robot = robot.properties.Label;
-                                processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_SET_TRAFFIC_RISKAREA_ON;
-                            }
-                            else
-                            {
-                                MoveElementToEnd();
-                                processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_GET_ANROBOT_INREADYLIST;
-                            }
-                            break;
-                        case ProcessAssignTaskReady.PROC_READY_ASSIGN_ANTASK:
-                           // if (!trafficService.HasRobotUnityinArea("READY"))
-                            {
-                                robot.TurnOnSupervisorTraffic(true);
-                                Console.WriteLine(processAssignTaskReady);
-                                SelectProcedureItem(robot, orderItem);
-                                deviceItemsList[0].RemoveFirstOrder();
-                                MoveElementToEnd(); // sort Task List
-                                processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_CHECK_ROBOT_OUTSIDEREADY;
-                            }
-                            break;
-                        case ProcessAssignTaskReady.PROC_READY_SET_TRAFFIC_RISKAREA_ON:
+                        break;
+                    case ProcessAssignTaskReady.PROC_READY_CHECK_HAS_ANTASK:
+                        orderItem = Gettask();
+                        if (orderItem != null)
+                        {
+                            Console.WriteLine(processAssignTaskReady);
+                            orderItem.robot = robot.properties.Label;
+                            processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_SET_TRAFFIC_RISKAREA_ON;
+                        }
+                        else
+                        {
+                            MoveElementToEnd();
+                            processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_GET_ANROBOT_INREADYLIST;
+                        }
+                        break;
+                    case ProcessAssignTaskReady.PROC_READY_ASSIGN_ANTASK:
+                        if (!robot.CheckRobotWorkinginReady())
+                        {
                             robot.TurnOnSupervisorTraffic(true);
-                            processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_ASSIGN_ANTASK;
-                            break;
-                        case ProcessAssignTaskReady.PROC_READY_CHECK_ROBOT_OUTSIDEREADY:
+                            Console.WriteLine(processAssignTaskReady);
+                            SelectProcedureItem(robot, orderItem);
+                            deviceItemsList[0].RemoveFirstOrder();
+                            MoveElementToEnd(); // sort Task List
+                            processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_CHECK_ROBOT_OUTSIDEREADY;
+                        }
+                        break;
+                    case ProcessAssignTaskReady.PROC_READY_SET_TRAFFIC_RISKAREA_ON:
+                        robot.TurnOnSupervisorTraffic(true);
+                        processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_ASSIGN_ANTASK;
+                        break;
+                    case ProcessAssignTaskReady.PROC_READY_CHECK_ROBOT_OUTSIDEREADY:
 
                         // kiem tra robot vẫn còn tai vung ready
-                             if(!trafficService.RobotIsInArea("READY",robot.properties.pose.Position))
-                            {
-                                    // xoa khoi list cho
-                                robotManageService.RemoveRobotUnityReadyList(robot);
-                                processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_GET_ANROBOT_INREADYLIST;
-                            }
+                        if (!trafficService.RobotIsInArea("READY", robot.properties.pose.Position))
+                        {
+                            // xoa khoi list cho
+                            robotManageService.RemoveRobotUnityReadyList(robot);
+                            processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_GET_ANROBOT_INREADYLIST;
+                        }
 
-                            break;
-                    }
-                    Thread.Sleep(500);
+                        break;
                 }
-         
+                Thread.Sleep(500);
+            }
+
         }
         public void AssignTaskGoToReady(RobotUnity robot)
         {
