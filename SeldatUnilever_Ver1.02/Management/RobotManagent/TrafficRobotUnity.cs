@@ -167,7 +167,7 @@ namespace SeldatMRMS.Management
                 {
                     foreach (RobotUnity r in RobotUnitylist)
                     {
-                        //if (r.onFlagSafeSmallcircle)
+                        //if (r.properties.IsConnected)
                         {
                             Point thCV = TopHeaderCv();
                             Point mdCV0 = MiddleHeaderCv();
@@ -177,9 +177,9 @@ namespace SeldatMRMS.Management
                             // bool onTouch= FindHeaderIntersectsFullRiskArea(this.TopHeader()) | FindHeaderIntersectsFullRiskArea(this.MiddleHeader()) | FindHeaderIntersectsFullRiskArea(this.BottomHeader());
                             // bool onTouch = r.FindHeaderIntersectsFullRiskAreaCv(thCV) | r.FindHeaderIntersectsFullRiskAreaCv(mdCV) | r.FindHeaderIntersectsFullRiskAreaCv(bhCV);
 
-                            bool onTouch0 = r.FindHeaderInsideCircleArea(mdCV0, 2 * Radius_S);
-                            bool onTouch1 = r.FindHeaderInsideCircleArea(mdCV1, 2 * Radius_S);
-                            bool onTouch2 = r.FindHeaderInsideCircleArea(mdCV2, 2 * Radius_S);
+                            bool onTouch0 = r.FindHeaderInsideCircleArea(mdCV0, 2 * r.Radius_S);
+                            bool onTouch1 = r.FindHeaderInsideCircleArea(mdCV1, 2 * r.Radius_S);
+                            bool onTouch2 = r.FindHeaderInsideCircleArea(mdCV2, 2 * r.Radius_S);
                             if (onTouch0 || onTouch1 || onTouch2)
                             {
                                 //  robotLogOut.ShowTextTraffic(r.properties.Label+" => CheckIntersection");
@@ -189,7 +189,7 @@ namespace SeldatMRMS.Management
                             }
                             else
                             {
-                                // SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
+                                SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
                             }
                         }
                     }
@@ -449,12 +449,7 @@ namespace SeldatMRMS.Management
                             WSCv = rZR.WS * properties.Scale;
                             DistInterCv = rZR.distance * properties.Scale;
 
-                            Radius_S = rZR.Radius_S * properties.Scale;
-                            Radius_B = rZR.Radius_B * properties.Scale;
-                            Radius_Y = rZR.Radius_Y * properties.Scale;
-                            Center_S = rZR.Center_S * properties.Scale;
-                            Center_B = rZR.Center_B * properties.Scale;
-                            Center_Y = rZR.Center_Y * properties.Scale;
+                            
 
 
                             //UpdateRiskAraParams(rZR.L1, rZR.L2, rZR.WS, rZR.distance);
@@ -464,7 +459,8 @@ namespace SeldatMRMS.Management
                             UpdateRiskAraParams(DfL1, DfL2, DfWS, DfDistanceInter);
                         }
                         //SupervisorTraffic();
-                        RobotBehavior();
+                       // SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
+                         RobotBehavior();
                     }
                     // giám sát an toàn
 
@@ -621,6 +617,10 @@ namespace SeldatMRMS.Management
             RobotBahaviorAtAnyPlace robotBahaviorAtAnyPlace = RobotBahaviorAtAnyPlace.ROBOT_PLACE_IDLE;
             TypeZone _type = trafficManagementService.GetTypeZone(properties.pose.Position, 0, 200);
             //onFlagDetectLine = true;
+            if(_type== TypeZone.READY)
+            {
+                //SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
+            }
             if (_type == TypeZone.HIGHWAY && onFlagDetectLine == false)
             {
                 robotBahaviorAtAnyPlace = RobotBahaviorAtAnyPlace.ROBOT_PLACE_HIGHWAY;
@@ -696,14 +696,17 @@ namespace SeldatMRMS.Management
                 {
                     // kiểm tra có robot nào nằm trong vòng tròn an toàn này kg?
                     Point cB = CenterOnLineCv(Center_B);
-                    if (FindHeaderInsideCircleArea(r.MiddleHeaderCv(), cB, Radius_B))
+                    if(r.MiddleHeaderCv().X<0 && r.MiddleHeaderCv().Y<0)
                     {
-                        SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
-                        break;
-                    }
-                    else
-                    {
-                        SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
+                        if (FindHeaderInsideCircleArea(r.MiddleHeaderCv(), cB, Radius_B))
+                        {
+                            SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
+                            break;
+                        }
+                        else
+                        {
+                            SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
+                        }
                     }
                 }
             }
@@ -713,7 +716,7 @@ namespace SeldatMRMS.Management
             bool flagInsideYellowCircle = false;
             foreach (RobotUnity r in RobotUnitylist)
             {
-                // kiểm tra có robot nó có nằm trong vòng tròn vàng nào không nếu có ngưng
+                // kiểm tra có robot chinh  nó có nằm trong vòng tròn vàng nào không nếu có ngưng
                 if (r.onFlagSafeYellowcircle)
                 {
                     Point cY = CenterOnLineCv(Center_Y);
@@ -728,14 +731,26 @@ namespace SeldatMRMS.Management
         }
         public void SetSafeYellowcircle(bool flagonoff)
         {
+            if (flagonoff)
+                Radius_Y = 40;
+            else
+                Radius_Y = 0;
             onFlagSafeYellowcircle = flagonoff;
         }
         public void SetSafeBluecircle(bool flagonoff)
         {
+            if (flagonoff)
+                Radius_B = 40;
+            else
+                Radius_B = 0;
             onFlagSafeBluecircle = flagonoff;
         }
         public void SetSafeSmallcircle(bool flagonoff)
         {
+            if (flagonoff)
+                Radius_S = 40;
+            else
+                Radius_S = 0;
             onFlagSafeSmallcircle = flagonoff;
         }
         public void SwitchToDetectLine(bool flagonoff)

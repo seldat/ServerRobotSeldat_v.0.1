@@ -332,6 +332,10 @@ namespace SeldatMRMS
         public override void FinishStatesCallBack(Int32 message)
         {
             this.resCmd = (ResponseCommand)message;
+            if (this.resCmd == ResponseCommand.RESPONSE_FINISH_GOBACK_FRONTLINE)
+            {
+                robot.ReleaseWorkingZone();
+            }
         }
     }
 }

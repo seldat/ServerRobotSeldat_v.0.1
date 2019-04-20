@@ -285,6 +285,7 @@ namespace SeldatMRMS
                         {
                             if (resCmd == ResponseCommand.RESPONSE_FINISH_GOBACK_FRONTLINE)
                             {
+
                                 robot.SwitchToDetectLine(false);
                                 robot.TurnOnCtrlSelfTraffic(true);
                                 resCmd = ResponseCommand.RESPONSE_NONE;
@@ -373,7 +374,7 @@ namespace SeldatMRMS
                         robot.SwitchToDetectLine(false);
                         // Release WorkinZone Robot
                         robot.robotTag = RobotStatus.IDLE;
-                        robot.ReleaseWorkingZone();
+                     
                         robot.TurnOnCtrlSelfTraffic(true);
                         rb.PreProcedureAs = ProcedureControlAssign.PRO_BUFFER_TO_MACHINE;
                         // if (errorCode == ErrorCode.RUN_OK) {
@@ -412,6 +413,10 @@ namespace SeldatMRMS
         public override void FinishStatesCallBack(Int32 message)
         {
             this.resCmd = (ResponseCommand)message;
+            if (this.resCmd == ResponseCommand.RESPONSE_FINISH_GOBACK_FRONTLINE)
+            {
+                robot.ReleaseWorkingZone();
+            }
         }
         protected override void CheckUserHandleError(object obj)
         {
