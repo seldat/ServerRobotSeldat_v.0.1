@@ -48,6 +48,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
         }
         public void Destroy()
         {
+            robot.orderItem = null;
             robot.SwitchToDetectLine(false);
             robot.robotTag = RobotStatus.IDLE;
             robot.ReleaseWorkingZone();
@@ -295,6 +296,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                     //    }
                     //    break;
                     case ForkLiftToMachine.FORMACH_ROBOT_RELEASED: // trả robot về robotmanagement để nhận quy trình mới
+                        robot.orderItem = null;
                         robot.SwitchToDetectLine(false);
                         robot.robotTag = RobotStatus.IDLE;
                         robot.ReleaseWorkingZone();

@@ -98,11 +98,21 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                     case ProcessAssignAnTaskWait.PROC_ANY_CHECK_HAS_ANTASK:
 
                         orderItem = Gettask();
-
+                        // xác định số lượng device đang có task và chỉ phân phối duy nhất 1 task cho một robot trên cùng thời điểm, không có trường hợp nhiểu
+                        // device có task mà nhiều robot cùng nhận task đó
+                        if (DetermineAmoutOfDeviceToAssignAnTask() > 0)
+                        {
+                            if (FindRobotUnitySameOrderItem(orderItem.userName))
+                            {
+                                MoveElementToEnd();
+                                continue;
+                            }
+                        }
                         if (orderItem != null)
                         {
                             processAssignAnTaskWait = ProcessAssignAnTaskWait.PROC_ANY_ASSIGN_ANTASK;
                             orderItem.robot = robot.properties.Label;
+                            robot.orderItem = orderItem;
                             cntOrderNull = 0;
                             break;
                         }
@@ -166,6 +176,10 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
             {
                 procedureService.Register(ProcedureItemSelected.PROCEDURE_FORLIFT_TO_MACHINE, robot, orderItem);
             }
+            else if (orderItem.typeReq == DeviceItem.TyeRequest.TYPEREQUEST_WMS_RETURNPALLET_BUFFER)
+            {
+                procedureService.Register(ProcedureItemSelected.PROCEDURE_BUFFER_TO_RETURN, robot, orderItem);
+            }
             // procedure;
         }
         public void AssignTaskAtReady()
@@ -206,10 +220,21 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                         break;
                     case ProcessAssignTaskReady.PROC_READY_CHECK_HAS_ANTASK:
                         orderItem = Gettask();
+                        // xác định số lượng device đang có task và chỉ phân phối duy nhất 1 task cho một robot trên cùng thời điểm, không có trường hợp nhiểu
+                        // device có task mà nhiều robot cùng nhận task đó
+                        if (DetermineAmoutOfDeviceToAssignAnTask()>0)
+                        {
+                            if(FindRobotUnitySameOrderItem(orderItem.userName))
+                            {
+                                MoveElementToEnd();
+                                continue;
+                            }
+                        }
                         if (orderItem != null)
                         {
                             Console.WriteLine(processAssignTaskReady);
                             orderItem.robot = robot.properties.Label;
+                            robot.orderItem = orderItem;
                             processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_SET_TRAFFIC_RISKAREA_ON;
                         }
                         else
@@ -248,6 +273,41 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                 Thread.Sleep(500);
             }
 
+        }
+        public bool FindRobotUnitySameOrderItem(String userName)
+        {
+            bool hasRobotSameOrderItem = false;
+            foreach(RobotUnity robot in robotManageService.RobotUnityRegistedList.Values)
+            {
+                if(robot.orderItem!=null)
+                {
+                    if(robot.orderItem.userName.Equals(userName))
+                    {
+                        hasRobotSameOrderItem = true; ;
+                        break;
+                    }
+                }
+            }
+            return hasRobotSameOrderItem;
+        }
+        public int DetermineAmoutOfDeviceToAssignAnTask()
+        {
+            int cntOrderWeight = 0;
+            if(deviceItemsList.Count>1)
+            {
+                foreach(DeviceItem item in deviceItemsList)
+                {
+                    if(item.PendingOrderList.Count>0)
+                    {
+                        cntOrderWeight++;
+                    }
+                }
+                if(cntOrderWeight>1) // có nhiều device đang có task
+                {
+                    return 1; // 
+                }
+            }
+            return 0; // chỉ có 1 device đang có task
         }
         public void AssignTaskGoToReady(RobotUnity robot)
         {

@@ -70,6 +70,7 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
             TYPEREQUEST_CLOSE_FRONTDOOR_RETURN_PALLET = 10,
             TYPEREQUEST_CLEAR_FORLIFT_TO_BUFFER = 11,
             TYPEREQUEST_FORLIFT_TO_MACHINE = 12, // santao jujeng cap bottle
+            TYPEREQUEST_WMS_RETURNPALLET_BUFFER = 13, // santao jujeng cap bottle
         }
         public enum TabletConTrol
         {
@@ -443,6 +444,32 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
                     order.dateTime = (string)DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss tt");
                     // chu y sua 
                     product.palletStatus = PalletStatus.W.ToString();
+                    order.dataRequest = product.ToString();
+                    order.status = StatusOrderResponseCode.PENDING;
+                    PendingOrderList.Add(order);
+                    OrderedItemList.Add(order);
+                }
+                else if(typeReq == (int)TyeRequest.TYPEREQUEST_WMS_RETURNPALLET_BUFFER)
+                {
+                    OrderItem order = new OrderItem();
+                    order.typeReq = (TyeRequest)typeReq;
+                    order.userName = (String)results["userName"];
+                    order.productDetailId = (int)results["productDetailId"];
+                    order.productDetailName = (String)results["productDetailName"];
+                    order.productId = (int)results["productId"];
+                    // order.planId = (int)results["planId"];
+                    order.deviceId = (int)results["deviceId"];
+                    order.timeWorkId = 1;
+                    // order.activeDate = (string)DateTime.Now.ToString("yyyy-MM-dd");
+                    // order.palletStatus = (String)results["palletStatus"];
+                    dynamic product = new JObject();
+                    product.timeWorkId = order.timeWorkId;
+                    product.activeDate = order.activeDate;
+                    order.dateTime = (string)DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss tt");
+                    product.productId = order.productId;
+                    product.productDetailId = order.productDetailId;
+                    // chu y sua 
+                    product.palletStatus = PalletStatus.W.ToString(); // W
                     order.dataRequest = product.ToString();
                     order.status = StatusOrderResponseCode.PENDING;
                     PendingOrderList.Add(order);

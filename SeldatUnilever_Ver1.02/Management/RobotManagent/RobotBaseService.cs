@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static SelDatUnilever_Ver1._00.Management.DeviceManagement.DeviceItem;
 
 namespace SeldatMRMS.Management.RobotManagent
 {
@@ -45,6 +46,7 @@ namespace SeldatMRMS.Management.RobotManagent
         public ProcedureControlAssign ProcedureRobotAssigned;
         public ProcedureControlAssign ProcedureAs;
         public bool SelectedATask { get; set; }
+        public OrderItem orderItem { get; set; }
        
         public struct LoadedConfigureInformation
         {

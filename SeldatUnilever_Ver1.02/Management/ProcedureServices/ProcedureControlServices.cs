@@ -38,6 +38,7 @@ namespace SeldatMRMS {
             PROC_CODE_MACHINE_TO_RETURN,
             PROC_CODE_RETURN_TO_GATE,
             PROC_CODE_ROBOT_TO_READY,
+            PROC_CODE_ROBOT_WAITINGTO_READY,
             PROC_CODE_ROBOT_TO_CHARGE,
         }
         public enum ErrorCode {
@@ -231,7 +232,8 @@ namespace SeldatMRMS {
             ROBREA_ROBOT_WAITTING_GOTO_READYSTATION, // hoàn thành đến vùng check in/ kiểm tra có robot đang làm việc vùng này và lấy vị trí line và pallet
             ROBREA_ROBOT_WAIITNG_DETECTLINE_TO_READYSTATION, // đang đợi dò line để đến vị trí line trong buffer
             ROBREA_ROBOT_WAITTING_CAME_POSITION_READYSTATION, // đến vị 
-            ROBREA_ROBOT_RELEASED
+            ROBREA_ROBOT_RELEASED,
+            ROBREA_ROBOT_WAITINGREADY_FORCERELEASED
         }
         public ProcedureControlServices (RobotUnity robot) : base (robot) {
             this.robot = robot;

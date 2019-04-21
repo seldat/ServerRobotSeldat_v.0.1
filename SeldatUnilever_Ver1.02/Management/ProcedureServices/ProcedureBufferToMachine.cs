@@ -64,6 +64,7 @@ namespace SeldatMRMS
         public void Destroy()
         {
             robot.robotTag = RobotStatus.IDLE;
+            robot.orderItem = null;
             StateBufferToMachine = BufferToMachine.BUFMAC_ROBOT_DESTROY;
         }
 
@@ -371,6 +372,7 @@ namespace SeldatMRMS
                         }
                         break;
                     case BufferToMachine.BUFMAC_ROBOT_RELEASED: // trả robot về robotmanagement để nhận quy trình mới
+                        robot.orderItem = null;
                         robot.SwitchToDetectLine(false);
                         // Release WorkinZone Robot
                         robot.robotTag = RobotStatus.IDLE;

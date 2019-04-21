@@ -79,6 +79,7 @@ namespace SeldatMRMS
         }
         public void Destroy()
         {
+            robot.orderItem = null;
             robot.robotTag = RobotStatus.IDLE;
             // StateForkLiftToBuffer = ForkLiftToBuffer.FORBUF_ROBOT_RELEASED;
             StateForkLift = ForkLift.FORMAC_ROBOT_DESTROY;
@@ -562,6 +563,7 @@ namespace SeldatMRMS
                         }
                         break;
                     case ForkLift.FORMAC_ROBOT_RELEASED: // trả robot về robotmanagement để nhận quy trình mới
+                        robot.orderItem = null;
                         robot.SwitchToDetectLine(false);
                         robot.robotTag = RobotStatus.IDLE;
                         robot.ReleaseWorkingZone();

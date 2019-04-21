@@ -167,7 +167,7 @@ namespace SeldatMRMS.Management
                 {
                     foreach (RobotUnity r in RobotUnitylist)
                     {
-                        //if (r.properties.IsConnected)
+                        if (r.robotTag==RobotStatus.WORKING)
                         {
                             Point thCV = TopHeaderCv();
                             Point mdCV0 = MiddleHeaderCv();
@@ -631,7 +631,7 @@ namespace SeldatMRMS.Management
             }
             if (_type == TypeZone.ROAD)
             {
-                SetSafeBluecircle(true);
+                
                 robotBahaviorAtAnyPlace = RobotBahaviorAtAnyPlace.ROBOT_PLACE_ROAD;
             }
             if (_type == TypeZone.BUFFER)
@@ -645,9 +645,9 @@ namespace SeldatMRMS.Management
                     SetSafeSmallcircle(true);
                     break;
                 case RobotBahaviorAtAnyPlace.ROBOT_PLACE_HIGHWAY:
-                    SetSafeSmallcircle(true);
+                    /*SetSafeSmallcircle(true);
                     SetSafeBluecircle(false);
-                    SetSafeYellowcircle(false);
+                    SetSafeYellowcircle(false);*/
                     if (CheckYellowCircle())
                     {
                         SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
@@ -661,11 +661,9 @@ namespace SeldatMRMS.Management
                 case RobotBahaviorAtAnyPlace.ROBOT_PLACE_ROAD:
                     // kiem tra vong tròn xanh
                     SetSafeSmallcircle(true);
+                    SetSafeBluecircle(true);
                     CheckBlueCircle();
-                    if (CheckYellowCircle())
-                    {
-                        SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
-                    }
+                    CheckYellowCircle();
                     break;
                 case RobotBahaviorAtAnyPlace.ROBOT_PLACE_HIGHWAY_DETECTLINE:
                     SetSafeSmallcircle(true);
@@ -694,9 +692,9 @@ namespace SeldatMRMS.Management
 
                 else
                 {
-                    // kiểm tra có robot nào nằm trong vòng tròn an toàn này kg?
+                    // kiểm tra có robot nào nằm trong vòng tròn và trạng thái đang là việc an toàn này kg?
                     Point cB = CenterOnLineCv(Center_B);
-                    if(r.MiddleHeaderCv().X<0 && r.MiddleHeaderCv().Y<0)
+                    if(r.robotTag==RobotStatus.WORKING)
                     {
                         if (FindHeaderInsideCircleArea(r.MiddleHeaderCv(), cB, Radius_B))
                         {
@@ -707,6 +705,11 @@ namespace SeldatMRMS.Management
                         {
                             SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
                         }
+
+                    }
+                    else
+                    {
+                            SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
                     }
                 }
             }
@@ -722,6 +725,7 @@ namespace SeldatMRMS.Management
                     Point cY = CenterOnLineCv(Center_Y);
                     if (r.FindHeaderInsideCircleArea(MiddleHeaderCv(), cY, Radius_Y))
                     {
+                        SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
                         flagInsideYellowCircle = true;
                         break;
                     }

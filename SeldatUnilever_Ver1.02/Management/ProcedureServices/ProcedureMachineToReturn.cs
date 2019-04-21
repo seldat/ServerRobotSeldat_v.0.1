@@ -39,6 +39,7 @@ namespace SeldatMRMS
 
         public void Start(MachineToReturn state = MachineToReturn.MACRET_ROBOT_GOTO_FRONTLINE_MACHINE)
         {
+            robot.orderItem = null;
             errorCode = ErrorCode.RUN_OK;
             robot.robotTag = RobotStatus.WORKING;
             robot.ProcedureAs = ProcedureControlAssign.PRO_MACHINE_TO_RETURN;
@@ -50,6 +51,7 @@ namespace SeldatMRMS
         }
         public void Destroy()
         {
+            robot.orderItem = null;
             robot.robotTag = RobotStatus.IDLE;
             // StateMachineToReturn = MachineToReturn.MACRET_ROBOT_RELEASED;
             robot.prioritLevel.OnAuthorizedPriorityProcedure = false;
@@ -310,6 +312,7 @@ namespace SeldatMRMS
                         }
                         break;
                     case MachineToReturn.MACRET_ROBOT_RELEASED: // trả robot về robotmanagement để nhận quy trình mới
+                        robot.orderItem = null;
                         robot.robotTag = RobotStatus.IDLE;
                         rb.PreProcedureAs = ProcedureControlAssign.PRO_MACHINE_TO_RETURN;
                         // if (errorCode == ErrorCode.RUN_OK) {

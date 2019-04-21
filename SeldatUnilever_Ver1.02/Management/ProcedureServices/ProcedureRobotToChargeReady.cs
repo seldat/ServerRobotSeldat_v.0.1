@@ -9,6 +9,7 @@ using SeldatMRMS.Management.RobotManagent;
 using SeldatMRMS.Management.TrafficManager;
 using SeldatUnilever_Ver1._02.Management.McuCom;
 using SelDatUnilever_Ver1._00.Management.ChargerCtrl;
+using SelDatUnilever_Ver1._00.Management.DeviceManagement;
 using static SeldatMRMS.Management.RobotManagent.RobotBaseService;
 using static SeldatMRMS.Management.RobotManagent.RobotUnity;
 using static SeldatMRMS.Management.RobotManagent.RobotUnityControl;
@@ -433,6 +434,7 @@ namespace SeldatMRMS
         RobotGoToReady StateRobotGoToReady;
         TrafficManagementService Traffic;
         public override event Action<Object> ReleaseProcedureHandler;
+        private DeviceRegistrationService deviceService;
         // public override event Action<Object> ErrorProcedureHandler;
         public ProcedureRobotToReady(RobotUnity robot, ChargerId id, TrafficManagementService trafficService, ChargerManagementService chargerService) : base(robot)
         {
@@ -444,7 +446,10 @@ namespace SeldatMRMS
             points.PointOfCharger = this.charger.PropertiesCharge_List[(int)id - 1].PointOfPallet;
             procedureCode = ProcedureCode.PROC_CODE_ROBOT_TO_READY;
         }
-
+        public void Registry(DeviceRegistrationService deviceService)
+        {
+            this.deviceService = deviceService;
+        }
         public void Start(RobotGoToReady state = RobotGoToReady.ROBREA_ROBOT_GOTO_FRONTLINE_READYSTATION)
         {
             errorCode = ErrorCode.RUN_OK;
@@ -488,10 +493,20 @@ namespace SeldatMRMS
                         if (rb.SendPoseStamped(p.PointFrontLine))
                         {
                             StateRobotGoToReady = RobotGoToReady.ROBREA_ROBOT_WAITTING_GOTO_READYSTATION;
+
                             robot.ShowText("ROBREA_ROBOT_WAITTING_GOTO_READYSTATION");
                         }
                         break;
                     case RobotGoToReady.ROBREA_ROBOT_WAITTING_GOTO_READYSTATION: // Robot dang di toi dau line ready station
+                        // nếu robot đang đi về ready , trạng thái không phải để charge. Kiểm tra có còn task nếu còn thì tiếp tục đi nhận task khác
+                        if(!robot.properties.RequestChargeBattery)
+                        {
+                            if(DetermineHasTaskWaiting())
+                            {
+                                StateRobotGoToReady = RobotGoToReady.ROBREA_ROBOT_WAITINGREADY_FORCERELEASED;
+                                break;
+                            }
+                        }
                         if (resCmd == ResponseCommand.RESPONSE_LASER_CAME_POINT)
                         //if ( robot.ReachedGoal())
                         {
@@ -527,6 +542,7 @@ namespace SeldatMRMS
                         }
                         break;
                     case RobotGoToReady.ROBREA_ROBOT_RELEASED:
+                      
                         robot.robotTag = RobotStatus.IDLE;
                         robot.SetSafeYellowcircle(false);
                         robot.SetSafeBluecircle(false);
@@ -543,12 +559,42 @@ namespace SeldatMRMS
                         robot.ShowText("RELEASED");
                         UpdateInformationInProc(this, ProcessStatus.S);
                         break;
+                    case RobotGoToReady.ROBREA_ROBOT_WAITINGREADY_FORCERELEASED:
+
+                        // add to wait task;
+                        robot.robotTag = RobotStatus.IDLE;
+                        ReleaseProcedureHandler(this);
+                        robot.setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_OK);
+                        procedureCode = ProcedureControlServices.ProcedureCode.PROC_CODE_ROBOT_WAITINGTO_READY;
+                        ProRun = false;
+                        robot.ShowText("RELEASED WHEN WAITTING TO READY, HAS AN NEW TASK");
+                        UpdateInformationInProc(this, ProcessStatus.S);
+                        break;
                 }
                 Thread.Sleep(5);
             }
             StateRobotGoToReady = RobotGoToReady.ROBREA_IDLE;
         }
-
+        // xác định còn task trong order
+        public bool DetermineHasTaskWaiting()
+        {
+            
+            List<DeviceItem> deviceList = deviceService.GetDeviceItemList();
+           if (deviceList.Count>0)
+            {
+                int cntAmoutOrderItem = 0;
+                foreach (DeviceItem item in deviceList)
+                {
+                    if(item.PendingOrderList.Count>0)
+                    {
+                        cntAmoutOrderItem++;
+                    }
+                }
+                if (cntAmoutOrderItem >=3) // ít nhất phải có hơn 3 task đang chờ
+                    return true;
+            }
+            return false;
+        }
         public override void FinishStatesCallBack(Int32 message)
         {
             this.resCmd = (ResponseCommand)message;
