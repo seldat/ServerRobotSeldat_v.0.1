@@ -417,6 +417,8 @@ namespace SeldatMRMS
             this.resCmd = (ResponseCommand)message;
             if (this.resCmd == ResponseCommand.RESPONSE_FINISH_GOBACK_FRONTLINE)
             {
+                // reset giao thông và xóa vùng đăng ký
+                robot.SetSafeSmallcircle(true);
                 robot.ReleaseWorkingZone();
             }
         }

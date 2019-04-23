@@ -378,6 +378,7 @@ namespace SeldatMRMS.Management
         public void TurnOnSupervisorTraffic(bool onflagtraffic)
         {
             onFlagSupervisorTraffic = onflagtraffic;
+            SetSafeSmallcircle(onflagtraffic);
             if (!onflagtraffic)
             {
                 properties.L1 = 0;
@@ -396,10 +397,6 @@ namespace SeldatMRMS.Management
                 Radius_Y = 0;
                 onFlagSafeSmallcircle = false;
 
-            }
-            else
-            {
-                onFlagSafeSmallcircle = true;
             }
         }
         public void TurnOnCtrlSelfTraffic(bool _onflagSelftraffic)
@@ -666,7 +663,7 @@ namespace SeldatMRMS.Management
                     CheckYellowCircle();
                     break;
                 case RobotBahaviorAtAnyPlace.ROBOT_PLACE_HIGHWAY_DETECTLINE:
-                    SetSafeSmallcircle(true);
+                   // SetSafeSmallcircle(true);
                     SetSafeBluecircle(false);
                     SetSafeYellowcircle(true);
                     SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
