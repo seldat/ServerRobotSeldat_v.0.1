@@ -251,12 +251,6 @@ namespace SeldatMRMS
 
                         StateForkLift = ForkLift.FORBUF_ROBOT_WAITTING_OPEN_DOOR;
                         robot.ShowText("FORBUF_ROBOT_WAITTING_OPEN_DOOR");
-
-
-
-
-
-
                         break;
                     case ForkLift.FORBUF_ROBOT_WAITTING_OPEN_DOOR: //doi mo cong
                         RetState ret = ds.checkOpen(DoorService.DoorType.DOOR_BACK);
@@ -269,8 +263,6 @@ namespace SeldatMRMS
                         {
 
                             StateForkLift = ForkLift.FORBUF_ROBOT_CAME_GATE_POSITION;
-
-
                         }
                         break;
                     case ForkLift.FORBUF_ROBOT_OPEN_DOOR_SUCCESS: // mo cua thang cong ,gui toa do line de robot di vao gap hang
@@ -305,12 +297,6 @@ namespace SeldatMRMS
 
                             StateForkLift = ForkLift.FORBUF_ROBOT_WAITTING_CLOSE_GATE;
                             robot.ShowText("FORBUF_ROBOT_WAITTING_CLOSE_GATE");
-
-
-
-
-
-
                         }
                         else if (resCmd == ResponseCommand.RESPONSE_ERROR)
                         {

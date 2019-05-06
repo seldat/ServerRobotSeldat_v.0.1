@@ -292,8 +292,6 @@ namespace SeldatMRMS.Management
                 //  robotLogOut.ShowTextTraffic(this.properties.Label + " =>" + TrafficBehaviorStateTracking + " " + robot.properties.Label);
             }
             // else if (robot.FindHeaderIntersectsRiskAreaTail(this.TopHeader()) || robot.FindHeaderIntersectsRiskAreaTail(this.MiddleHeader()) || robot.FindHeaderIntersectsRiskAreaTail(this.BottomHeader()))
-
-
             else if (robot.FindHeaderIntersectsRiskAreaTailCv(thCV) || robot.FindHeaderIntersectsRiskAreaTailCv(mhCV) || robot.FindHeaderIntersectsRiskAreaTailCv(bhCV) ||
                 robot.FindHeaderIntersectsRiskAreaTailCv(mhCV1) || robot.FindHeaderIntersectsRiskAreaTailCv(mhCV2) || robot.FindHeaderIntersectsRiskAreaTailCv(mhCV3))
             {
@@ -574,7 +572,6 @@ namespace SeldatMRMS.Management
             if (robot != null)
             {
                 return true;
-
             }
             else
             {
@@ -628,7 +625,6 @@ namespace SeldatMRMS.Management
             }
             if (_type == TypeZone.ROAD)
             {
-                
                 robotBahaviorAtAnyPlace = RobotBahaviorAtAnyPlace.ROBOT_PLACE_ROAD;
             }
             if (_type == TypeZone.BUFFER)
@@ -686,10 +682,9 @@ namespace SeldatMRMS.Management
                     // va chạm vòng tròn an toàn nhỏ ra quyết định ngưng robot
                     CheckIntersection(true);
                 }
-
                 else
                 {
-                    // kiểm tra có robot nào nằm trong vòng tròn và trạng thái đang là việc an toàn này kg?
+                    // kiểm tra có robot nào nằm trong vòng tròn và trạng thái đang làm việc an toàn này kg?
                     Point cB = CenterOnLineCv(Center_B);
                     if(r.robotTag==RobotStatus.WORKING)
                     {

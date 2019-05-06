@@ -435,6 +435,7 @@ namespace SeldatMRMS
         TrafficManagementService Traffic;
         public override event Action<Object> ReleaseProcedureHandler;
         private DeviceRegistrationService deviceService;
+        RobotManagementService robotService;
         // public override event Action<Object> ErrorProcedureHandler;
         public ProcedureRobotToReady(RobotUnity robot, ChargerId id, TrafficManagementService trafficService, ChargerManagementService chargerService) : base(robot)
         {
@@ -449,6 +450,10 @@ namespace SeldatMRMS
         public void Registry(DeviceRegistrationService deviceService)
         {
             this.deviceService = deviceService;
+        }
+        public void Registry(RobotManagementService robotService)
+        {
+            this.robotService = robotService;
         }
         public void Start(RobotGoToReady state = RobotGoToReady.ROBREA_ROBOT_GOTO_FRONTLINE_READYSTATION)
         {
@@ -501,7 +506,7 @@ namespace SeldatMRMS
                         // nếu robot đang đi về ready , trạng thái không phải để charge. Kiểm tra có còn task nếu còn thì tiếp tục đi nhận task khác
                         if(!robot.properties.RequestChargeBattery)
                         {
-                            if(DetermineHasTaskWaiting())
+                            if(DetermineHasTaskWaitingAnRobotAvailable())
                             {
                                 StateRobotGoToReady = RobotGoToReady.ROBREA_ROBOT_WAITINGREADY_FORCERELEASED;
                                 break;
@@ -576,7 +581,7 @@ namespace SeldatMRMS
             StateRobotGoToReady = RobotGoToReady.ROBREA_IDLE;
         }
         // xác định còn task trong order
-        public bool DetermineHasTaskWaiting()
+        public bool DetermineHasTaskWaitingAnRobotAvailable()
         {
             
             List<DeviceItem> deviceList = deviceService.GetDeviceItemList();
@@ -590,8 +595,14 @@ namespace SeldatMRMS
                         cntAmoutOrderItem++;
                     }
                 }
-                if (cntAmoutOrderItem >=3) // ít nhất phải có hơn 3 task đang chờ
-                    return true;
+                if (cntAmoutOrderItem >0) // ít nhất phải có hơn 3 task đang chờ
+                {
+                    if (robotService.RobotUnityWaitTaskList.Count > 0)
+                        return false;
+                    else
+                        return true;
+                }
+               
             }
             return false;
         }

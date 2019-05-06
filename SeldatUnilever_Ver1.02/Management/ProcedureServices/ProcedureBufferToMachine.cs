@@ -286,7 +286,6 @@ namespace SeldatMRMS
                         {
                             if (resCmd == ResponseCommand.RESPONSE_FINISH_GOBACK_FRONTLINE)
                             {
-
                                 robot.SwitchToDetectLine(false);
                                 robot.TurnOnCtrlSelfTraffic(true);
                                 resCmd = ResponseCommand.RESPONSE_NONE;
