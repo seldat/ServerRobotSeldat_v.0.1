@@ -264,8 +264,9 @@ namespace SeldatMRMS
                         }
                         else if (RetState.DOOR_CTRL_ERROR == ret)
                         {
-
+                            robot.ShowText("FORBUF_ROBOT_OPEN_DOOR_ERROR");
                             StateForkLift = ForkLift.FORBUF_ROBOT_CAME_GATE_POSITION;
+                            Thread.Sleep(50);
                         }
                         break;
                     case ForkLift.FORBUF_ROBOT_OPEN_DOOR_SUCCESS: // mo cua thang cong ,gui toa do line de robot di vao gap hang
@@ -307,7 +308,7 @@ namespace SeldatMRMS
                             CheckUserHandleError(this);
                         }
                         break;
-                    case ForkLift.FORBUF_ROBOT_WAITTING_CLOSE_GATE: // doi dong cong.
+                    case ForkLift.FORBUF_ROBOT_WAITTING_CLOSE_GATE: 
                         try
                         {
                             //if (true == ds.Close(DoorService.DoorType.DOOR_BACK))

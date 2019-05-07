@@ -182,7 +182,9 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                         }
                         else if (ret == RetState.DOOR_CTRL_ERROR)
                         {
+                            robot.ShowText("FORMACH_ROBOT_OPEN_DOOR_ERROR");
                             StateForkLiftToMachine = ForkLiftToMachine.FORMACH_ROBOT_CAME_GATE_POSITION;
+                            Thread.Sleep(50);
                         }
                         break;
                     case ForkLiftToMachine.FORMACH_ROBOT_OPEN_DOOR_SUCCESS: // mo cua thang cong ,gui toa do line de robot di vao gap hang

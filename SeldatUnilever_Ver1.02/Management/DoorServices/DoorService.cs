@@ -124,7 +124,7 @@ namespace DoorControllerService
         private StateCtrl stateCtrlDoor;
         private Stopwatch elapsedTime;
         private const UInt32 TIME_OUT_WAIT_DOOR_FRONT = 20000;
-        private const UInt32 TIME_OUT_WAIT_DOOR_BACK = 10000;
+        private const UInt32 TIME_OUT_WAIT_DOOR_BACK = 20000;
         private const UInt32 NUM_TRY_OPEN_DOOR = 10;
         private const UInt32 NUM_TRY_CLOSE_DOOR = 10;
         private UInt32 numTryOpen = 0;
@@ -181,7 +181,6 @@ namespace DoorControllerService
 
         public RetState checkOpen(DoorType type)
         {
-            RetState ret = RetState.DOOR_CTRL_WAITTING;
             switch (type)
             {
                 case DoorType.DOOR_FRONT:
@@ -191,6 +190,7 @@ namespace DoorControllerService
                     }
                     else if (this.stateCtrlDoor == StateCtrl.DOOR_ST_ERROR)
                     {
+                        Console.WriteLine("OPEN_DOOR_FRONT_ERROR");
                         return RetState.DOOR_CTRL_ERROR;
                     }
                     break;
@@ -201,18 +201,18 @@ namespace DoorControllerService
                     }
                     else if (this.stateCtrlDoor == StateCtrl.DOOR_ST_ERROR)
                     {
+                        Console.WriteLine("OPEN_DOOR_BACK_ERROR");
                         return RetState.DOOR_CTRL_ERROR;
                     }
                     break;
                 default:
                     break;
             }
-            return ret;
+            return RetState.DOOR_CTRL_WAITTING;
         }
 
         public RetState checkClose(DoorType type)
         {
-            RetState ret = RetState.DOOR_CTRL_WAITTING;
             switch (type)
             {
                 case DoorType.DOOR_FRONT:
@@ -222,6 +222,7 @@ namespace DoorControllerService
                     }
                     else if (this.stateCtrlDoor == StateCtrl.DOOR_ST_ERROR)
                     {
+                        Console.WriteLine("CLOSE_DOOR_FRONT_ERROR");
                         return RetState.DOOR_CTRL_ERROR;
                     }
                     break;
@@ -232,13 +233,14 @@ namespace DoorControllerService
                     }
                     else if (this.stateCtrlDoor == StateCtrl.DOOR_ST_ERROR)
                     {
+                        Console.WriteLine("CLOSE_DOOR_BACK_ERROR");
                         return RetState.DOOR_CTRL_ERROR;
                     }
                     break;
                 default:
                     break;
             }
-            return ret;
+            return RetState.DOOR_CTRL_WAITTING;
         }
 
         public void doorCtrlProcess(object ojb)
@@ -252,6 +254,7 @@ namespace DoorControllerService
 
                         break;
                     case StateCtrl.DOOR_ST_OPEN_FRONT:
+                        Console.WriteLine("DOOR_ST_OPEN_FRONT");
                         if (this.Open(DoorType.DOOR_FRONT))
                         {
                             this.elapsedTime.Start();
@@ -273,6 +276,7 @@ namespace DoorControllerService
                             this.elapsedTime.Stop();
                             this.stateCtrlDoor = StateCtrl.DOOR_ST_OPEN_FRONT;
                             this.numTryOpen++;
+                            Console.WriteLine("TIME_OUT_WAIT_OPEN_DOOR_FRONT");
                             if (this.numTryOpen >= NUM_TRY_OPEN_DOOR)
                             {
                                 this.numTryOpen = 0;
@@ -287,13 +291,16 @@ namespace DoorControllerService
                             {
                                 this.stateCtrlDoor = StateCtrl.DOOR_ST_OPEN_FRONT_SUCCESS;
                                 this.elapsedTime.Stop();
+                                Console.WriteLine("DOOR_ST_OPEN_FRONT_SUCCESS");
                             }
                         }
+                        Thread.Sleep(50);
                         break;
                     case StateCtrl.DOOR_ST_OPEN_FRONT_SUCCESS:
 
                         break;
                     case StateCtrl.DOOR_ST_CLOSE_DOOR_FRONT:
+                        Console.WriteLine("DOOR_ST_CLOSE_DOOR_FRONT");
                         if (this.Close(DoorType.DOOR_FRONT))
                         {
                             this.elapsedTime.Start();
@@ -315,6 +322,7 @@ namespace DoorControllerService
                             this.elapsedTime.Stop();
                             this.stateCtrlDoor = StateCtrl.DOOR_ST_CLOSE_DOOR_FRONT;
                             this.numTryClose++;
+                            Console.WriteLine("TIME_OUT_WAIT_CLOSE_DOOR_FRONT");
                             if (this.numTryClose >= NUM_TRY_CLOSE_DOOR)
                             {
                                 this.numTryClose = 0;
@@ -329,13 +337,16 @@ namespace DoorControllerService
                             {
                                 this.stateCtrlDoor = StateCtrl.DOOR_ST_CLOSE_DOOR_FRONT_SUCCESS;
                                 this.elapsedTime.Stop();
-                            }
+                                Console.WriteLine("DOOR_ST_CLOSE_DOOR_FRONT_SUCCESS");
+                            }                          
                         }
+                        Thread.Sleep(50);
                         break;
                     case StateCtrl.DOOR_ST_CLOSE_DOOR_FRONT_SUCCESS:
 
                         break;
                     case StateCtrl.DOOR_ST_OPEN_DOOR_BACK:
+                        Console.WriteLine("DOOR_ST_OPEN_DOOR_BACK");
                         if (this.Open(DoorType.DOOR_BACK))
                         {
                             this.elapsedTime.Start();
@@ -357,6 +368,7 @@ namespace DoorControllerService
                             this.elapsedTime.Stop();
                             this.stateCtrlDoor = StateCtrl.DOOR_ST_OPEN_DOOR_BACK;
                             this.numTryOpen++;
+                            Console.WriteLine("TIME_OUT_WAIT_OPEN_DOOR_BACK");
                             if (this.numTryOpen >= NUM_TRY_OPEN_DOOR)
                             {
                                 this.numTryOpen = 0;
@@ -371,13 +383,16 @@ namespace DoorControllerService
                             {
                                 this.stateCtrlDoor = StateCtrl.DOOR_ST_OPEN_DOOR_BACK_SUCCESS;
                                 this.elapsedTime.Stop();
+                                Console.WriteLine("DOOR_ST_OPEN_DOOR_BACK_SUCCESS");
                             }
                         }
+                        Thread.Sleep(50);
                         break;
                     case StateCtrl.DOOR_ST_OPEN_DOOR_BACK_SUCCESS:
 
                         break;
                     case StateCtrl.DOOR_ST_CLOSE_DOOR_BACK:
+                        Console.WriteLine("DOOR_ST_CLOSE_DOOR_BACK");
                         if (this.Close(DoorType.DOOR_BACK))
                         {
                             this.elapsedTime.Start();
@@ -399,6 +414,7 @@ namespace DoorControllerService
                             this.elapsedTime.Stop();
                             this.stateCtrlDoor = StateCtrl.DOOR_ST_CLOSE_DOOR_BACK;
                             this.numTryClose++;
+                            Console.WriteLine("TIME_OUT_WAIT_CLOSE_DOOR_BACK");
                             if (this.numTryClose >= NUM_TRY_CLOSE_DOOR)
                             {
                                 this.numTryClose = 0;
@@ -413,8 +429,10 @@ namespace DoorControllerService
                             {
                                 this.stateCtrlDoor = StateCtrl.DOOR_ST_CLOSE_DOOR_BACK_SUCCESS;
                                 this.elapsedTime.Stop();
+                                Console.WriteLine("DOOR_ST_CLOSE_DOOR_BACK_SUCCESS");
                             }
                         }
+                        Thread.Sleep(50);
                         break;
                     case StateCtrl.DOOR_ST_CLOSE_DOOR_BACK_SUCCESS:
 
@@ -425,7 +443,7 @@ namespace DoorControllerService
                     default:
                         break;
                 }
-                Thread.Sleep(25);
+                Thread.Sleep(50);
             }
         }
 
