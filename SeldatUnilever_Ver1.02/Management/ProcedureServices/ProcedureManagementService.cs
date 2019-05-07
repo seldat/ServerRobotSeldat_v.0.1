@@ -107,6 +107,7 @@ namespace SeldatMRMS
                     robot.proRegistryInRobot.pRR = procrr;
                     robot.ProcedureRobotAssigned = ProcedureControlAssign.PRO_READY;
                     procrr.Registry(deviceService);
+                    procrr.Registry(robotManagementService);
                     procrr.Start ();
                     break;
                 case ProcedureItemSelected.PROCEDURE_ROBOT_READY_TO_READY:

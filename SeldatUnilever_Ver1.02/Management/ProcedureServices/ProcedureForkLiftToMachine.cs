@@ -38,7 +38,6 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
         public void Start(ForkLiftToMachine state = ForkLiftToMachine.FORMACH_ROBOT_GOTO_CHECKIN_GATE)
         {
             errorCode = ErrorCode.RUN_OK;
-            robot.robotTag = RobotStatus.WORKING;
             robot.ProcedureAs = ProcedureControlAssign.PRO_FORKLIFT_TO_MACHINE;
             StateForkLiftToMachine = state;
             ProForkLiftToMachine = new Thread(this.Procedure);
@@ -81,6 +80,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                         {
                             if (false == robot.CheckInGateFromReadyZoneBehavior(ds.config.PointFrontLine.Position))
                             {
+                                robot.robotTag = RobotStatus.WORKING;
                                 if (rb.SendCmdPosPallet(RequestCommandPosPallet.REQUEST_GOBACK_FRONTLINE_TURN_LEFT))
                                 {
                                     Stopwatch sw = new Stopwatch();
@@ -117,6 +117,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                         }
                         else
                         {
+                            robot.robotTag = RobotStatus.WORKING;
                             if (Traffic.RobotIsInArea("OPA4", rb.properties.pose.Position))
                             {
                                 rb.SendPoseStamped(ds.config.PointFrontLine);

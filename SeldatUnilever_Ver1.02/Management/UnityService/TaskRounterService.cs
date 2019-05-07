@@ -268,7 +268,7 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
             }
             return palletId;
         }
-        public Pose CheckAvailableFrontLineReturn(OrderItem order)
+        public Pose CheckAvailableFrontLineReturn2(OrderItem order)
         {
 
             Pose poseTemp = null;
@@ -287,6 +287,40 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                 double y = (double)stuff["line"]["y"];
                 double angle = (double)stuff["line"]["angle"];
                 poseTemp = new Pose(x, y, angle);
+
+            }
+            return poseTemp;
+        }
+        public Pose CheckAvailableFrontLineReturn(OrderItem order)
+        {
+
+            Pose poseTemp = null;
+            dynamic product = new JObject();
+            product.palletStatus = PalletStatus.F.ToString();
+            String collectionData = RequestDataProcedure(product.ToString(), Global_Object.url + "buffer/getListBufferReturn");
+            if (collectionData.Length > 0)
+            {
+                JArray results = JArray.Parse(collectionData);
+                // var result = results[0];
+                //var bufferResults = result["buffers"][0];
+                foreach (var buffer in results)
+                {
+                    if (buffer["pallets"].Count() > 0)
+                    {
+                        var palletInfo = buffer["pallets"][0];
+                        JObject stuff = JObject.Parse((String)palletInfo["dataPallet"]);
+                        double x = (double)stuff["line"]["x"];
+                        double y = (double)stuff["line"]["y"];
+                        double angle = (double)stuff["line"]["angle"];
+                        poseTemp = new Pose(x, y, angle);
+                        break;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+
 
             }
             return poseTemp;

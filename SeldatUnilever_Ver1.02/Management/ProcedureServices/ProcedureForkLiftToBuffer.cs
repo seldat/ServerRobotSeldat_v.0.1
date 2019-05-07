@@ -66,7 +66,7 @@ namespace SeldatMRMS
         public void Start(ForkLift state = ForkLift.FORBUF_ROBOT_GOTO_CHECKIN_GATE)
         {
             // public void Start (ForkLiftToBuffer state = ForkLiftToBuffer.FORBUF_ROBOT_RELEASED) {
-            robot.robotTag = RobotStatus.WORKING;
+           
             errorCode = ErrorCode.RUN_OK;
             robot.ProcedureAs = ProcedureControlAssign.PRO_FORKLIFT_TO_BUFFER;
             StateForkLift = state;
@@ -146,6 +146,7 @@ namespace SeldatMRMS
                         {
                             if (false == robot.CheckInGateFromReadyZoneBehavior(ds.config.PointFrontLine.Position))
                             {
+                                robot.robotTag = RobotStatus.WORKING;
                                 if (rb.SendCmdPosPallet(RequestCommandPosPallet.REQUEST_GOBACK_FRONTLINE_TURN_LEFT))
 
 
@@ -185,27 +186,29 @@ namespace SeldatMRMS
 
                                 }
                             }
+                        }
+                        else
+                        {
+                            robot.robotTag = RobotStatus.WORKING;
+                            if (Traffic.RobotIsInArea("OPA4", rb.properties.pose.Position))
+                            {
+                                if (rb.SendPoseStamped(ds.config.PointFrontLine))
+                                {
+                                    StateForkLift = ForkLift.FORBUF_ROBOT_CAME_CHECKIN_GATE;
+                                    robot.ShowText("FORBUF_ROBOT_CAME_CHECKIN_GATE");
+                                }
+                            }
                             else
                             {
-                                if (Traffic.RobotIsInArea("OPA4", rb.properties.pose.Position))
-                                {
-                                    if (rb.SendPoseStamped(ds.config.PointFrontLine))
-                                    {
-                                        StateForkLift = ForkLift.FORBUF_ROBOT_CAME_CHECKIN_GATE;
-                                        robot.ShowText("FORBUF_ROBOT_CAME_CHECKIN_GATE");
-                                    }
-                                }
-                                else
-                                {
 
-                                    if (rb.SendPoseStamped(ds.config.PointCheckInGate))
-                                    {
-                                        StateForkLift = ForkLift.FORBUF_ROBOT_WAITTING_GOTO_CHECKIN_GATE;
-                                        robot.ShowText("FORBUF_ROBOT_WAITTING_GOTO_CHECKIN_GATE");
-                                    }
+                                if (rb.SendPoseStamped(ds.config.PointCheckInGate))
+                                {
+                                    StateForkLift = ForkLift.FORBUF_ROBOT_WAITTING_GOTO_CHECKIN_GATE;
+                                    robot.ShowText("FORBUF_ROBOT_WAITTING_GOTO_CHECKIN_GATE");
                                 }
                             }
                         }
+                 
                             break;
                         
                 

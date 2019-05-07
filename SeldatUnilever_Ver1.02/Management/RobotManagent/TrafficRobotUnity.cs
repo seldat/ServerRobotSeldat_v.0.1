@@ -46,10 +46,11 @@ namespace SeldatMRMS.Management
         }
         public enum RobotStatus
         {
+            IDLE,
             WORKING,
             CHARGING,
-            READY,
-            IDLE
+            READY
+
         }
         public class RobotRegistryToWorkingZone
         {
@@ -129,6 +130,7 @@ namespace SeldatMRMS.Management
         private const double DistanceToSetNormalSpeed = 12; // sau khi dừng robot phai doi khoan cach len duoc tren 8m thi robot bat dau hoat dong lai bình thuong 12m
         public RobotRegistryToWorkingZone robotRegistryToWorkingZone;
         public RobotStatus robotTag;
+        public String STATE_SPEED = "";
         public TrafficRobotUnity() : base()
         {
             TurnOnSupervisorTraffic(false);
@@ -136,10 +138,11 @@ namespace SeldatMRMS.Management
             RobotUnitylist = new List<RobotUnity>();
             prioritLevel = new PriorityLevel();
             robotRegistryToWorkingZone = new RobotRegistryToWorkingZone();
+            robotTag = RobotStatus.IDLE;
 
 
-        }
-        public void StartTraffic()
+    }
+    public void StartTraffic()
         {
             new Thread(TrafficUpdate).Start();
 
@@ -177,18 +180,20 @@ namespace SeldatMRMS.Management
                             // bool onTouch= FindHeaderIntersectsFullRiskArea(this.TopHeader()) | FindHeaderIntersectsFullRiskArea(this.MiddleHeader()) | FindHeaderIntersectsFullRiskArea(this.BottomHeader());
                             // bool onTouch = r.FindHeaderIntersectsFullRiskAreaCv(thCV) | r.FindHeaderIntersectsFullRiskAreaCv(mdCV) | r.FindHeaderIntersectsFullRiskAreaCv(bhCV);
 
-                            bool onTouch0 = r.FindHeaderInsideCircleArea(mdCV0, 2 * r.Radius_S);
-                            bool onTouch1 = r.FindHeaderInsideCircleArea(mdCV1, 2 * r.Radius_S);
-                            bool onTouch2 = r.FindHeaderInsideCircleArea(mdCV2, 2 * r.Radius_S);
+                            bool onTouch0 = r.FindHeaderInsideCircleArea(mdCV0,  r.Radius_S);
+                            bool onTouch1 = r.FindHeaderInsideCircleArea(mdCV1,  r.Radius_S);
+                            bool onTouch2 = r.FindHeaderInsideCircleArea(mdCV2,  r.Radius_S);
                             if (onTouch0 || onTouch1 || onTouch2)
                             {
                                 //  robotLogOut.ShowTextTraffic(r.properties.Label+" => CheckIntersection");
+                                STATE_SPEED = "CKSECTION_STOP"+ r.properties.Label;
                                 SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
                                 robot = r;
                                 break;
                             }
                             else
                             {
+                                STATE_SPEED = "CKSECTION_NORMAL"+ r.properties.Label;
                                 SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
                             }
                         }
@@ -643,11 +648,15 @@ namespace SeldatMRMS.Management
                     SetSafeYellowcircle(false);*/
                     if (CheckYellowCircle())
                     {
-                        SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
+                       
+                        //SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
                     }
                     else
                     {
                         // mở vòng tròn nhỏ vá kiểm tra va chạm
+                        SetSafeSmallcircle(true);
+                        SetSafeBluecircle(false);
+                        SetSafeYellowcircle(false);
                         CheckIntersection(true);
                     }
                     break;
@@ -690,18 +699,21 @@ namespace SeldatMRMS.Management
                     {
                         if (FindHeaderInsideCircleArea(r.MiddleHeaderCv(), cB, Radius_B))
                         {
+                            STATE_SPEED = "BLUEC_STOP";
                             SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
                             break;
                         }
                         else
                         {
+                            STATE_SPEED = "BLUEC_NORMAL";
                             SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
                         }
 
                     }
                     else
                     {
-                            SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
+                        STATE_SPEED = "BLUEC_NORMAL";
+                        SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
                     }
                 }
             }
@@ -717,6 +729,7 @@ namespace SeldatMRMS.Management
                     Point cY = CenterOnLineCv(Center_Y);
                     if (r.FindHeaderInsideCircleArea(MiddleHeaderCv(), cY, Radius_Y))
                     {
+                        STATE_SPEED = "YELLOWC_STOP";
                         SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
                         flagInsideYellowCircle = true;
                         break;

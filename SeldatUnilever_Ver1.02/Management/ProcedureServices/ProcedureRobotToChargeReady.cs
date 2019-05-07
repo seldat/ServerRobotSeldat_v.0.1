@@ -595,7 +595,7 @@ namespace SeldatMRMS
                         cntAmoutOrderItem++;
                     }
                 }
-                if (cntAmoutOrderItem >0) // ít nhất phải có hơn 3 task đang chờ
+                if (cntAmoutOrderItem >0) //
                 {
                     if (robotService.RobotUnityWaitTaskList.Count > 0)
                         return false;

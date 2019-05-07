@@ -393,8 +393,14 @@ namespace SeldatMRMS.Management.RobotManagent
                     "Radius _S" + Radius_S + Environment.NewLine +
                     "Radius _Y" + Radius_Y + Environment.NewLine +
                     "Radius _B" + Radius_B + Environment.NewLine +
-                    "Speed Set :"+ properties.speedInSpecicalArea;
-                ;
+                    "Speed Set :" + properties.speedInSpecicalArea + Environment.NewLine +
+                    "STATE: " + STATE_SPEED + Environment.NewLine +
+                    "MIDDLE :" + MiddleHeaderCv().X.ToString("0.00") + " /" + MiddleHeaderCv().Y.ToString("0.00") + Environment.NewLine+
+                    "MIDDLE1 :" + MiddleHeaderCv1().X.ToString("0.00") + " /" + MiddleHeaderCv1().Y.ToString("0.00") + Environment.NewLine+
+                    "MIDDLE2 :" + MiddleHeaderCv2().X.ToString("0.00") + " /" + MiddleHeaderCv2().Y.ToString("0.00") + Environment.NewLine +
+                    "ValueR SC:" + valueSC+ Environment.NewLine +
+                    "ValueR BigC:" + valueBigC + Environment.NewLine+
+                    "RobotTag:" + robotTag + Environment.NewLine;
             }
             catch { }
         }

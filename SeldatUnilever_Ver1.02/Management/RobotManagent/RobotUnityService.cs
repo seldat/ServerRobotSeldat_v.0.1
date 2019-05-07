@@ -339,10 +339,13 @@ namespace SeldatMRMS.Management.RobotManagent
         {
             return new Point((BottomHeaderCenterCv(dc).X + TopHeaderCenterCv(dc).X) / 2.0, (BottomHeaderCenterCv(dc).Y + TopHeaderCenterCv(dc).Y) / 2.0);
         }
+        public String valueSC = "";
+        public String valueBigC = "";
         public bool FindHeaderInsideCircleArea(Point pheader, double r)
         {
             Point ccPoint = Global_Object.CoorCanvas(properties.pose.Position);
             double leftSideEq = (pheader.X - ccPoint.X) * (pheader.X - ccPoint.X) + (pheader.Y - ccPoint.Y) * (pheader.Y - ccPoint.Y);
+            valueSC = Math.Sqrt(leftSideEq)+"";
             if (Math.Sqrt(leftSideEq) <= r)
                 return true;
             else
@@ -352,6 +355,7 @@ namespace SeldatMRMS.Management.RobotManagent
         {
             Point ccPoint = Global_Object.CoorCanvas(properties.pose.Position);
             double leftSideEq = (pheader.X - center.X) * (pheader.X - center.X) + (pheader.Y - center.Y) * (pheader.Y - center.Y);
+            valueBigC = Math.Sqrt(leftSideEq) + "";
             if (Math.Sqrt(leftSideEq) <= r)
                 return true;
             else

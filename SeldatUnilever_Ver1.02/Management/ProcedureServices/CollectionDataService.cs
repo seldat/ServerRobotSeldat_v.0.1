@@ -412,14 +412,14 @@ namespace SelDatUnilever_Ver1
         public Pose GetCheckInReturn()
         {
             dynamic product = new JObject();
-            product.palletStatus = order.palletStatus;
+            product.palletStatus = PalletStatus.F.ToString();
             Pose poseTemp = null;
             String collectionData = RequestDataProcedure(product.ToString(), Global_Object.url + "buffer/getListBufferReturn");
             if (collectionData.Length > 0)
             {
                 JArray results = JArray.Parse(collectionData);
-                var result = results[0];
-                foreach (var buffer in result["buffers"])
+               // var result = results[0];
+                foreach (var buffer in results)
                 {
                     if (buffer["pallets"].Count() > 0)
                     {
@@ -447,14 +447,14 @@ namespace SelDatUnilever_Ver1
 
             Pose poseTemp = null;
             dynamic product = new JObject();
-            product.palletStatus = order.palletStatus;
+            product.palletStatus = PalletStatus.F.ToString();
             String collectionData = RequestDataProcedure(product.ToString(), Global_Object.url + "buffer/getListBufferReturn");
             if (collectionData.Length > 0)
             {
                 JArray results = JArray.Parse(collectionData);
-                var result = results[0];
+               // var result = results[0];
                 //var bufferResults = result["buffers"][0];
-                foreach (var buffer in result["buffers"])
+                foreach (var buffer in results)
                 {
                     if (buffer["pallets"].Count() > 0)
                     {
@@ -602,13 +602,13 @@ namespace SelDatUnilever_Ver1
             JInfoPallet infoPallet = new JInfoPallet();
 
             dynamic product = new JObject();
-            product.palletStatus = order.palletStatus;
+            product.palletStatus = PalletStatus.F.ToString();
             String collectionData = RequestDataProcedure(product.ToString(), Global_Object.url + "buffer/getListBufferReturn");
             if (collectionData.Length > 0)
             {
                 JArray results = JArray.Parse(collectionData);
-                var result = results[0];
-                foreach (var buffer in result["buffers"])
+              //  var result = results[0];
+                foreach (var buffer in results)
                 {
                     if (buffer["pallets"].Count() > 0)
                     {
