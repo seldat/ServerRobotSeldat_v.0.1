@@ -246,6 +246,7 @@ namespace DoorControllerService
         public void doorCtrlProcess(object ojb)
         {
             DoorService dS = (DoorService)ojb;
+            this.elapsedTime.Start();
             while (true)
             {
                 switch (this.stateCtrlDoor)
@@ -257,7 +258,7 @@ namespace DoorControllerService
                         Console.WriteLine("DOOR_ST_OPEN_FRONT");
                         if (this.Open(DoorType.DOOR_FRONT))
                         {
-                            this.elapsedTime.Start();
+                            this.elapsedTime.Restart();
                             this.stateCtrlDoor = StateCtrl.DOOR_ST_WAITTING_OPEN_DOOR_FRONT;
                         }
                         else
@@ -303,7 +304,7 @@ namespace DoorControllerService
                         Console.WriteLine("DOOR_ST_CLOSE_DOOR_FRONT");
                         if (this.Close(DoorType.DOOR_FRONT))
                         {
-                            this.elapsedTime.Start();
+                            this.elapsedTime.Restart();
                             this.stateCtrlDoor = StateCtrl.DOOR_ST_WAITTING_CLOSE_DOOR_FRONT;
                         }
                         else
@@ -349,7 +350,7 @@ namespace DoorControllerService
                         Console.WriteLine("DOOR_ST_OPEN_DOOR_BACK");
                         if (this.Open(DoorType.DOOR_BACK))
                         {
-                            this.elapsedTime.Start();
+                            this.elapsedTime.Restart();
                             this.stateCtrlDoor = StateCtrl.DOOR_ST_WAITTING_OPEN_DOOR_BACK;
                         }
                         else
@@ -395,7 +396,7 @@ namespace DoorControllerService
                         Console.WriteLine("DOOR_ST_CLOSE_DOOR_BACK");
                         if (this.Close(DoorType.DOOR_BACK))
                         {
-                            this.elapsedTime.Start();
+                            this.elapsedTime.Restart();
                             this.stateCtrlDoor = StateCtrl.DOOR_ST_WAITTING_CLOSE_DOOR_BACK;
                         }
                         else
