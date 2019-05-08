@@ -465,8 +465,8 @@ namespace SeldatMRMS.Management.RobotManagent
                 Radius_B = 4 * properties.Scale;
                 Radius_Y = 4 * properties.Scale;
                 Center_S = 0;
-                Center_B = 2 * properties.Scale;
-                Center_Y = 2 * properties.Scale;
+                Center_B = 3 * properties.Scale;
+                Center_Y = 3 * properties.Scale;
                 SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
             }
         }

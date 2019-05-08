@@ -139,9 +139,10 @@ namespace SeldatMRMS.Management
             prioritLevel = new PriorityLevel();
             robotRegistryToWorkingZone = new RobotRegistryToWorkingZone();
             robotTag = RobotStatus.IDLE;
+           //robotTag = RobotStatus.WORKING;
 
 
-    }
+        }
     public void StartTraffic()
         {
             new Thread(TrafficUpdate).Start();
@@ -177,13 +178,14 @@ namespace SeldatMRMS.Management
                             Point mdCV1 = MiddleHeaderCv1();
                             Point mdCV2 = MiddleHeaderCv2();
                             Point bhCV = BottomHeaderCv();
+                            Point Rp = Global_Object.CoorCanvas(this.properties.pose.Position);
                             // bool onTouch= FindHeaderIntersectsFullRiskArea(this.TopHeader()) | FindHeaderIntersectsFullRiskArea(this.MiddleHeader()) | FindHeaderIntersectsFullRiskArea(this.BottomHeader());
                             // bool onTouch = r.FindHeaderIntersectsFullRiskAreaCv(thCV) | r.FindHeaderIntersectsFullRiskAreaCv(mdCV) | r.FindHeaderIntersectsFullRiskAreaCv(bhCV);
-
+                            bool onTouchR = r.FindHeaderInsideCircleArea(Rp, r.Radius_S);
                             bool onTouch0 = r.FindHeaderInsideCircleArea(mdCV0,  r.Radius_S);
                             bool onTouch1 = r.FindHeaderInsideCircleArea(mdCV1,  r.Radius_S);
                             bool onTouch2 = r.FindHeaderInsideCircleArea(mdCV2,  r.Radius_S);
-                            if (onTouch0 || onTouch1 || onTouch2)
+                            if (onTouchR || onTouch0 || onTouch1 || onTouch2)
                             {
                                 //  robotLogOut.ShowTextTraffic(r.properties.Label+" => CheckIntersection");
                                 STATE_SPEED = "CKSECTION_STOP"+ r.properties.Label;
@@ -697,15 +699,15 @@ namespace SeldatMRMS.Management
                     Point cB = CenterOnLineCv(Center_B);
                     if(r.robotTag==RobotStatus.WORKING)
                     {
-                        if (FindHeaderInsideCircleArea(r.MiddleHeaderCv(), cB, Radius_B))
+                         if (FindHeaderInsideCircleArea(r.MiddleHeaderCv(), cB, Radius_B) || FindHeaderInsideCircleArea(Global_Object.CoorCanvas(r.properties.pose.Position), cB, Radius_B))
                         {
-                            STATE_SPEED = "BLUEC_STOP";
+                            STATE_SPEED = "BLUEC_STOP"+ r.properties.Label;
                             SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
                             break;
                         }
                         else
                         {
-                            STATE_SPEED = "BLUEC_NORMAL";
+                            STATE_SPEED = "BLUEC_NORMAL" + r.properties.Label;
                             SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
                         }
 
@@ -727,7 +729,7 @@ namespace SeldatMRMS.Management
                 if (r.onFlagSafeYellowcircle)
                 {
                     Point cY = CenterOnLineCv(Center_Y);
-                    if (r.FindHeaderInsideCircleArea(MiddleHeaderCv(), cY, Radius_Y))
+                    if (r.FindHeaderInsideCircleArea(MiddleHeaderCv(), cY, Radius_Y) )
                     {
                         STATE_SPEED = "YELLOWC_STOP";
                         SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
