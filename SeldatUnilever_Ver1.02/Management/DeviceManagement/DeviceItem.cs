@@ -249,7 +249,7 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine("control lamp failed");
+                        Console.WriteLine("control lamp failed"+e);
                     }
                 }
                 if (typeReq == (int)TyeRequest.TYPEREQUEST_FORLIFT_TO_MACHINE)

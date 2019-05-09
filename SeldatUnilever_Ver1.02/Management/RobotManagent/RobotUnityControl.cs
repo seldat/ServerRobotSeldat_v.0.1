@@ -709,7 +709,6 @@ namespace SeldatMRMS.Management.RobotManagent
                         {
                             return false;
                         }
-                     return true;
                     }
                     catch {
                     Console.WriteLine("Error Send SendCmdAreaPallet");
