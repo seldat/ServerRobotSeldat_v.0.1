@@ -5,6 +5,7 @@ using SelDatUnilever_Ver1._00.Management;
 using SelDatUnilever_Ver1._00.Management.ChargerCtrl;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Timers;
 using System.Windows;
 using System.Windows.Media;
@@ -26,6 +27,15 @@ namespace SeldatMRMS.Management.RobotManagent
         public RobotLogOut robotLogOut;
         public bool onFlagDetectLine = false;
         private const float delBatterry = 2;
+        public enum ResponseCtrl
+        {
+            RESPONSE_NONE = 0,
+            RESPONSE_POS_PALLET = 3216,
+            RESPONSE_AREA_PALLET = 3217,
+            RESPONSE_ROBOT_NAVIGATION = 3218,
+            RESPONSE_LINE_CTRL = 3219
+        }
+       public static ResponseCtrl respCtrlCallBack { get; set; }
         public class Pose
         {
             public Pose(Point p, double Angle) // Angle gốc
@@ -283,11 +293,14 @@ namespace SeldatMRMS.Management.RobotManagent
             int subscription_robotInfo = this.Subscribe ("/amcl_pose", "geometry_msgs/PoseWithCovarianceStamped", AmclPoseHandler,100);
             paramsRosSocket.publication_ctrlrobotdriving = this.Advertise ("/ctrlRobotDriving", "std_msgs/Int32");
             int subscription_finishedStates = this.Subscribe ("/finishedStates", "std_msgs/Int32", FinishedStatesHandler,100);
-            paramsRosSocket.publication_robotnavigation = this.Advertise ("/robot_navigation", "geometry_msgs/PoseStamped");
             paramsRosSocket.publication_checkAliveTimeOut = this.Advertise ("/checkAliveTimeOut", "std_msgs/Int32");
-            paramsRosSocket.publication_linedetectionctrl = this.Advertise ("/linedetectionctrl", "std_msgs/Int32");
-            paramsRosSocket.publication_postPallet = this.Advertise ("/pospallet", "std_msgs/Int32");
-            paramsRosSocket.publication_cmdAreaPallet = this.Advertise ("/cmdAreaPallet", "std_msgs/String");
+
+            int subscription_respCtrlCallBack = this.Subscribe("/respCtrl", "std_msgs/Int32", ResponseCtrlHandler, 100);
+            paramsRosSocket.publication_linedetectionctrl = this.Advertise("/linedetectionctrl_servercallback", "std_msgs/Int32");
+            paramsRosSocket.publication_postPallet = this.Advertise ("/pospallet_servercallback", "std_msgs/Int32");
+            paramsRosSocket.publication_cmdAreaPallet = this.Advertise ("/cmdAreaPallet_servercallback", "std_msgs/String");
+            paramsRosSocket.publication_robotnavigation = this.Advertise("/robot_navigation", "geometry_msgs/PoseStamped");
+
             paramsRosSocket.publication_killpid = this.Advertise("/key_press", "std_msgs/String");
             float subscription_publication_batteryvol = this.Subscribe ("/battery_vol", "std_msgs/Int32", BatteryVolHandler);
             int subscription_AGV_LaserError = this.Subscribe ("/stm_error", "std_msgs/String", AGVLaserErrorHandler);
@@ -349,6 +362,22 @@ namespace SeldatMRMS.Management.RobotManagent
             }
 
         }
+        private void ResponseCtrlHandler(Communication.Message message)
+        {
+            try
+            {
+                StandardInt32 standard = (StandardInt32)message;
+                robotLogOut.ShowText(this.properties.Label, "ResponseCtrl [" + standard.data + "]");
+                respCtrlCallBack = (ResponseCtrl)standard.data;
+
+            }
+            catch
+            {
+                Console.WriteLine(" Error FinishedStatesHandler");
+            }
+
+        }
+        
         private void OdometryCallback(Communication.Message message)
         {
             NavigationOdometry standard = (NavigationOdometry)message;
@@ -432,6 +461,21 @@ namespace SeldatMRMS.Management.RobotManagent
             // AGVLaserWarningCallBack (war);*/
         }
 
+        public bool CheckResponseTimeOut(ResponseCtrl value)
+        {
+            respCtrlCallBack = ResponseCtrl.RESPONSE_NONE;
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            bool responsed = false;
+            System.Threading.Thread.Sleep(5000);
+            if (respCtrlCallBack == value)
+            {
+                responsed = true;
+            }
+            robotLogOut.ShowText(this.properties.Label, "CheckResponseTimeOut= " + respCtrlCallBack + " " + responsed);
+            respCtrlCallBack = ResponseCtrl.RESPONSE_NONE;
+            return responsed;
+        }
         public void TestLaserError (String cmd) {
             StandardString msg = new StandardString ();
             msg.data = cmd;
@@ -491,6 +535,15 @@ namespace SeldatMRMS.Management.RobotManagent
                     gx = data.pose.position.x;
                     gy = data.pose.position.y;
 
+                   if(CheckResponseTimeOut(ResponseCtrl.RESPONSE_ROBOT_NAVIGATION))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
                     return true;
                 }
                 else
@@ -531,6 +584,15 @@ namespace SeldatMRMS.Management.RobotManagent
                 this.Publish(paramsRosSocket.publication_linedetectionctrl, msg);
                 robotLogOut.ShowText(this.properties.Label, "SendCmdLineDetectionCtrl => " + msg.data);
 
+                if (CheckResponseTimeOut(ResponseCtrl.RESPONSE_LINE_CTRL))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
                 return true;
             }
             catch {
@@ -546,7 +608,14 @@ namespace SeldatMRMS.Management.RobotManagent
                 msg.data = Convert.ToInt32(cmd);
                 this.Publish(paramsRosSocket.publication_postPallet, msg);
                 robotLogOut.ShowText(this.properties.Label, "SendCmdPosPallet => " + msg.data);
-
+               if (CheckResponseTimeOut(ResponseCtrl.RESPONSE_POS_PALLET))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
                 return true;
             }
             catch {
@@ -632,7 +701,15 @@ namespace SeldatMRMS.Management.RobotManagent
                         Console.WriteLine(cmd);
                         this.Publish(paramsRosSocket.publication_cmdAreaPallet, msg);
                         robotLogOut.ShowText(this.properties.Label, "SendCmdAreaPallet => " + msg.data);
-                        return true;
+                        if (CheckResponseTimeOut(ResponseCtrl.RESPONSE_AREA_PALLET))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                     return true;
                     }
                     catch {
                     Console.WriteLine("Error Send SendCmdAreaPallet");

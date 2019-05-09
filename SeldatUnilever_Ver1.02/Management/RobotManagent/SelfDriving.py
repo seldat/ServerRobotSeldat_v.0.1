@@ -26,6 +26,10 @@ class ResponseStatus(Enum):
     	RESPONSE_FINISH_TURN_RIGHT = 3211;
     	RESPONSE_FINISH_GOBACK_FRONTLINE = 3213;
     	RESPONSE_ERROR = 3215;
+	RESPONSE_POS_PALLET=3216;
+	RESPONSE_AREA_PALLET = 3217;
+	RESPONSE_ROBOT_NAVIGATION = 3218;
+	RESPONSE_LINE_CTRL = 3219;
 class CallErrorLineDetect(Enum):
 	CallERROR_LINEDETECTION=4205;
 class SelfDriving():
@@ -62,6 +66,7 @@ class SelfDriving():
 		self.pub=rospy.Publisher('chatter', String, queue_size=10)
 		self.pub_navigation_setgoal=rospy.Publisher('/move_base_simple/goal',PoseStamped,queue_size=100);
 		self.pub_FinishedStates=rospy.Publisher('finishedStates', Int32, queue_size=100);
+
 		rospy.Subscriber('/robot_navigation',PoseStamped,self.moveBaseSimple_goal,queue_size=100);
 		#rospy.Subscriber('battery_vol',UInt32,self.batterysub_callback,queue_size=100);
 		rospy.Subscriber('linedetectioncallback',Int32,self.LineDetection_callback,queue_size=1);
@@ -69,6 +74,15 @@ class SelfDriving():
 		rospy.Subscriber('odom',Odometry,self.odometry_callback,queue_size=100);
 		rospy.Subscriber('move_base/status',GoalStatusArray,self.reachedGoal_Callback,queue_size=100);
 		rospy.Subscriber('goalConfirm',Vector3,self.goalConfirmCallBack,queue_size=10)
+
+		self.pub_respCtrl=rospy.Publisher('respCtrl', Int32, queue_size=100);
+		rospy.Subscriber('linedetectionctrl_servercallback',Int32,self.Linedetectionctrl_Servercallback,queue_size=1);
+		rospy.Subscriber('pospallet_servercallback',Int32,self.Pospallet_Servercallback,queue_size=1);
+		rospy.Subscriber('cmdAreaPallet_servercallback',String,self.CmdAreaPallet_Servercallback,queue_size=1);
+		
+		self.pub_linedetectionctrl=rospy.Publisher('linedetectionctrl', Int32, queue_size=10)
+		self.pub_pospallet=rospy.Publisher('pospallet', Int32, queue_size=10)
+		self.pub_cmdAreaPallet=rospy.Publisher('cmdAreaPallet', String, queue_size=10)
 	
 	def spin(self):
 	        self.r = rospy.Rate(self.rate)
@@ -103,6 +117,7 @@ class SelfDriving():
 			self.currentgoal_x = msg.x
 			self.currentgoal_y = msg.y		
 			self.fnewGoal = True
+			self.pub_respCtrl.publish(ResponseStatus.RESPONSE_ROBOT_NAVIGATION.value);
 	# 		self.dataGoalConfirm = self.Point(msg.x,msg.y,msg.z).__dict__
 	# 		self.fgoalConfirm = True
 		except:
@@ -112,7 +127,6 @@ class SelfDriving():
 		numctrl=cmd.value
 		self.pub_linedetectionctrl.publish(numctrl);
 	def pubFinishedStates(self,state):
-		#print(state)
 		self.pub_FinishedStates.publish(state);
 	def moveBaseSimple_goal(self,pose):
 		#self.currentgoal_x=pose.pose.position.x;
@@ -121,6 +135,21 @@ class SelfDriving():
 		#self.currentgoal_w=pose.pose.orientation.w;
 		#print(pose);
 		self.pub_navigation_setgoal.publish(pose);
+	def Linedetectionctrl_Servercallback(self,msg):
+		self.pub_linedetectionctrl.publish(msg);
+		value=ResponseStatus.RESPONSE_LINE_CTRL.value
+		self.pub_respCtrl.publish(value);
+	def Pospallet_Servercallback(self,msg):
+		self.pub_pospallet.publish(msg);
+                value=ResponseStatus.RESPONSE_POS_PALLET.value
+		print(value)
+		self.pub_respCtrl.publish(value);
+	def CmdAreaPallet_Servercallback(self,msg):
+		self.pub_cmdAreaPallet.publish(msg);
+                value=ResponseStatus.RESPONSE_AREA_PALLET.value
+		self.pub_respCtrl.publish(ResponseStatus.RESPONSE_AREA_PALLET.value);
+		
+
 	def LineDetection_callback(self,msg):
 		self.pubFinishedStates(msg.data);
 	def reachedGoal_Callback(self,msg):

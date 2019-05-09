@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static SeldatMRMS.Management.RobotManagent.RobotUnityControl;
 
 namespace SeldatUnilever_Ver1._02
 {
@@ -31,21 +33,36 @@ namespace SeldatUnilever_Ver1._02
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             rms.RobotUnityRegistedList.ElementAt(0).Value.FinishedStatesPublish(2000);
-        }
+            new Thread(()=>{
+                rms.RobotUnityRegistedList.ElementAt(2).Value.SendCmdLineDetectionCtrl(RequestCommandLineDetect.REQUEST_LINEDETECT_PALLETUP);
+        }).Start();
+            }
 
         private void CmdPalletUp_Click(object sender, RoutedEventArgs e)
         {
             rms.RobotUnityRegistedList.ElementAt(0).Value.FinishedStatesPublish(3203);
+            new Thread(() => {
+                rms.RobotUnityRegistedList.ElementAt(2).Value.SendCmdAreaPallet("hello kh");
+            }).Start();
+            
         }
 
         private void CmdPalletDown_Click(object sender, RoutedEventArgs e)
         {
             rms.RobotUnityRegistedList.ElementAt(0).Value.FinishedStatesPublish(3204);
-        }
+
+            new Thread(() => {
+                rms.RobotUnityRegistedList.ElementAt(2).Value.SendCmdPosPallet(RequestCommandPosPallet.REQUEST_FORWARD_DIRECTION);
+
+            }).Start();
+}
 
         private void CmdBackFrontLine_Click(object sender, RoutedEventArgs e)
         {
             rms.RobotUnityRegistedList.ElementAt(0).Value.FinishedStatesPublish(3213);
+            new Thread(() => {
+                rms.RobotUnityRegistedList.ElementAt(2).Value.SendPoseStamped(new Pose());
+            }).Start();
         }
 
         private void CmdBatLevel_Click(object sender, RoutedEventArgs e)
