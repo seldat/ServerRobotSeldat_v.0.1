@@ -142,7 +142,7 @@ class SelfDriving():
 	def Pospallet_Servercallback(self,msg):
 		self.pub_pospallet.publish(msg);
                 value=ResponseStatus.RESPONSE_POS_PALLET.value
-		print(value)
+#		print(value)
 		self.pub_respCtrl.publish(value);
 	def CmdAreaPallet_Servercallback(self,msg):
 		self.pub_cmdAreaPallet.publish(msg);

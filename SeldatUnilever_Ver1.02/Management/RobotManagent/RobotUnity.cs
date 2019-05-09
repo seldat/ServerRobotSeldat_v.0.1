@@ -494,6 +494,7 @@ namespace SeldatMRMS.Management.RobotManagent
             robotService.RemoveRobotUnityReadyList(this);
             robotService.RemoveRobotUnityWaitTaskList(this);
             robotRegistryToWorkingZone.Release();
+            robotTag = RobotStatus.IDLE;
             setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_DISCONNECT);
             Radius_S =0;
             Radius_B = 0;
