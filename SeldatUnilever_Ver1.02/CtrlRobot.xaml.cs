@@ -32,36 +32,36 @@ namespace SeldatUnilever_Ver1._02
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            rms.RobotUnityRegistedList.ElementAt(0).Value.FinishedStatesPublish(2000);
+           // rms.RobotUnityRegistedList.ElementAt(0).Value.FinishedStatesPublish(2000);
             new Thread(()=>{
-                rms.RobotUnityRegistedList.ElementAt(2).Value.SendCmdLineDetectionCtrl(RequestCommandLineDetect.REQUEST_LINEDETECT_PALLETUP);
+                rms.RobotUnityRegistedList.ElementAt(0).Value.SendCmdLineDetectionCtrl(RequestCommandLineDetect.REQUEST_LINEDETECT_PALLETUP);
         }).Start();
             }
 
         private void CmdPalletUp_Click(object sender, RoutedEventArgs e)
         {
-            rms.RobotUnityRegistedList.ElementAt(0).Value.FinishedStatesPublish(3203);
+           // rms.RobotUnityRegistedList.ElementAt(0).Value.FinishedStatesPublish(3203);
             new Thread(() => {
-                rms.RobotUnityRegistedList.ElementAt(2).Value.SendCmdAreaPallet("hello kh");
+                rms.RobotUnityRegistedList.ElementAt(0).Value.SendCmdAreaPallet("hello kh");
             }).Start();
             
         }
 
         private void CmdPalletDown_Click(object sender, RoutedEventArgs e)
         {
-            rms.RobotUnityRegistedList.ElementAt(0).Value.FinishedStatesPublish(3204);
+           // rms.RobotUnityRegistedList.ElementAt(0).Value.FinishedStatesPublish(3204);
 
             new Thread(() => {
-                rms.RobotUnityRegistedList.ElementAt(2).Value.SendCmdPosPallet(RequestCommandPosPallet.REQUEST_FORWARD_DIRECTION);
+                rms.RobotUnityRegistedList.ElementAt(0).Value.SendCmdPosPallet(RequestCommandPosPallet.REQUEST_FORWARD_DIRECTION);
 
             }).Start();
 }
 
         private void CmdBackFrontLine_Click(object sender, RoutedEventArgs e)
         {
-            rms.RobotUnityRegistedList.ElementAt(0).Value.FinishedStatesPublish(3213);
+         //   rms.RobotUnityRegistedList.ElementAt(0).Value.FinishedStatesPublish(3213);
             new Thread(() => {
-                rms.RobotUnityRegistedList.ElementAt(2).Value.SendPoseStamped(new Pose());
+                rms.RobotUnityRegistedList.ElementAt(0).Value.SendPoseStamped(new Pose());
             }).Start();
         }
 

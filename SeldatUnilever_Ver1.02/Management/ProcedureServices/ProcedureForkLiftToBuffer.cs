@@ -450,6 +450,7 @@ namespace SeldatMRMS
                     case ForkLift.FORBUF_ROBOT_WAITTING_GOBACK_FRONTLINE_BUFFER: // đợi
                         if (resCmd == ResponseCommand.RESPONSE_FINISH_GOBACK_FRONTLINE)
                         {
+                            robot.ReleaseWorkingZone();
                             robot.SwitchToDetectLine(false);
                             resCmd = ResponseCommand.RESPONSE_NONE;
                             rb.prioritLevel.OnAuthorizedPriorityProcedure = false;
@@ -603,10 +604,10 @@ namespace SeldatMRMS
         public override void FinishStatesCallBack(Int32 message)
         {
             this.resCmd = (ResponseCommand)message;
-            if (this.resCmd == ResponseCommand.RESPONSE_FINISH_GOBACK_FRONTLINE)
+        /*  if (this.resCmd == ResponseCommand.RESPONSE_FINISH_GOBACK_FRONTLINE)
             {
-                robot.ReleaseWorkingZone();
-            }
+               
+            }*/
         }
         public class ForkLiftToMachineInfo
         {

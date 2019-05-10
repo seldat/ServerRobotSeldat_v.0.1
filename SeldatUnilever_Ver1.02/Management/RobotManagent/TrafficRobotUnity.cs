@@ -171,6 +171,7 @@ namespace SeldatMRMS.Management
                 {
                     foreach (RobotUnity r in RobotUnitylist)
                     {
+                        String lableR = r.properties.Label;
                         if (r.robotTag==RobotStatus.WORKING)
                         {
                             Point thCV = TopHeaderCv();
@@ -688,7 +689,7 @@ namespace SeldatMRMS.Management
         {
             foreach (RobotUnity r in RobotUnitylist)
             {
-                if (r.prioritLevel.IndexOnMainRoad >= prioritLevel.IndexOnMainRoad)
+                if (r.prioritLevel.IndexOnMainRoad == prioritLevel.IndexOnMainRoad)
                 {
                     // va chạm vòng tròn an toàn nhỏ ra quyết định ngưng robot
                     CheckIntersection(true);

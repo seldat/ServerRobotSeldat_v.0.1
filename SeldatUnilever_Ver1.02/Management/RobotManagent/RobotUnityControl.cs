@@ -467,10 +467,15 @@ namespace SeldatMRMS.Management.RobotManagent
             Stopwatch sw = new Stopwatch();
             sw.Start();
             bool responsed = false;
-            System.Threading.Thread.Sleep(5000);
-            if (respCtrlCallBack == value)
+
+            while(true)
             {
-                responsed = true;
+                if (respCtrlCallBack == value)
+                {
+                    responsed = true;
+                    break;
+                }
+                if (sw.ElapsedMilliseconds > 5000) break;
             }
             robotLogOut.ShowText(this.properties.Label, "CheckResponseTimeOut= " + respCtrlCallBack + " " + responsed);
             respCtrlCallBack = ResponseCtrl.RESPONSE_NONE;
