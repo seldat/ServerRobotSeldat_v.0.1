@@ -36,7 +36,7 @@ class SelfDriving():
 	def __init__(self):
     #####################################################
 		print("Initializing SelfDriving Class...")
-        	rospy.init_node("SelfDriving")
+        	rospy.init_node("SelfDriving",anonymous=True)
         	self.nodename = rospy.get_name()
         	print("%s started" % self.nodename)
 		self.rate=rospy.get_param('~rate',50);
