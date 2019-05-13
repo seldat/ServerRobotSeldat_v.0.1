@@ -72,7 +72,7 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
         {
             try
             {
-                if (deviceItemsList.Count > 0)
+                if (deviceItemsList.Count > 1)
                 {
                     var element = deviceItemsList[0];
                     deviceItemsList.RemoveAt(0);

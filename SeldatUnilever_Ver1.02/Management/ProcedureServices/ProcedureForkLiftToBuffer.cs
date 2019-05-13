@@ -76,6 +76,7 @@ namespace SeldatMRMS
             ProForkLift.Start();
             ProRun = true;
             robot.prioritLevel.OnAuthorizedPriorityProcedure = false;
+            robot.robotRegistryToWorkingZone.onRobotwillCheckInsideGate = true;
         }
         public void Destroy()
         {
@@ -250,6 +251,7 @@ namespace SeldatMRMS
                         }
                         break;
                     case ForkLift.FORBUF_ROBOT_CAME_GATE_POSITION: // da den khu vuc cong , gui yeu cau mo cong.
+                        robot.robotRegistryToWorkingZone.onRobotwillCheckInsideGate = false;
                         ds.openDoor(DoorService.DoorType.DOOR_BACK);
 
                         StateForkLift = ForkLift.FORBUF_ROBOT_WAITTING_OPEN_DOOR;

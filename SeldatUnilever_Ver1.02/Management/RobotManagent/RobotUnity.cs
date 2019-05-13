@@ -400,7 +400,8 @@ namespace SeldatMRMS.Management.RobotManagent
                     "MIDDLE2 :" + MiddleHeaderCv2().X.ToString("0.00") + " /" + MiddleHeaderCv2().Y.ToString("0.00") + Environment.NewLine +
                     "ValueR SC:" + valueSC+ Environment.NewLine +
                     "ValueR BigC:" + valueBigC + Environment.NewLine+
-                    "RobotTag:" + robotTag + Environment.NewLine;
+                    "RobotTag:" + robotTag + Environment.NewLine+
+                    "CheckGate: " + robotRegistryToWorkingZone.onRobotwillCheckInsideGate + Environment.NewLine;
             }
             catch { }
         }
@@ -494,6 +495,7 @@ namespace SeldatMRMS.Management.RobotManagent
             robotService.RemoveRobotUnityReadyList(this);
             robotService.RemoveRobotUnityWaitTaskList(this);
             robotRegistryToWorkingZone.Release();
+            robotRegistryToWorkingZone.onRobotwillCheckInsideGate = false;
             robotTag = RobotStatus.IDLE;
             setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_DISCONNECT);
             Radius_S =0;
