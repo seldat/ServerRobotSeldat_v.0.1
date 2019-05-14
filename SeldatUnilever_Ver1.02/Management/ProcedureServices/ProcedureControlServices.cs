@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Threading;
+using Newtonsoft.Json;
 using SeldatMRMS.Management.RobotManagent;
 using SeldatMRMS.Management.TrafficManager;
 using static SeldatMRMS.Management.RobotManagent.RobotUnity;
@@ -377,6 +379,15 @@ namespace SeldatMRMS {
                     break;
             }
             return "";
+        }
+        public void SaveOrderItem(OrderItem order)
+        {
+            Object obj = new Object();
+            lock (obj)
+            {
+                String path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "OrderItemInProc.txt");
+                File.AppendAllText(path, DateTime.Now.ToString("yyyyMMdd HH:mm:ss tt >> ") + JsonConvert.SerializeObject(order) + Environment.NewLine );
+            }
         }
     }
 }

@@ -77,6 +77,7 @@ namespace SeldatMRMS
             ProRun = true;
             robot.prioritLevel.OnAuthorizedPriorityProcedure = false;
             robot.robotRegistryToWorkingZone.onRobotwillCheckInsideGate = true;
+            order.startTimeProcedure = DateTime.Now;
         }
         public void Destroy()
         {
@@ -571,6 +572,9 @@ namespace SeldatMRMS
                         robot.ShowText("RELEASED");
                         UpdateInformationInProc(this, ProcessStatus.S);
                         order.status = StatusOrderResponseCode.FINISHED;
+                        order.endTimeProcedure = DateTime.Now;
+                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+                        SaveOrderItem(order);
                         break;
                     case ForkLift.FORMAC_ROBOT_DESTROY: // trả robot về robotmanagement để nhận quy trình mới
                         robot.SwitchToDetectLine(false);
@@ -583,6 +587,9 @@ namespace SeldatMRMS
                         procedureStatus = ProcedureStatus.PROC_KILLED;
                         // RestoreOrderItem();
                         FreePlanedBuffer();
+                        order.endTimeProcedure = DateTime.Now;
+                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+                        SaveOrderItem(order);
                         break;
                     //////////////////////////////////////////////////////
                     default:
