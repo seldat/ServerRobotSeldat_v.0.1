@@ -26,8 +26,8 @@ namespace SeldatMRMS.Management.UnityService
         public AssigmentTaskService assigmentTaskService { get; set; }
         public DeviceRegistrationService deviceRegistrationService { get; set; }
         public ChargerManagementService chargerService;
+    
 
-        
 
         private MainWindow mainWindow;
         public UnityManagementService(MainWindow mainWindow )
@@ -42,7 +42,7 @@ namespace SeldatMRMS.Management.UnityService
             chargerService = new ChargerManagementService();
             trafficService = new TrafficManagementService();
             deviceRegistrationService = new DeviceRegistrationService(12000);
-
+            Global_Object.doorManagementServiceCtrl = doorManagementService;
             assigmentTaskService = new AssigmentTaskService();
             assigmentTaskService.RegistryService(robotManagementService);
             assigmentTaskService.RegistryService(procedureManagementService);

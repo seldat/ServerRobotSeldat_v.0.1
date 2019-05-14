@@ -97,7 +97,6 @@ namespace SeldatUnilever_Ver1._02
         public UnityManagementService unityService;
         public CanvasControlService canvasControlService;
         CtrlRobot ctrR;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -169,7 +168,6 @@ namespace SeldatUnilever_Ver1._02
                 unityService = new UnityManagementService(this);
                 unityService.Initialize();
                 ctrR = new CtrlRobot(unityService.robotManagementService);
-
                 stationtimer = new System.Timers.Timer();
                 stationtimer.Interval = 5000;
                 stationtimer.Elapsed += OnTimedOrderListEvent;

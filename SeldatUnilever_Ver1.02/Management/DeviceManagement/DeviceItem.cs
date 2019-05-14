@@ -247,7 +247,7 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
                     }
                     try
                     {
-                        new DoorManagementService().DoorMezzamineUp.LampOn(DoorType.DOOR_FRONT);
+                        Global_Object.doorManagementServiceCtrl.DoorMezzamineUp.LampOn(DoorType.DOOR_FRONT);
                     }
                     catch (Exception e)
                     {
@@ -292,7 +292,7 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
                     }
                     try
                     {
-                        new DoorManagementService().DoorMezzamineUp.LampOn(DoorType.DOOR_FRONT);
+                        Global_Object.doorManagementServiceCtrl.DoorMezzamineUp.LampOn(DoorType.DOOR_FRONT);
                     }
                     catch (Exception e)
                     {
@@ -528,7 +528,7 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
                     // same deviceID forklift
                     try
                     {
-                        new DoorManagementService().DoorMezzamineUp.openDoor(DoorType.DOOR_FRONT);
+                        Global_Object.doorManagementServiceCtrl.DoorMezzamineUp.openDoor(DoorType.DOOR_FRONT);
                     }
                     catch (Exception e)
                     {
@@ -542,7 +542,7 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
                     // same deviceID forklift
                     try
                     {
-                        new DoorManagementService().DoorMezzamineUp.closeDoor(DoorType.DOOR_FRONT);
+                        Global_Object.doorManagementServiceCtrl.DoorMezzamineUp.closeDoor(DoorType.DOOR_FRONT);
                     }
                     catch (Exception e)
                     {

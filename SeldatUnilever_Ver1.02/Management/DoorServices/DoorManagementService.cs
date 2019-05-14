@@ -27,21 +27,25 @@ namespace SeldatMRMS.Management.DoorServices
         public DoorService DoorMezzamineReturn;
         public DoorElevator DoorElevator;
         public DoorConfigure doorConfigure;
+        static public bool fistInit = false;
         public DoorManagementService(){
             // LoadDoorConfigure();
             DoorInfoConfigList = new List<DoorInfoConfig>();
             PropertiesDoor_List = new List<DoorInfoConfig>();
             Grouped_PropertiesDoor = (ListCollectionView)CollectionViewSource.GetDefaultView(PropertiesDoor_List);
-
-            LoadConfigure();
-            
-            DoorMezzamineUp = new DoorService(DoorInfoConfigList[0]);
-            DoorMezzamineReturn = new DoorService(DoorInfoConfigList[1]);
-            try
+            if(fistInit == false)
             {
-                doorConfigure = new DoorConfigure(this);
+                fistInit = true;
+                LoadConfigure();
+
+                DoorMezzamineUp = new DoorService(DoorInfoConfigList[0]);
+                DoorMezzamineReturn = new DoorService(DoorInfoConfigList[1]);
+                try
+                {
+                    doorConfigure = new DoorConfigure(this);
+                }
+                catch { }
             }
-            catch { }
         }
     
         public void AddDoor()

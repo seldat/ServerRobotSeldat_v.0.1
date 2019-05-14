@@ -1,4 +1,5 @@
-﻿using SeldatUnilever_Ver1._02;
+﻿using SeldatMRMS.Management.DoorServices;
+using SeldatUnilever_Ver1._02;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -56,7 +57,7 @@ namespace SeldatMRMS
         public static string messageTitileError = "Error";
         public static string messageTitileWarning = "Warning";
 
-
+        public static DoorManagementService doorManagementServiceCtrl;
         //#######################################
         public static bool ServerAlive(string hostUri = "localhost", int portNumber = 8081)
         {
