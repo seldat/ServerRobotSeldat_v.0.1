@@ -395,6 +395,9 @@ namespace SeldatMRMS
                         SaveOrderItem(order);
                         break;
                     case BufferToMachine.BUFMAC_ROBOT_DESTROY:
+                        order.endTimeProcedure = DateTime.Now;
+                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+                        SaveOrderItem(order);
                         robot.SwitchToDetectLine(false);
                         robot.ReleaseWorkingZone();
                         // StateBufferToMachine = BufferToMachine.BUFMAC_ROBOT_RELEASED;
@@ -408,9 +411,7 @@ namespace SeldatMRMS
                         selectHandleError = SelectHandleError.CASE_ERROR_EXIT;
                         procedureStatus = ProcedureStatus.PROC_KILLED;
                         FreeHoldBuffer();
-                        order.endTimeProcedure = DateTime.Now;
-                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
-                        SaveOrderItem(order);
+                        
                         //this.robot.DestroyRegistrySolvedForm();
                         break;
                     default:
