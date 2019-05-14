@@ -125,8 +125,8 @@ namespace DoorControllerService
         private Thread doorBackServiceThread;
         private StateCtrl stateCtrlDoorFront;
         private StateCtrl stateCtrlDoorBack;
-        private Stopwatch elapsedTimeFront;
-        private Stopwatch elapsedTimeBack;
+        public Stopwatch elapsedTimeFront_;
+        public Stopwatch elapsedTimeBack_;
         private const UInt32 TIME_OUT_WAIT_DOOR_FRONT = 20000;
         private const UInt32 TIME_OUT_WAIT_DOOR_BACK = 20000;
         private const UInt32 NUM_TRY_OPEN_DOOR = 10;
@@ -144,8 +144,8 @@ namespace DoorControllerService
             doorBackServiceThread.Start(this);
             stateCtrlDoorFront = StateCtrl.DOOR_ST_IDLE;
             stateCtrlDoorBack = StateCtrl.DOOR_ST_IDLE;
-            elapsedTimeFront = new Stopwatch();
-            elapsedTimeBack = new Stopwatch();
+            elapsedTimeFront_ = new Stopwatch();
+            elapsedTimeBack_ = new Stopwatch();
             this.numTryClose = 0;
             this.numTryOpen = 0;
             //SetId(cf.id);
@@ -274,7 +274,8 @@ namespace DoorControllerService
         public void doorFrontCtrlProcess(object ojb)
         {
             DoorService dS = (DoorService)ojb;
-            this.elapsedTimeFront.Start();
+            Stopwatch elapsedTimeFront = dS.elapsedTimeFront_;
+            elapsedTimeFront.Start();
             while (true)
             {
                 switch (this.stateCtrlDoorFront)
@@ -289,7 +290,7 @@ namespace DoorControllerService
                             this.socketBusy = true;
                             if (this.Open(DoorType.DOOR_FRONT))
                             {
-                                this.elapsedTimeFront.Restart();
+                                elapsedTimeFront.Restart();
                                 this.stateCtrlDoorFront = StateCtrl.DOOR_ST_WAITTING_OPEN_DOOR_FRONT;
                             }
                             else
@@ -305,9 +306,9 @@ namespace DoorControllerService
                         this.socketBusy = false;
                         break;
                     case StateCtrl.DOOR_ST_WAITTING_OPEN_DOOR_FRONT:
-                        if (checkElapsedTimeFront(TIME_OUT_WAIT_DOOR_FRONT))
+                        if (dS.checkElapsedTime(elapsedTimeFront,TIME_OUT_WAIT_DOOR_FRONT))
                         {
-                            this.elapsedTimeFront.Stop();
+                            elapsedTimeFront.Stop();
                             this.stateCtrlDoorFront = StateCtrl.DOOR_ST_OPEN_FRONT;
                             this.numTryOpen++;
                             Console.WriteLine("TIME_OUT_WAIT_OPEN_DOOR_FRONT");
@@ -329,7 +330,7 @@ namespace DoorControllerService
                                     if (status.data[0] == (byte)DoorStatus.DOOR_OPEN)
                                     {
                                         this.stateCtrlDoorFront = StateCtrl.DOOR_ST_OPEN_FRONT_SUCCESS;
-                                        this.elapsedTimeFront.Stop();
+                                        elapsedTimeFront.Stop();
                                         Console.WriteLine("DOOR_ST_OPEN_FRONT_SUCCESS");
                                     }
                                 }
@@ -352,7 +353,7 @@ namespace DoorControllerService
                             Console.WriteLine("DOOR_ST_CLOSE_DOOR_FRONT");
                             if (this.Close(DoorType.DOOR_FRONT))
                             {
-                                this.elapsedTimeFront.Restart();
+                                elapsedTimeFront.Restart();
                                 this.stateCtrlDoorFront = StateCtrl.DOOR_ST_WAITTING_CLOSE_DOOR_FRONT;
                             }
                             else
@@ -368,9 +369,9 @@ namespace DoorControllerService
                         this.socketBusy = false;
                         break;
                     case StateCtrl.DOOR_ST_WAITTING_CLOSE_DOOR_FRONT:
-                        if (checkElapsedTimeFront(TIME_OUT_WAIT_DOOR_FRONT))
+                        if (dS.checkElapsedTime(elapsedTimeFront,TIME_OUT_WAIT_DOOR_FRONT))
                         {
-                            this.elapsedTimeFront.Stop();
+                            elapsedTimeFront.Stop();
                             this.stateCtrlDoorFront = StateCtrl.DOOR_ST_CLOSE_DOOR_FRONT;
                             this.numTryClose++;
                             Console.WriteLine("TIME_OUT_WAIT_CLOSE_DOOR_FRONT");
@@ -392,7 +393,7 @@ namespace DoorControllerService
                                     if (status.data[0] == (byte)DoorStatus.DOOR_CLOSE)
                                     {
                                         this.stateCtrlDoorFront = StateCtrl.DOOR_ST_CLOSE_DOOR_FRONT_SUCCESS;
-                                        this.elapsedTimeFront.Stop();
+                                        elapsedTimeFront.Stop();
                                         Console.WriteLine("DOOR_ST_CLOSE_DOOR_FRONT_SUCCESS");
                                     }
                                 }
@@ -420,7 +421,8 @@ namespace DoorControllerService
         public void doorBackCtrlProcess(object ojb)
         {
             DoorService dS = (DoorService)ojb;
-            this.elapsedTimeBack.Start();
+            Stopwatch elapsedTimeBack = dS.elapsedTimeBack_;
+            elapsedTimeBack.Start();
             while (true)
             {
                 switch (this.stateCtrlDoorBack)
@@ -435,7 +437,7 @@ namespace DoorControllerService
                             Console.WriteLine("DOOR_ST_OPEN_DOOR_BACK");
                             if (this.Open(DoorType.DOOR_BACK))
                             {
-                                this.elapsedTimeBack.Restart();
+                                elapsedTimeBack.Restart();
                                 this.stateCtrlDoorBack = StateCtrl.DOOR_ST_WAITTING_OPEN_DOOR_BACK;
                             }
                             else
@@ -451,9 +453,9 @@ namespace DoorControllerService
                         this.socketBusy = false;
                         break;
                     case StateCtrl.DOOR_ST_WAITTING_OPEN_DOOR_BACK:
-                        if (checkElapsedTimeBack(TIME_OUT_WAIT_DOOR_BACK))
+                        if (dS.checkElapsedTime(elapsedTimeBack, TIME_OUT_WAIT_DOOR_BACK))
                         {
-                            this.elapsedTimeBack.Stop();
+                            elapsedTimeBack.Stop();
                             this.stateCtrlDoorBack = StateCtrl.DOOR_ST_OPEN_DOOR_BACK;
                             this.numTryOpen++;
                             Console.WriteLine("TIME_OUT_WAIT_OPEN_DOOR_BACK");
@@ -475,7 +477,7 @@ namespace DoorControllerService
                                     if (status.data[0] == (byte)DoorStatus.DOOR_OPEN)
                                     {
                                         this.stateCtrlDoorBack = StateCtrl.DOOR_ST_OPEN_DOOR_BACK_SUCCESS;
-                                        this.elapsedTimeBack.Stop();
+                                        elapsedTimeBack.Stop();
                                         Console.WriteLine("DOOR_ST_OPEN_DOOR_BACK_SUCCESS");
                                     }
                                 }
@@ -497,7 +499,7 @@ namespace DoorControllerService
                             Console.WriteLine("DOOR_ST_CLOSE_DOOR_BACK");
                             if (this.Close(DoorType.DOOR_BACK))
                             {
-                                this.elapsedTimeBack.Restart();
+                                elapsedTimeBack.Restart();
                                 this.stateCtrlDoorBack = StateCtrl.DOOR_ST_WAITTING_CLOSE_DOOR_BACK;
                             }
                             else
@@ -513,9 +515,9 @@ namespace DoorControllerService
                         this.socketBusy = false;
                         break;
                     case StateCtrl.DOOR_ST_WAITTING_CLOSE_DOOR_BACK:
-                        if (checkElapsedTimeBack(TIME_OUT_WAIT_DOOR_BACK))
+                        if (dS.checkElapsedTime(elapsedTimeBack,TIME_OUT_WAIT_DOOR_BACK))
                         {
-                            this.elapsedTimeBack.Stop();
+                            elapsedTimeBack.Stop();
                             this.stateCtrlDoorBack = StateCtrl.DOOR_ST_CLOSE_DOOR_BACK;
                             this.numTryClose++;
                             Console.WriteLine("TIME_OUT_WAIT_CLOSE_DOOR_BACK");
@@ -537,7 +539,7 @@ namespace DoorControllerService
                                     if (status.data[0] == (byte)DoorStatus.DOOR_CLOSE)
                                     {
                                         this.stateCtrlDoorBack = StateCtrl.DOOR_ST_CLOSE_DOOR_BACK_SUCCESS;
-                                        this.elapsedTimeBack.Stop();
+                                        elapsedTimeBack.Stop();
                                         Console.WriteLine("DOOR_ST_CLOSE_DOOR_BACK_SUCCESS");
                                     }
                                 }
@@ -657,25 +659,25 @@ namespace DoorControllerService
             return ret;
         }
 
-        private bool checkElapsedTimeFront(UInt32 timeOut)
+        private bool checkElapsedTime(Stopwatch elapsedTime,UInt32 timeOut)
         {
             bool ret = false;
-            if (elapsedTimeFront.ElapsedMilliseconds >= timeOut)
+            if (elapsedTime.ElapsedMilliseconds >= timeOut)
             {
                 ret = true;
             }
             return ret;
         }
 
-        private bool checkElapsedTimeBack(UInt32 timeOut)
-        {
-            bool ret = false;
-            if (elapsedTimeBack.ElapsedMilliseconds >= timeOut)
-            {
-                ret = true;
-            }
-            return ret;
-        }
+        //private bool checkElapsedTimeBack(UInt32 timeOut)
+        //{
+        //    bool ret = false;
+        //    if (elapsedTimeBack.ElapsedMilliseconds >= timeOut)
+        //    {
+        //        ret = true;
+        //    }
+        //    return ret;
+        //}
         //        public bool WaitOpen(DoorType id, UInt32 timeOut)
         //        {
         //            bool result = true;
