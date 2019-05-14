@@ -407,14 +407,19 @@ namespace SelDatUnilever_Ver1._00.Management.TrafficManager
         public TypeZone GetTypeZone(Point position, int min, int max)
         {
             TypeZone _type = TypeZone.IDLE;
+            int index= max+200;
             foreach (var r in ZoneRegisterList.Values) // xác định khu vực đến
             {
                 if (r.Index >= min && r.Index <= max)
                 {
                     if (ExtensionService.IsInPolygon(r.GetZone(), position))
                     {
-                        _type = r.Type;
-                        break;
+                        if (index > r.Index)
+                        {
+                            index = r.Index;
+                            _type = r.Type;
+                        }
+                        
                     }
                 }
             }

@@ -50,12 +50,14 @@ namespace SeldatMRMS
             ProBuferToReturn.Start(this);
             procedureStatus = ProcedureStatus.PROC_ALIVE;
             ProRun = true;
+            ProRunStopW = true;
             robot.prioritLevel.OnAuthorizedPriorityProcedure = false;
             order.startTimeProcedure = DateTime.Now;
         }
         public void Destroy()
         {
             // StateBufferToReturn = BufferToReturn.BUFRET_ROBOT_RELEASED;
+            ProRunStopW = false;
             robot.orderItem = null;
             robot.SwitchToDetectLine(false);
             robot.robotTag = RobotStatus.IDLE;
@@ -114,7 +116,7 @@ namespace SeldatMRMS
                                             break;
                                         }
                                         Thread.Sleep(100);
-                                    } while (ProRun);
+                                    } while (ProRunStopW);
                                     sw.Stop();
                                 }
                             }
@@ -368,7 +370,7 @@ namespace SeldatMRMS
                         UpdateInformationInProc(this, ProcessStatus.S);
                         order.status = StatusOrderResponseCode.FINISHED;
                         order.endTimeProcedure = DateTime.Now;
-                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalMinutes;
                         SaveOrderItem(order);
                         break;
                     default:

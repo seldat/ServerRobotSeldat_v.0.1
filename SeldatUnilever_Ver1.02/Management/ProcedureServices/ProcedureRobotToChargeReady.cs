@@ -93,7 +93,7 @@ namespace SeldatMRMS
             UpdateInformationInProc(this, ProcessStatus.F);
             selectHandleError = SelectHandleError.CASE_ERROR_EXIT;
             order.endTimeProcedure = DateTime.Now;
-            order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+            order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalMinutes;
             SaveOrderItem(order);
             //   this.robot.DestroyRegistrySolvedForm();
         }
@@ -387,7 +387,7 @@ namespace SeldatMRMS
                         robot.ShowText("RELEASED");
                         UpdateInformationInProc(this, ProcessStatus.S);
                         order.endTimeProcedure = DateTime.Now;
-                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalMinutes;
                         SaveOrderItem(order);
                         break; // trả robot về robotmanagement để nhận quy trình mới
                     default:
@@ -489,7 +489,7 @@ namespace SeldatMRMS
             UpdateInformationInProc(this, ProcessStatus.F);
             selectHandleError = SelectHandleError.CASE_ERROR_EXIT;
             order.endTimeProcedure = DateTime.Now;
-            order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+            order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalMinutes;
             SaveOrderItem(order);
         }
 
@@ -577,7 +577,7 @@ namespace SeldatMRMS
                         robot.ShowText("RELEASED");
                         UpdateInformationInProc(this, ProcessStatus.S);
                         order.endTimeProcedure = DateTime.Now;
-                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalMinutes;
                         SaveOrderItem(order);
                         break;
                     case RobotGoToReady.ROBREA_ROBOT_WAITINGREADY_FORCERELEASED:
@@ -591,7 +591,7 @@ namespace SeldatMRMS
                         robot.ShowText("RELEASED WHEN WAITTING TO READY, HAS AN NEW TASK");
                         UpdateInformationInProc(this, ProcessStatus.S);
                         order.endTimeProcedure = DateTime.Now;
-                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalMinutes;
                         SaveOrderItem(order);
                         break;
                 }

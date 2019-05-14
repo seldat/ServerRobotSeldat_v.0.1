@@ -43,12 +43,14 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
             ProForkLiftToMachine = new Thread(this.Procedure);
             ProForkLiftToMachine.Start(this);
             ProRun = true;
+            ProRunStopW = true;
             robot.prioritLevel.OnAuthorizedPriorityProcedure = false;
             robot.robotRegistryToWorkingZone.onRobotwillCheckInsideGate = true;
             order.startTimeProcedure = DateTime.Now;
         }
         public void Destroy()
         {
+            ProRunStopW = false;
             robot.orderItem = null;
             robot.SwitchToDetectLine(false);
             robot.robotTag = RobotStatus.IDLE;
@@ -62,7 +64,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
             this.robot.DestroyRegistrySolvedForm();
             procedureStatus = ProcedureStatus.PROC_KILLED;
             order.endTimeProcedure = DateTime.Now;
-            order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+            order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalMinutes;
             SaveOrderItem(order);
             // RestoreOrderItem();
         }
@@ -115,7 +117,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                                             break;
                                         }
                                         Thread.Sleep(100);
-                                    } while (ProRun);
+                                    } while (ProRunStopW);
                                     sw.Stop();
                                 }
                             }
@@ -321,7 +323,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                         robot.ShowText("RELEASED");
                         UpdateInformationInProc(this, ProcessStatus.S);
                         order.endTimeProcedure = DateTime.Now;
-                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalMinutes;
                         SaveOrderItem(order);
                         break;
                     default:

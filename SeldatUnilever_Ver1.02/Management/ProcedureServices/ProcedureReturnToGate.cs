@@ -56,18 +56,20 @@ namespace SeldatMRMS
             ProReturnToGate = new Thread(this.Procedure);
             ProReturnToGate.Start(this);
             ProRun = true;
+            ProRunStopW = true;
             robot.prioritLevel.OnAuthorizedPriorityProcedure = false;
             order.startTimeProcedure = DateTime.Now;
         }
         public void Destroy()
         {
             // StateReturnToGate = ReturnToGate.RETGATE_ROBOT_RELEASED;
+            ProRunStopW = false;
             robot.robotTag = RobotStatus.IDLE;
             robot.prioritLevel.OnAuthorizedPriorityProcedure = false;
             ProRun = false;
             UpdateInformationInProc(this, ProcessStatus.F);
             order.endTimeProcedure = DateTime.Now;
-            order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+            order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalMinutes;
             SaveOrderItem(order);
         }
         public void Procedure(object ojb)
@@ -118,7 +120,7 @@ namespace SeldatMRMS
                                             break;
                                         }
                                         Thread.Sleep(100);
-                                    } while (ProRun);
+                                    } while (ProRunStopW);
                                     sw.Stop();
                                 }
                             }
@@ -337,7 +339,7 @@ namespace SeldatMRMS
                         robot.ShowText("RELEASED");
                         UpdateInformationInProc(this, ProcessStatus.S);
                         order.endTimeProcedure = DateTime.Now;
-                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalMinutes;
                         SaveOrderItem(order);
                         break;
                     default:

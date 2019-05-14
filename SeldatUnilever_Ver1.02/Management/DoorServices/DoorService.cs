@@ -275,6 +275,8 @@ namespace DoorControllerService
         {
             DoorService dS = (DoorService)ojb;
             Stopwatch elapsedTimeFront = dS.elapsedTimeFront_;
+            if (elapsedTimeFront == null)
+                return;
             elapsedTimeFront.Start();
             while (true)
             {

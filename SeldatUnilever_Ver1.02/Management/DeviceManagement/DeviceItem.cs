@@ -561,6 +561,11 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
             try
             {
                 String path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "RecoderDataOrder.txt");
+                if (File.ReadAllBytes(path).Length > 3000000) // lon 3M thi xoa bot
+                {
+                    String[] lines = File.ReadAllLines(path);
+                    Array.Clear(lines, 0, 615); // xoa bot text 615 vong tuong ung 1M
+                }
                 File.AppendAllText(path, DateTime.Now.ToString("yyyyMMdd HH:mm:ss tt >> ") + dataReq + Environment.NewLine + "[Response] >> " + (statusOrderResponse.status) + Environment.NewLine);
             }
             catch { }

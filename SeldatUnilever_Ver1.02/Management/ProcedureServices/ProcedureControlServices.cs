@@ -256,6 +256,7 @@ namespace SeldatMRMS {
             return this.robot;
         }
         public bool ProRun;
+        public bool ProRunStopW;
 
         public enum SelectHandleError {
             CASE_ERROR_EXIT = 0,
@@ -385,6 +386,11 @@ namespace SeldatMRMS {
         {
             Task.Run(() => {
                 String path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "OrderItemInProc.txt");
+                if (File.ReadAllBytes(path).Length > 3000000) // lon 3M thi xoa bot
+                {
+                    String[] lines = File.ReadAllLines(path); 
+                    Array.Clear(lines, 0, 615);
+                }
                 File.AppendAllText(path, DateTime.Now.ToString("yyyyMMdd HH:mm:ss tt >> ") + JsonConvert.SerializeObject(order) + Environment.NewLine);
                 Thread.Sleep(1000);
             }

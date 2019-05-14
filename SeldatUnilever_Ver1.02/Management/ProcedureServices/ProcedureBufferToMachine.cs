@@ -58,13 +58,14 @@ namespace SeldatMRMS
             ProBuferToMachine.Start();
             procedureStatus = ProcedureStatus.PROC_ALIVE;
             ProRun = true;
+            ProRunStopW = true;
             robot.prioritLevel.OnAuthorizedPriorityProcedure = false;
             order.startTimeProcedure = DateTime.Now;
 
         }
         public void Destroy()
         {
-
+            ProRunStopW = false;
             robot.robotTag = RobotStatus.IDLE;
             robot.orderItem = null;
             StateBufferToMachine = BufferToMachine.BUFMAC_ROBOT_DESTROY;
@@ -159,7 +160,7 @@ namespace SeldatMRMS
                                             break;
                                         }
                                         Thread.Sleep(100);
-                                    } while (ProRun);
+                                    } while (ProRunStopW);
                                     sw.Stop();
                                 }
                             }
@@ -391,12 +392,12 @@ namespace SeldatMRMS
                         UpdateInformationInProc(this, ProcessStatus.S);
                         order.status = StatusOrderResponseCode.FINISHED;
                         order.endTimeProcedure = DateTime.Now;
-                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalMinutes;
                         SaveOrderItem(order);
                         break;
                     case BufferToMachine.BUFMAC_ROBOT_DESTROY:
                         order.endTimeProcedure = DateTime.Now;
-                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalMinutes;
                         SaveOrderItem(order);
                         robot.SwitchToDetectLine(false);
                         robot.ReleaseWorkingZone();

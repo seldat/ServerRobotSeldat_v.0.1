@@ -1,6 +1,7 @@
 ﻿using SeldatMRMS.Management.RobotManagent;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -34,8 +35,17 @@ namespace SeldatUnilever_Ver1._02
         {
            // rms.RobotUnityRegistedList.ElementAt(0).Value.FinishedStatesPublish(2000);
             new Thread(()=>{
-                rms.RobotUnityRegistedList.ElementAt(0).Value.SendCmdLineDetectionCtrl(RequestCommandLineDetect.REQUEST_LINEDETECT_PALLETUP);
-        }).Start();
+                // rms.RobotUnityRegistedList.ElementAt(0).Value.SendCmdLineDetectionCtrl(RequestCommandLineDetect.REQUEST_LINEDETECT_PALLETUP);
+
+                String path = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "OrderItemInProc.txt");
+                if (File.ReadAllBytes(path).Length > 10000)
+                {
+                    MessageBox.Show(File.ReadAllBytes(path).Length + "");
+                    String[] lines = File.ReadAllLines(path);
+                    Array.Clear(lines, 0, 2);
+                }
+
+            }).Start();
             }
 
         private void CmdPalletUp_Click(object sender, RoutedEventArgs e)

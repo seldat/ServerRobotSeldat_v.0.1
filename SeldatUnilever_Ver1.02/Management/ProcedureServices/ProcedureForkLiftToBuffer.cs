@@ -75,12 +75,14 @@ namespace SeldatMRMS
             procedureStatus = ProcedureStatus.PROC_ALIVE;
             ProForkLift.Start();
             ProRun = true;
+            ProRunStopW = true;
             robot.prioritLevel.OnAuthorizedPriorityProcedure = false;
             robot.robotRegistryToWorkingZone.onRobotwillCheckInsideGate = true;
             order.startTimeProcedure = DateTime.Now;
         }
         public void Destroy()
         {
+            ProRunStopW = false;
             robot.orderItem = null;
             robot.robotTag = RobotStatus.IDLE;
             // StateForkLiftToBuffer = ForkLiftToBuffer.FORBUF_ROBOT_RELEASED;
@@ -183,7 +185,7 @@ namespace SeldatMRMS
                                             break;
                                         }
                                         Thread.Sleep(100);
-                                    } while (ProRun);
+                                    } while (ProRunStopW);
                                     sw.Stop();
 
                                 }
@@ -573,7 +575,7 @@ namespace SeldatMRMS
                         UpdateInformationInProc(this, ProcessStatus.S);
                         order.status = StatusOrderResponseCode.FINISHED;
                         order.endTimeProcedure = DateTime.Now;
-                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalMinutes;
                         SaveOrderItem(order);
                         break;
                     case ForkLift.FORMAC_ROBOT_DESTROY: // trả robot về robotmanagement để nhận quy trình mới
@@ -588,7 +590,7 @@ namespace SeldatMRMS
                         // RestoreOrderItem();
                         FreePlanedBuffer();
                         order.endTimeProcedure = DateTime.Now;
-                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalMinutes;
                         SaveOrderItem(order);
                         break;
                     //////////////////////////////////////////////////////
