@@ -118,7 +118,7 @@ namespace SeldatMRMS
                                             break;
                                         }
                                         Thread.Sleep(100);
-                                    } while (true);
+                                    } while (ProRun);
                                     sw.Stop();
                                 }
                             }

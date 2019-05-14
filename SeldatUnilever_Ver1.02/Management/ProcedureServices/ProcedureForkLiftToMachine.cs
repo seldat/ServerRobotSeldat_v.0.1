@@ -115,7 +115,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                                             break;
                                         }
                                         Thread.Sleep(100);
-                                    } while (true);
+                                    } while (ProRun);
                                     sw.Stop();
                                 }
                             }
