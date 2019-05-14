@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SeldatMRMS.Management.RobotManagent;
 using SeldatMRMS.Management.TrafficManager;
@@ -382,12 +383,12 @@ namespace SeldatMRMS {
         }
         public void SaveOrderItem(OrderItem order)
         {
-            Object obj = new Object();
-            lock (obj)
-            {
+            Task.Run(() => {
                 String path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "OrderItemInProc.txt");
-                File.AppendAllText(path, DateTime.Now.ToString("yyyyMMdd HH:mm:ss tt >> ") + JsonConvert.SerializeObject(order) + Environment.NewLine );
+                File.AppendAllText(path, DateTime.Now.ToString("yyyyMMdd HH:mm:ss tt >> ") + JsonConvert.SerializeObject(order) + Environment.NewLine);
+                Thread.Sleep(1000);
             }
+            );
         }
     }
 }
