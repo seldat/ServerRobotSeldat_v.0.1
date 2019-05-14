@@ -113,7 +113,9 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
 
             public int bufferId;
             public int palletAmount;
-
+            public DateTime startTimeProcedure;
+            public DateTime endTimeProcedure;
+            public double totalTimeProcedure { get; set; }
 
 
 

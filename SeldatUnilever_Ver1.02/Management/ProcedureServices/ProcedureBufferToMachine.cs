@@ -59,13 +59,16 @@ namespace SeldatMRMS
             procedureStatus = ProcedureStatus.PROC_ALIVE;
             ProRun = true;
             robot.prioritLevel.OnAuthorizedPriorityProcedure = false;
+            order.startTimeProcedure = DateTime.Now;
 
         }
         public void Destroy()
         {
+
             robot.robotTag = RobotStatus.IDLE;
             robot.orderItem = null;
             StateBufferToMachine = BufferToMachine.BUFMAC_ROBOT_DESTROY;
+            
         }
 
         public void RestoreOrderItem()
@@ -387,6 +390,9 @@ namespace SeldatMRMS
                         robot.ShowText("RELEASED");
                         UpdateInformationInProc(this, ProcessStatus.S);
                         order.status = StatusOrderResponseCode.FINISHED;
+                        order.endTimeProcedure = DateTime.Now;
+                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+                        SaveOrderItem(order);
                         break;
                     case BufferToMachine.BUFMAC_ROBOT_DESTROY:
                         robot.SwitchToDetectLine(false);
@@ -402,6 +408,9 @@ namespace SeldatMRMS
                         selectHandleError = SelectHandleError.CASE_ERROR_EXIT;
                         procedureStatus = ProcedureStatus.PROC_KILLED;
                         FreeHoldBuffer();
+                        order.endTimeProcedure = DateTime.Now;
+                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+                        SaveOrderItem(order);
                         //this.robot.DestroyRegistrySolvedForm();
                         break;
                     default:

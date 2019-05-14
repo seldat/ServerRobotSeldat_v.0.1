@@ -51,6 +51,7 @@ namespace SeldatMRMS
             procedureStatus = ProcedureStatus.PROC_ALIVE;
             ProRun = true;
             robot.prioritLevel.OnAuthorizedPriorityProcedure = false;
+            order.startTimeProcedure = DateTime.Now;
         }
         public void Destroy()
         {
@@ -366,6 +367,9 @@ namespace SeldatMRMS
                         robot.ShowText("RELEASED");
                         UpdateInformationInProc(this, ProcessStatus.S);
                         order.status = StatusOrderResponseCode.FINISHED;
+                        order.endTimeProcedure = DateTime.Now;
+                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+                        SaveOrderItem(order);
                         break;
                     default:
                         break;

@@ -48,6 +48,7 @@ namespace SeldatMRMS
             ProMachineToReturn.Start(this);
             ProRun = true;
             robot.prioritLevel.OnAuthorizedPriorityProcedure = false;
+            order.startTimeProcedure = DateTime.Now;
         }
         public void Destroy()
         {
@@ -59,6 +60,9 @@ namespace SeldatMRMS
             UpdateInformationInProc(this, ProcessStatus.F);
             order.status = StatusOrderResponseCode.ROBOT_ERROR;
             selectHandleError = SelectHandleError.CASE_ERROR_EXIT;
+            order.endTimeProcedure = DateTime.Now;
+            order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+            SaveOrderItem(order);
             //   this.robot.DestroyRegistrySolvedForm();
         }
         public void Procedure(object ojb)
@@ -324,6 +328,8 @@ namespace SeldatMRMS
                         robot.ShowText("RELEASED");
                         UpdateInformationInProc(this, ProcessStatus.S);
                         order.status = StatusOrderResponseCode.FINISHED;
+                        order.endTimeProcedure = DateTime.Now;
+                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds; SaveOrderItem(order);
                         break;
                     default:
                         break;

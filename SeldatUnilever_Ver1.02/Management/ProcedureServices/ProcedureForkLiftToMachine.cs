@@ -45,6 +45,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
             ProRun = true;
             robot.prioritLevel.OnAuthorizedPriorityProcedure = false;
             robot.robotRegistryToWorkingZone.onRobotwillCheckInsideGate = true;
+            order.startTimeProcedure = DateTime.Now;
         }
         public void Destroy()
         {
@@ -60,6 +61,9 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
             selectHandleError = SelectHandleError.CASE_ERROR_EXIT;
             this.robot.DestroyRegistrySolvedForm();
             procedureStatus = ProcedureStatus.PROC_KILLED;
+            order.endTimeProcedure = DateTime.Now;
+            order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+            SaveOrderItem(order);
             // RestoreOrderItem();
         }
         public void Procedure(object ojb)
@@ -316,6 +320,9 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                         ProRun = false;
                         robot.ShowText("RELEASED");
                         UpdateInformationInProc(this, ProcessStatus.S);
+                        order.endTimeProcedure = DateTime.Now;
+                        order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalSeconds;
+                        SaveOrderItem(order);
                         break;
                     default:
                         break;
