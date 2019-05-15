@@ -221,6 +221,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                         {
                             robot.SwitchToDetectLine(false);
                             resCmd = ResponseCommand.RESPONSE_NONE;
+                            ds.LampOff(DoorService.DoorType.DOOR_FRONT);
                             ds.closeDoor(DoorService.DoorType.DOOR_BACK);
                             StateForkLiftToMachine = ForkLiftToMachine.FORMACH_ROBOT_WAITTING_CLOSE_GATE;
                             robot.ShowText("FORMACH_ROBOT_WAITTING_CLOSE_GATE");
