@@ -96,12 +96,13 @@ namespace SeldatMRMS
                                         {
                                             resCmd = ResponseCommand.RESPONSE_NONE;
 
-                                            if (rb.SendPoseStamped(BfToRe.GetCheckInBuffer()))
+                                            if (rb.SendPoseStamped(BfToRe.GetCheckInBuffer_Return(order.bufferId)))
                                             {
                                                 StateBufferToReturn = BufferToReturn.BUFRET_ROBOT_WAITTING_GOTO_CHECKIN_BUFFER;
                                                 robot.ShowText("BUFRET_ROBOT_WAITTING_GOTO_CHECKIN_BUFFER");
+                                                break;
                                             }
-                                            break;
+                                          
                                         }
                                         else if (resCmd == ResponseCommand.RESPONSE_ERROR)
                                         {
@@ -122,7 +123,7 @@ namespace SeldatMRMS
                             }
                             else
                             {
-                                if (rb.SendPoseStamped(BfToRe.GetCheckInBuffer()))
+                                if (rb.SendPoseStamped(BfToRe.GetCheckInBuffer_Return(order.bufferId)))
                                 {
                                     StateBufferToReturn = BufferToReturn.BUFRET_ROBOT_WAITTING_GOTO_CHECKIN_BUFFER;
                                     robot.ShowText("BUFRET_ROBOT_WAITTING_GOTO_CHECKIN_BUFFER");
@@ -153,7 +154,7 @@ namespace SeldatMRMS
                     case BufferToReturn.BUFRET_ROBOT_WAITTING_ZONE_BUFFER_READY: // doi khu vuc buffer san sang de di vao
                         try
                         {
-                            if (false == robot.CheckInZoneBehavior(BfToRe.GetAnyPointInBuffer().Position))
+                            if (false == robot.CheckInZoneBehavior(BfToRe.GetAnyPointInBuffer_Return(order.bufferId).Position))
                             {
                                 robot.SetTrafficAtCheckIn(true);
                                 rb.prioritLevel.OnAuthorizedPriorityProcedure = false;
@@ -178,7 +179,7 @@ namespace SeldatMRMS
                             {
                                 robot.SwitchToDetectLine(true);
                                 resCmd = ResponseCommand.RESPONSE_NONE;
-                                if (rb.SendCmdAreaPallet(BfToRe.GetInfoOfPalletBuffer(PistonPalletCtrl.PISTON_PALLET_UP)))
+                                if (rb.SendCmdAreaPallet(BfToRe.GetInfoOfPalletBuffer_Return(PistonPalletCtrl.PISTON_PALLET_UP,order.bufferId)))
                                 {
                                     StateBufferToReturn = BufferToReturn.BUFRET_ROBOT_WAITTING_PICKUP_PALLET_BUFFER;
                                     rb.prioritLevel.OnAuthorizedPriorityProcedure = true;

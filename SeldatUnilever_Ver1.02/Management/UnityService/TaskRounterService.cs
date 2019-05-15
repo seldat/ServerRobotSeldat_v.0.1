@@ -117,21 +117,10 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                         else
                             return null;
                     }
-                    else if (item.typeReq == TyeRequest.TYPEREQUEST_BUFFER_TO_RETURN)
+                    else if (item.typeReq == TyeRequest.TYPEREQUEST_WMS_RETURNPALLET_BUFFER)
                     {
-                        if (CheckAvailableFrontLineBuffer(item, false) != null) // check buffer
-                        {
-                            if (CheckAvailableFrontLineReturn(item) != null) // check return 
-                            {
-                                //chưa sửa
-                                item.status = StatusOrderResponseCode.DELIVERING;
-                                return item;
-                            }
-                            else
-                                return null;
-                        }
-                        else
-                            return null;
+                          item.status = StatusOrderResponseCode.DELIVERING;
+                          return item;
                     }
                     else if (item.typeReq == TyeRequest.TYPEREQUEST_MACHINE_TO_RETURN)
                     {

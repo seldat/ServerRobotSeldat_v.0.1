@@ -144,8 +144,9 @@ namespace SeldatMRMS
                                             {
                                                 StateBufferToMachine = BufferToMachine.BUFMAC_ROBOT_WAITTING_GOTO_CHECKIN_BUFFER;
                                                 robot.ShowText("BUFMAC_ROBOT_WAITTING_GOTO_CHECKIN_BUFFER");
+                                                break;
                                             }
-                                            break;
+                                           
                                         }
                                         else if (resCmd == ResponseCommand.RESPONSE_ERROR)
                                         {

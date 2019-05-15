@@ -74,6 +74,7 @@ namespace SeldatMRMS
 
         public void Start(RobotGoToCharge state = RobotGoToCharge.ROBCHAR_ROBOT_GOTO_CHARGER)
         {
+            order = new OrderItem();
             robot.robotTag = RobotStatus.CHARGING;
             errorCode = ErrorCode.RUN_OK;
             robot.ProcedureAs = ProcedureControlAssign.PRO_CHARGE;
@@ -463,6 +464,7 @@ namespace SeldatMRMS
         }
         public void Start(RobotGoToReady state = RobotGoToReady.ROBREA_ROBOT_GOTO_FRONTLINE_READYSTATION)
         {
+            order = new OrderItem();
             errorCode = ErrorCode.RUN_OK;
             robot.robotTag = RobotStatus.WORKING;
             robot.ProcedureAs = ProcedureControlAssign.PRO_READY;

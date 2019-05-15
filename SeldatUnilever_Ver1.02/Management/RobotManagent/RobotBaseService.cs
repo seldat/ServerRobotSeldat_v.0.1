@@ -64,21 +64,25 @@ namespace SeldatMRMS.Management.RobotManagent
                  
                     if (proRegistryInRobot.pMR != null)
                     {
+                        Global_Object.onFlagRobotComingGateBusy = false;
                         proRegistryInRobot.pMR.Destroy();
                        // proRegistryInRobot.pMR = null;
                     }
                     if (proRegistryInRobot.pFB != null)
                     {
+                        Global_Object.onFlagRobotComingGateBusy = false;
                         proRegistryInRobot.pFB.Destroy();
                       // proRegistryInRobot.pFB = null;
                     }
                     if (proRegistryInRobot.pFM != null)
                     {
+                        Global_Object.onFlagRobotComingGateBusy = false;
                         proRegistryInRobot.pFM.Destroy();
                         // proRegistryInRobot.pFB = null;
                     }
                     if (proRegistryInRobot.pBR != null)
                     {
+                        Global_Object.onFlagRobotComingGateBusy = false;
                         proRegistryInRobot.pBR.Destroy();
                        // proRegistryInRobot.pBR = null;
                     }

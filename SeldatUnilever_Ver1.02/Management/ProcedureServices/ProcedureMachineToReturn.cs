@@ -98,8 +98,9 @@ namespace SeldatMRMS
                                             {
                                                 StateMachineToReturn = MachineToReturn.MACRET_ROBOT_WAITTING_CAME_FRONTLINE_MACHINE;
                                                 robot.ShowText("MACRET_ROBOT_WAITTING_CAME_FRONTLINE_MACHINE");
+                                                break;
                                             }
-                                            break;
+                                           
                                         }
                                         else if (resCmd == ResponseCommand.RESPONSE_ERROR)
                                         {
@@ -220,6 +221,7 @@ namespace SeldatMRMS
                     case MachineToReturn.MACRET_ROBOT_CAME_CHECKIN_RETURN: // đã đến vị trí
                         try
                         {
+
                             if (false == robot.CheckInZoneBehavior(BfToRe.GetFrontLineReturn().Position))
                             {
                                 rb.UpdateRiskAraParams(40, rb.properties.L2, rb.properties.WS, rb.properties.DistInter);

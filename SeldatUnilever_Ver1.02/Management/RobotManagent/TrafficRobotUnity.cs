@@ -140,7 +140,8 @@ namespace SeldatMRMS.Management
             prioritLevel = new PriorityLevel();
             robotRegistryToWorkingZone = new RobotRegistryToWorkingZone();
             robotTag = RobotStatus.IDLE;
-           //robotTag = RobotStatus.WORKING;
+            //robotTag = RobotStatus.WORKING;
+            onFlagReadyGo = false;
 
 
         }
@@ -622,6 +623,7 @@ namespace SeldatMRMS.Management
             //onFlagDetectLine = true;
             if(_type== TypeZone.READY)
             {
+                robotBahaviorAtAnyPlace = RobotBahaviorAtAnyPlace.ROBOT_PLACE_HIGHWAY;
                 //SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
             }
             if (_type == TypeZone.HIGHWAY && onFlagDetectLine == false)
@@ -731,7 +733,7 @@ namespace SeldatMRMS.Management
                 if (r.onFlagSafeYellowcircle)
                 {
                     Point cY = CenterOnLineCv(Center_Y);
-                    if (r.FindHeaderInsideCircleArea(MiddleHeaderCv(), cY, Radius_Y) )
+                    if (r.FindHeaderInsideCircleArea(MiddleHeaderCv(), cY, r.Radius_Y) )
                     {
                         STATE_SPEED = "YELLOWC_STOP";
                         SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);

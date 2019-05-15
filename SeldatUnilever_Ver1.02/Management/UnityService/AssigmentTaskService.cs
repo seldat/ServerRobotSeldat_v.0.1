@@ -1,4 +1,5 @@
-﻿using SeldatMRMS.Management.RobotManagent;
+﻿using SeldatMRMS;
+using SeldatMRMS.Management.RobotManagent;
 using SelDatUnilever_Ver1._00.Management.DeviceManagement;
 using System;
 using System.Collections.Generic;
@@ -120,6 +121,7 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                                 if (DetermineRobotWorkInGate(orderItem_wait.typeReq, robotwait.properties.NameId))
                                 {
                                     MoveElementToEnd();
+                                    cntOrderNull_wait++;
                                     break;
                                 }
                             }
@@ -340,25 +342,16 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
         }
         public bool DetermineRobotWorkInGate(TyeRequest tyeRequest,String nameid)
         {
-            bool hasRobotwillWoningate = false;
             if (tyeRequest == TyeRequest.TYPEREQUEST_FORLIFT_TO_BUFFER || tyeRequest == TyeRequest.TYPEREQUEST_FORLIFT_TO_MACHINE)
             {
-                foreach (RobotUnity robot in robotManageService.RobotUnityRegistedList.Values)
+                if (!Global_Object.onFlagRobotComingGateBusy)
                 {
-                    if (!robot.properties.NameId.Equals(nameid))
-                    {
-                        if (robot.orderItem != null)
-                        {
-                            if (robot.robotRegistryToWorkingZone.onRobotwillCheckInsideGate)
-                            {
-                                hasRobotwillWoningate = true;
-                                break;
-                            }
-                        }
-                    }
+                    Global_Object.onFlagRobotComingGateBusy = true;
                 }
+                else
+                    return true;
             }
-            return hasRobotwillWoningate;
+            return false;
         }
         public int DetermineAmoutOfDeviceToAssignAnTask()
         {

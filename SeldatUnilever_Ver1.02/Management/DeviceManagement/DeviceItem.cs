@@ -23,6 +23,7 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
             ORDER_STATUS_RESPONSE_SUCCESS = 200,
             ORDER_STATUS_RESPONSE_ERROR_DATA = 201,
             ORDER_STATUS_RESPONSE_NOACCEPTED = 202,
+            ORDER_STATUS_DOOR_BUSY = 203,
             PENDING = 300,
             DELIVERING = 301,
             FINISHED = 302,
@@ -96,7 +97,7 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
             public String productDetailName { get; set; }
             public int productId { get; set; }
             public int productDetailId { get; set; }
-
+       
 
             public TyeRequest typeReq { get; set; } // FL: ForkLift// BM: BUFFER MACHINE // PR: Pallet return
             public String activeDate;
@@ -113,8 +114,8 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
 
             public int bufferId;
             public int palletAmount;
-            public DateTime startTimeProcedure;
-            public DateTime endTimeProcedure;
+            public DateTime startTimeProcedure=new DateTime();
+            public DateTime endTimeProcedure = new DateTime();
             public double totalTimeProcedure { get; set; }
 
 
@@ -213,6 +214,11 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
                 int typeReq = (int)results["typeReq"];
                 if (typeReq == (int)TyeRequest.TYPEREQUEST_FORLIFT_TO_BUFFER)
                 {
+                    if(Global_Object.onFlagRobotComingGateBusy)
+                    {
+                        statusOrderResponse = new StatusOrderResponse() { status = (int)StatusOrderResponseCode.ORDER_STATUS_DOOR_BUSY, ErrorMessage = "" };
+                         return statusOrderResponse;
+                    }
                     OrderItem order = new OrderItem();
                     order.typeReq = (TyeRequest)typeReq;
                     order.userName = (String)results["userName"];
@@ -256,6 +262,11 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
                 }
                 if (typeReq == (int)TyeRequest.TYPEREQUEST_FORLIFT_TO_MACHINE)
                 {
+                    if (Global_Object.onFlagRobotComingGateBusy)
+                    {
+                        statusOrderResponse = new StatusOrderResponse() { status = (int)StatusOrderResponseCode.ORDER_STATUS_DOOR_BUSY, ErrorMessage = "" };
+                        return statusOrderResponse;
+                    }
                     OrderItem order = new OrderItem();
                     order.typeReq = (TyeRequest)typeReq;
                     order.userName = (String)results["userName"];
@@ -461,6 +472,7 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
                     order.productId = (int)results["productId"];
                     // order.planId = (int)results["planId"];
                     order.deviceId = (int)results["deviceId"];
+                    order.bufferId = (int)results["bufferId"];
                     order.timeWorkId = 1;
                     // order.activeDate = (string)DateTime.Now.ToString("yyyy-MM-dd");
                     // order.palletStatus = (String)results["palletStatus"];

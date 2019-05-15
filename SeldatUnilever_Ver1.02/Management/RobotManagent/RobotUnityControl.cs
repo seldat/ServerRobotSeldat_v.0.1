@@ -26,6 +26,7 @@ namespace SeldatMRMS.Management.RobotManagent
         private Timer timerCheckKeepAlive;
         public RobotLogOut robotLogOut;
         public bool onFlagDetectLine = false;
+        public bool onFlagReadyGo = false;
         private const float delBatterry = 2;
         public enum ResponseCtrl
         {

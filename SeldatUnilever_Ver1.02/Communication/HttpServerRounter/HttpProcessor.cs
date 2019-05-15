@@ -17,7 +17,8 @@ namespace SelDatUnilever_Ver1._00.Communication.HttpServerRounter
         {
             STATUS_MESSAGE_SUCCESS=200,
             STATUS_MESSAGE_ERROR=201,
-            STATUS_MESSAGE_NOACCEPTED=202
+            STATUS_MESSAGE_NOACCEPTED=202,
+            STATUS_MESSAGE_DOOR_BUSY=203
         }
         public TcpClient socket;
         public HttpServer srv;

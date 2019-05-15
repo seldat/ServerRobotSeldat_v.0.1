@@ -91,9 +91,13 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
             {
                 p.handlePOSTResponse(p, StatusHttPResponse.STATUS_MESSAGE_ERROR);
             }
-            if (statusOrder.status == (int)StatusOrderResponseCode.ORDER_STATUS_RESPONSE_NOACCEPTED)
+            else if (statusOrder.status == (int)StatusOrderResponseCode.ORDER_STATUS_RESPONSE_NOACCEPTED)
             {
                 p.handlePOSTResponse(p, StatusHttPResponse.STATUS_MESSAGE_NOACCEPTED);
+            }
+            else if (statusOrder.status == (int)StatusOrderResponseCode.ORDER_STATUS_DOOR_BUSY)
+            {
+                p.handlePOSTResponse(p, StatusHttPResponse.STATUS_MESSAGE_DOOR_BUSY);
             }
         }
 

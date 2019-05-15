@@ -104,8 +104,9 @@ namespace SeldatMRMS
                                             {
                                                 StateReturnToGate = ReturnToGate.RETGATE_ROBOT_WAITTING_ZONE_RETURN_READY;
                                                 robot.ShowText("RETGATE_ROBOT_WAITTING_ZONE_RETURN_READY");
+                                                break;
                                             }
-                                            break;
+                                         
                                         }
                                         else if (resCmd == ResponseCommand.RESPONSE_ERROR)
                                         {

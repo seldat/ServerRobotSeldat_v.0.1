@@ -38,6 +38,8 @@ namespace SeldatMRMS
         public static int userLogin = -2;
         public static string userName = "";
         public static int userAuthor = -2;
+        public static bool onFlagRobotComingGateBusy = false;
+        public static bool onFlagDoorBusy = false;
 
 
         public static string messageDuplicated = "{0} is duplicated.";

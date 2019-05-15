@@ -167,8 +167,9 @@ namespace SeldatMRMS
                                             {
                                                 StateForkLift = ForkLift.FORBUF_ROBOT_WAITTING_GOTO_GATE;
                                                 robot.ShowText("FORBUF_ROBOT_WAITTING_GOTO_GATE");
+                                                break;
                                             }
-                                            break;
+                                            
                                         }
                                         else if (resCmd == ResponseCommand.RESPONSE_ERROR)
                                         {
@@ -376,6 +377,7 @@ namespace SeldatMRMS
 
                         if (!Traffic.HasRobotUnityinArea("GATE_CHECKOUT", robot))
                         {
+                            Global_Object.onFlagRobotComingGateBusy = false;
                             robot.ReleaseWorkingZone();
                         }
                         if (resCmd == ResponseCommand.RESPONSE_LASER_CAME_POINT)
@@ -560,6 +562,7 @@ namespace SeldatMRMS
                         break;
                     case ForkLift.FORMAC_ROBOT_RELEASED: // trả robot về robotmanagement để nhận quy trình mới
                         robot.orderItem = null;
+                       // Global_Object.onFlagDoorBusy = false;
                         robot.SwitchToDetectLine(false);
                         robot.robotTag = RobotStatus.IDLE;
                         robot.ReleaseWorkingZone();
