@@ -318,6 +318,7 @@ namespace SeldatMRMS
                         {
                             //if (true == ds.Close(DoorService.DoorType.DOOR_BACK))
                             //{
+
                             robot.SwitchToDetectLine(false);
                             flToMachineInfo = GetPriorityTaskForkLiftToMachine(order.productId);
                             if (flToMachineInfo == null)
@@ -329,25 +330,16 @@ namespace SeldatMRMS
                                     if (rb.SendPoseStamped(FlToBuf.GetCheckInBuffer(true)))
 
                                     {
-
-
                                         StateForkLift = ForkLift.FORBUF_ROBOT_WAITTING_GOTO_CHECKIN_BUFFER;
                                         robot.ShowText("FORBUF_ROBOT_WAITTING_GOTO_CHECKIN_BUFFER");
                                     }
                                     else
                                     {
-
-
                                     }
-
-
                                 }
                                 catch
                                 {
                                     Console.WriteLine("Error at rb.SendPoseStamped(FlToBuf.GetCheckInBuffer(true)); ");
-
-
-
                                 }
                             }
                             else
@@ -356,7 +348,6 @@ namespace SeldatMRMS
                                 FreePlanedBuffer();
                                 StateForkLift = ForkLift.FORMAC_ROBOT_GOTO_FRONTLINE_MACHINE;
                                 robot.ShowText("FORMAC_ROBOT_GOTO_FRONTLINE_MACHINE");
-
                             }
                             //}
                             //else
