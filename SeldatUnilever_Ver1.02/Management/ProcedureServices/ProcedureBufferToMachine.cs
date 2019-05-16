@@ -188,7 +188,6 @@ namespace SeldatMRMS
                         if (resCmd == ResponseCommand.RESPONSE_LASER_CAME_POINT)
                         //if (onComePoint)
                         {
-                            robot.SetTrafficAtCheckIn(true);
                             resCmd = ResponseCommand.RESPONSE_NONE;
                             //rb.prioritLevel.OnAuthorizedPriorityProcedure = true;
                             StateBufferToMachine = BufferToMachine.BUFMAC_ROBOT_WAITTING_ZONE_BUFFER_READY;
@@ -201,7 +200,7 @@ namespace SeldatMRMS
                         {
                             if (false == robot.CheckInZoneBehavior(BfToMa.GetAnyPointInBuffer().Position))
                             {
-                                robot.SetTrafficAtCheckIn(false);
+                                
                                 //rb.prioritLevel.OnAuthorizedPriorityProcedure = false;
                                 if (rb.SendPoseStamped(BfToMa.GetFrontLineBuffer()))
                                 {
@@ -226,7 +225,7 @@ namespace SeldatMRMS
                                 // 
 
                                 robot.SwitchToDetectLine(true);
-                                robot.TurnOnCtrlSelfTraffic(false);
+                          
                                 resCmd = ResponseCommand.RESPONSE_NONE;
                                 rb.prioritLevel.OnAuthorizedPriorityProcedure = true;
                                 if (rb.SendCmdAreaPallet(BfToMa.GetInfoOfPalletBuffer(PistonPalletCtrl.PISTON_PALLET_UP)))
@@ -292,7 +291,7 @@ namespace SeldatMRMS
                             if (resCmd == ResponseCommand.RESPONSE_FINISH_GOBACK_FRONTLINE)
                             {
                                 robot.SwitchToDetectLine(false);
-                                robot.TurnOnCtrlSelfTraffic(true);
+                              
                                 resCmd = ResponseCommand.RESPONSE_NONE;
                                 rb.prioritLevel.OnAuthorizedPriorityProcedure = false;
                                 if (rb.SendPoseStamped(BfToMa.GetFrontLineMachine()))
@@ -321,7 +320,7 @@ namespace SeldatMRMS
                             //if (onComePoint3)
                             {
                                 robot.SwitchToDetectLine(true);
-                                robot.TurnOnCtrlSelfTraffic(false);
+                      
                                 if (rb.SendCmdAreaPallet(BfToMa.GetInfoOfPalletMachine(PistonPalletCtrl.PISTON_PALLET_DOWN)))
                                 {
                                     rb.prioritLevel.OnAuthorizedPriorityProcedure = true;
@@ -380,8 +379,6 @@ namespace SeldatMRMS
                         robot.SwitchToDetectLine(false);
                         // Release WorkinZone Robot
                         robot.robotTag = RobotStatus.IDLE;
-                     
-                        robot.TurnOnCtrlSelfTraffic(true);
                         rb.PreProcedureAs = ProcedureControlAssign.PRO_BUFFER_TO_MACHINE;
                         // if (errorCode == ErrorCode.RUN_OK) {
                         ReleaseProcedureHandler(this);
@@ -443,7 +440,6 @@ namespace SeldatMRMS
                     robot.setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_CAN_NOTGET_DATA);
                     order.status = StatusOrderResponseCode.NO_BUFFER_DATA;
                     robot.TurnOnSupervisorTraffic(true);
-                    robot.TurnOnCtrlSelfTraffic(true);
                     robot.PreProcedureAs = robot.ProcedureAs;
                     // reset pallet state
 
@@ -456,7 +452,6 @@ namespace SeldatMRMS
                     robot.setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_CAN_NOTGET_DATA);
                     order.status = StatusOrderResponseCode.NO_BUFFER_DATA;
                     robot.TurnOnSupervisorTraffic(true);
-                    robot.TurnOnCtrlSelfTraffic(true);
                     return;
                 }
             }

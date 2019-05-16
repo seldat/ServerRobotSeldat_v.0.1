@@ -383,12 +383,17 @@ namespace SeldatMRMS.Management.RobotManagent
         {
             try
             {
+                String OrderStr = "";
+                if (orderItem != null)
+                    OrderStr = "" + orderItem.typeReq + " / " + orderItem.productDetailName;
+
                 TypeZone typezone = trafficManagementService.GetTypeZone(properties.pose.Position, 0, 200);
                 double angle = -properties.pose.Angle;
                 Point position = Global_Object.CoorLaser(properties.pose.Position);
                 border.ToolTip = "Name: " + properties.Label + Environment.NewLine + "Zone: " + typezone +
                     Environment.NewLine + " Location: " + position.X.ToString("0.00") + " / " +
                     position.Y.ToString("0.00") + " / " + angle.ToString("0.00") + Environment.NewLine +
+                    "Place: "+ TyprPlaceStr + Environment.NewLine+
                     "Working Zone: " + robotRegistryToWorkingZone.WorkingZone + Environment.NewLine +
                     "Radius _S" + Radius_S + Environment.NewLine +
                     "Radius _Y" + Radius_Y + Environment.NewLine +
@@ -401,7 +406,8 @@ namespace SeldatMRMS.Management.RobotManagent
                     "ValueR SC:" + valueSC+ Environment.NewLine +
                     "ValueR BigC:" + valueBigC + Environment.NewLine+
                     "RobotTag:" + robotTag + Environment.NewLine+
-                    "CheckGate: " + robotRegistryToWorkingZone.onRobotwillCheckInsideGate + Environment.NewLine;
+                    "CheckGate: " + robotRegistryToWorkingZone.onRobotwillCheckInsideGate + Environment.NewLine+
+                    "Order: "+ OrderStr +Environment.NewLine;
             }
             catch { }
         }

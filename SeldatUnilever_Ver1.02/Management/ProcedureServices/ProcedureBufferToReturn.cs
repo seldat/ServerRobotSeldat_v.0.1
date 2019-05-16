@@ -143,7 +143,7 @@ namespace SeldatMRMS
                         {
                             //if (robot.ReachedGoal(rb.getPointCheckInConfirm()))
                             //{
-                            robot.SetTrafficAtCheckIn(true);
+                           
                             resCmd = ResponseCommand.RESPONSE_NONE;
                             rb.prioritLevel.OnAuthorizedPriorityProcedure = true;
                             StateBufferToReturn = BufferToReturn.BUFRET_ROBOT_WAITTING_ZONE_BUFFER_READY;
@@ -156,7 +156,7 @@ namespace SeldatMRMS
                         {
                             if (false == robot.CheckInZoneBehavior(BfToRe.GetAnyPointInBuffer_Return(order.bufferId).Position))
                             {
-                                robot.SetTrafficAtCheckIn(true);
+                          
                                 rb.prioritLevel.OnAuthorizedPriorityProcedure = false;
                                 if (rb.SendPoseStamped(BfToRe.GetFrontLineBuffer()))
                                 {
@@ -391,7 +391,7 @@ namespace SeldatMRMS
                     ProRun = false;
                     robot.setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_CAN_NOTGET_DATA);
                     robot.TurnOnSupervisorTraffic(true);
-                    robot.TurnOnCtrlSelfTraffic(true);
+         
                     robot.PreProcedureAs = robot.ProcedureAs;
                     ReleaseProcedureHandler(obj);
                     return;
@@ -401,7 +401,7 @@ namespace SeldatMRMS
                     ProRun = false;
                     robot.setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_CAN_NOTGET_DATA);
                     robot.TurnOnSupervisorTraffic(true);
-                    robot.TurnOnCtrlSelfTraffic(true);
+          
                     return;
                 }
             }

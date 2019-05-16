@@ -117,13 +117,29 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                         {
                             if (robotwait != null)
                             {
-
-                                if (DetermineRobotWorkInGate(orderItem_wait.typeReq, robotwait.properties.NameId))
+                                if (orderItem_wait.typeReq == TyeRequest.TYPEREQUEST_FORLIFT_TO_BUFFER || orderItem_wait.typeReq == TyeRequest.TYPEREQUEST_FORLIFT_TO_MACHINE)
                                 {
-                                    MoveElementToEnd();
-                                    cntOrderNull_wait++;
-                                    break;
+
+                                    if (DetermineRobotWorkInGate())
+                                    {
+                                        MoveElementToEnd();
+                                        cntOrderNull_wait++;
+                                        break;
+                                    }
                                 }
+                                else
+                                {
+                                    if (DetermineAmoutOfDeviceToAssignAnTask() > 0)
+                                    {
+                                        if (FindRobotUnitySameOrderItem(orderItem_wait.userName))
+                                        {
+                                            MoveElementToEnd();
+                                            cntOrderNull_wait++;
+                                            break;
+                                        }
+                                    }
+                                }
+
                             }
                             else
                             {
@@ -133,20 +149,23 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                         }
                         // xác định số lượng device đang có task và chỉ phân phối duy nhất 1 task cho một robot trên cùng thời điểm, không có trường hợp nhiểu
                         // device có task mà nhiều robot cùng nhận task đó
-                        if (DetermineAmoutOfDeviceToAssignAnTask() > 0)
-                        {
-                            if (FindRobotUnitySameOrderItem(orderItem_wait.userName))
-                            {
-                                MoveElementToEnd();
-                                break;
-                            }
-                        }
+
+                       
                         if (orderItem_wait != null)
                         {
-                            processAssignAnTaskWait = ProcessAssignAnTaskWait.PROC_ANY_ASSIGN_ANTASK;
-                            orderItem_wait.robot = robotwait.properties.Label;
-                            robotwait.orderItem = orderItem_wait;
-                            cntOrderNull_wait = 0;
+                            if (!orderItem_wait.onAssiged) //kiem tra da gan task
+                            {
+                                orderItem_wait.onAssiged = true;
+                                processAssignAnTaskWait = ProcessAssignAnTaskWait.PROC_ANY_ASSIGN_ANTASK;
+                                orderItem_wait.robot = robotwait.properties.Label;
+                                robotwait.orderItem = orderItem_wait;
+                                cntOrderNull_wait = 0;
+                            }
+                            else
+                            {
+                                MoveElementToEnd();
+                                processAssignAnTaskWait = ProcessAssignAnTaskWait.PROC_ANY_GET_ANROBOT_IN_WAITTASKLIST;
+                            }
                             break;
                         }
                         else
@@ -258,10 +277,27 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                         {
                             if (robotatready != null)
                             {
-                                if (DetermineRobotWorkInGate(orderItem_ready.typeReq, robotatready.properties.NameId))
+
+                                if (orderItem_ready.typeReq == TyeRequest.TYPEREQUEST_FORLIFT_TO_BUFFER || orderItem_ready.typeReq == TyeRequest.TYPEREQUEST_FORLIFT_TO_MACHINE)
                                 {
-                                    MoveElementToEnd();
-                                    break;
+                                    if (DetermineRobotWorkInGate())
+                                    {
+                                        MoveElementToEnd();
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    // xác định số lượng device đang có task và chỉ phân phối duy nhất 1 task cho một robot trên cùng thời điểm, không có trường hợp nhiểu
+                                    // device có task mà nhiều robot cùng nhận task đó
+                                    if (DetermineAmoutOfDeviceToAssignAnTask() > 0)
+                                    {
+                                        if (FindRobotUnitySameOrderItem(orderItem_ready.userName))
+                                        {
+                                            MoveElementToEnd();
+                                            break;
+                                        }
+                                    }
                                 }
                             }
                             else
@@ -270,22 +306,22 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                                 break;
                             }
                         }
-                // xác định số lượng device đang có task và chỉ phân phối duy nhất 1 task cho một robot trên cùng thời điểm, không có trường hợp nhiểu
-                // device có task mà nhiều robot cùng nhận task đó
-                    if (DetermineAmoutOfDeviceToAssignAnTask()>0)
-                        {
-                            if(FindRobotUnitySameOrderItem(orderItem_ready.userName))
-                            {
-                                MoveElementToEnd();
-                               break;
-                            }
-                        }
+
                         if (orderItem_ready != null)
                         {
-                            Console.WriteLine(processAssignTaskReady);
-                            orderItem_ready.robot = robotatready.properties.Label;
-                            robotatready.orderItem = orderItem_ready;
-                            processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_SET_TRAFFIC_RISKAREA_ON;
+                            if (!orderItem_ready.onAssiged)
+                            {
+                                orderItem_ready.onAssiged = true;
+                                Console.WriteLine(processAssignTaskReady);
+                                orderItem_ready.robot = robotatready.properties.Label;
+                                robotatready.orderItem = orderItem_ready;
+                                processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_SET_TRAFFIC_RISKAREA_ON;
+                            }
+                            else
+                            {
+                                MoveElementToEnd();
+                                processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_GET_ANROBOT_INREADYLIST;
+                            }
                         }
                         else
                         {
@@ -340,17 +376,15 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
             }
             return hasRobotSameOrderItem;
         }
-        public bool DetermineRobotWorkInGate(TyeRequest tyeRequest,String nameid)
+        public bool DetermineRobotWorkInGate()
         {
-            if (tyeRequest == TyeRequest.TYPEREQUEST_FORLIFT_TO_BUFFER || tyeRequest == TyeRequest.TYPEREQUEST_FORLIFT_TO_MACHINE)
-            {
+         
                 if (!Global_Object.onFlagRobotComingGateBusy)
                 {
                     Global_Object.onFlagRobotComingGateBusy = true;
                 }
                 else
                     return true;
-            }
             return false;
         }
         public int DetermineAmoutOfDeviceToAssignAnTask()

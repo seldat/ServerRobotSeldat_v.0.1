@@ -618,7 +618,7 @@ namespace SeldatMRMS
                 }
                 if (cntAmoutOrderItem >0) //
                 {
-                    if (robotService.RobotUnityWaitTaskList.Count > 0)
+                    if (robotService.RobotUnityWaitTaskList.Count > 0 || robotService.RobotUnityReadyList.Count > 0)
                         return false;
                     else
                         return true;

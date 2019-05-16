@@ -117,6 +117,7 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
             public DateTime startTimeProcedure=new DateTime();
             public DateTime endTimeProcedure = new DateTime();
             public double totalTimeProcedure { get; set; }
+            public bool onAssiged = false;
 
 
 
@@ -573,6 +574,8 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
             try
             {
                 String path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "RecoderDataOrder.txt");
+                if (!File.Exists(path))
+                    File.Create(path);
                 if (File.ReadAllBytes(path).Length > 3000000) // lon 3M thi xoa bot
                 {
                     String[] lines = File.ReadAllLines(path);

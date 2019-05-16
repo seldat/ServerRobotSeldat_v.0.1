@@ -386,6 +386,8 @@ namespace SeldatMRMS {
         {
             Task.Run(() => {
                 String path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "OrderItemInProc.txt");
+                if (!File.Exists(path))
+                    File.Create(path);
                 if (File.ReadAllBytes(path).Length > 3000000) // lon 3M thi xoa bot
                 {
                     String[] lines = File.ReadAllLines(path); 

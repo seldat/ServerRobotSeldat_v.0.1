@@ -145,7 +145,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                         //if (robot.ReachedGoal())
                         {
 
-                            robot.SetTrafficAtCheckIn(true);
+                            
                             resCmd = ResponseCommand.RESPONSE_NONE;
                             rb.prioritLevel.OnAuthorizedPriorityProcedure = true;
                             rb.UpdateRiskAraParams(0, rb.properties.L2, rb.properties.WS, rb.properties.DistInter);
@@ -157,7 +157,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                                                                             // robot.ShowText( "FORMACH_ROBOT_WAITTING_GOTO_GATE ===> FLAG " + Traffic.HasRobotUnityinArea(ds.config.PointFrontLine.Position));
                         if (false == robot.CheckInZoneBehavior(ds.config.PointFrontLine.Position))
                         {
-                            robot.SetTrafficAtCheckIn(false);
+                           
                             rb.UpdateRiskAraParams(40, rb.properties.L2, rb.properties.WS, rb.properties.DistInter);
                             rb.prioritLevel.OnAuthorizedPriorityProcedure = false;
                             rb.SendPoseStamped(ds.config.PointFrontLine);
@@ -237,7 +237,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                         {
                             //if (true == ds.Close(DoorService.DoorType.DOOR_BACK))
                             //{
-                            robot.TurnOnCtrlSelfTraffic(true);
+                       
                             rb.prioritLevel.OnAuthorizedPriorityProcedure = false;
                             rb.SendPoseStamped(FlToMach.GetFrontLineMachine());
                             StateForkLiftToMachine = ForkLiftToMachine.FORMACH_ROBOT_WAITTING_CAME_FRONTLINE_MACHINE;
@@ -315,7 +315,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                         robot.SwitchToDetectLine(false);
                         robot.robotTag = RobotStatus.IDLE;
                         robot.ReleaseWorkingZone();
-                        robot.TurnOnCtrlSelfTraffic(true);
+                     
                         rb.PreProcedureAs = ProcedureControlAssign.PRO_FORKLIFT_TO_MACHINE;
                         order.status = StatusOrderResponseCode.FINISHED;
                         // if (errorCode == ErrorCode.RUN_OK) {

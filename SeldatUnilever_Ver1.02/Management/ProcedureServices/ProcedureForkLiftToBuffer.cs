@@ -221,7 +221,7 @@ namespace SeldatMRMS
                         if (resCmd == ResponseCommand.RESPONSE_LASER_CAME_POINT)
                         //if ( robot.ReachedGoal())
                         {
-                            robot.SetTrafficAtCheckIn(true);
+                         
                             resCmd = ResponseCommand.RESPONSE_NONE;
                             rb.prioritLevel.OnAuthorizedPriorityProcedure = true;
                             rb.UpdateRiskAraParams(0, rb.properties.L2, rb.properties.WS, rb.properties.DistInter);
@@ -233,7 +233,7 @@ namespace SeldatMRMS
                                                                   // robot.ShowText( "FORBUF_ROBOT_WAITTING_GOTO_GATE ===> FLAG " + Traffic.HasRobotUnityinArea(ds.config.PointFrontLine.Position));
                         if (false == robot.CheckInZoneBehavior(ds.config.PointFrontLine.Position))
                         {
-                            robot.SetTrafficAtCheckIn(false);
+                            
                             rb.UpdateRiskAraParams(4, rb.properties.L2, rb.properties.WS, rb.properties.DistInter);
                             rb.prioritLevel.OnAuthorizedPriorityProcedure = false;
                             if (rb.SendPoseStamped(ds.config.PointFrontLine))
@@ -376,7 +376,7 @@ namespace SeldatMRMS
                         //{
                         //    if (robot.ReachedGoal(rb.getPointCheckInConfirm()))
                         {
-                            robot.SetTrafficAtCheckIn(true);
+                           
                             resCmd = ResponseCommand.RESPONSE_NONE;
                             rb.prioritLevel.OnAuthorizedPriorityProcedure = true;
                             StateForkLift = ForkLift.FORBUF_ROBOT_WAITTING_ZONE_BUFFER_READY;
@@ -389,7 +389,7 @@ namespace SeldatMRMS
                         {
                             if (false == robot.CheckInZoneBehavior(FlToBuf.GetAnyPointInBuffer(true).Position))
                             {
-                                robot.SetTrafficAtCheckIn(false);
+                               
                                 // createPlanBuffer();
                                 rb.prioritLevel.OnAuthorizedPriorityProcedure = false;
 
@@ -479,7 +479,7 @@ namespace SeldatMRMS
                     case ForkLift.FORMAC_ROBOT_GOTO_FRONTLINE_MACHINE:
                         try
                         {
-                            robot.TurnOnCtrlSelfTraffic(true);
+                       
                             rb.prioritLevel.OnAuthorizedPriorityProcedure = false;
                             if (rb.SendPoseStamped(flToMachineInfo.frontLinePose))
                             {
@@ -505,7 +505,7 @@ namespace SeldatMRMS
                             //if (robot.ReachedGoal())
                             {
                                 robot.SwitchToDetectLine(true);
-                                robot.TurnOnCtrlSelfTraffic(false);
+                           
                                 if (rb.SendCmdAreaPallet(flToMachineInfo.infoPallet))
                                 {
                                     rb.prioritLevel.OnAuthorizedPriorityProcedure = true;
@@ -557,7 +557,6 @@ namespace SeldatMRMS
                         robot.SwitchToDetectLine(false);
                         robot.robotTag = RobotStatus.IDLE;
                         robot.ReleaseWorkingZone();
-                        robot.TurnOnCtrlSelfTraffic(true);
                         rb.PreProcedureAs = ProcedureControlAssign.PRO_FORKLIFT_TO_MACHINE;
                         // if (errorCode == ErrorCode.RUN_OK) {
                         ReleaseProcedureHandler(this);

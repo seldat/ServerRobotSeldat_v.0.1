@@ -135,7 +135,7 @@ namespace SeldatMRMS.Management
         public TrafficRobotUnity() : base()
         {
             TurnOnSupervisorTraffic(false);
-            TurnOnCtrlSelfTraffic(true);
+        
             RobotUnitylist = new List<RobotUnity>();
             prioritLevel = new PriorityLevel();
             robotRegistryToWorkingZone = new RobotRegistryToWorkingZone();
@@ -164,9 +164,9 @@ namespace SeldatMRMS.Management
         {
             this.trafficManagementService = trafficManagementService;
         }
-        public RobotUnity CheckIntersection(bool turnon)
+        public void CheckIntersection(bool turnon)
         {
-            RobotUnity robot = null;
+            
             if (turnon)
             {
                 if (RobotUnitylist.Count > 0)
@@ -180,6 +180,7 @@ namespace SeldatMRMS.Management
                             Point mdCV0 = MiddleHeaderCv();
                             Point mdCV1 = MiddleHeaderCv1();
                             Point mdCV2 = MiddleHeaderCv2();
+                            Point mdCV3 = MiddleHeaderCv3();
                             Point bhCV = BottomHeaderCv();
                             Point Rp = Global_Object.CoorCanvas(this.properties.pose.Position);
                             // bool onTouch= FindHeaderIntersectsFullRiskArea(this.TopHeader()) | FindHeaderIntersectsFullRiskArea(this.MiddleHeader()) | FindHeaderIntersectsFullRiskArea(this.BottomHeader());
@@ -188,24 +189,31 @@ namespace SeldatMRMS.Management
                             bool onTouch0 = r.FindHeaderInsideCircleArea(mdCV0,  r.Radius_S);
                             bool onTouch1 = r.FindHeaderInsideCircleArea(mdCV1,  r.Radius_S);
                             bool onTouch2 = r.FindHeaderInsideCircleArea(mdCV2,  r.Radius_S);
-                            if (onTouchR || onTouch0 || onTouch1 || onTouch2)
+                            bool onTouch3= r.FindHeaderInsideCircleArea(mdCV3, r.Radius_S);
+
+                            if (onTouchR || onTouch1 || onTouch2)
                             {
                                 //  robotLogOut.ShowTextTraffic(r.properties.Label+" => CheckIntersection");
-                                STATE_SPEED = "CKSECTION_STOP"+ r.properties.Label;
+                                STATE_SPEED = "CHECKINT SECTION_STOP " + r.properties.Label;
                                 SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
-                                robot = r;
                                 break;
+                            }
+                            else if (onTouch0)
+                            {
+                                //  robotLogOut.ShowTextTraffic(r.properties.Label+" => CheckIntersection");
+                                STATE_SPEED = "CHECKINT SECTION_SLOW " + r.properties.Label;
+                                SetSpeed(RobotSpeedLevel.ROBOT_SPEED_SLOW);
                             }
                             else
                             {
-                                STATE_SPEED = "CKSECTION_NORMAL"+ r.properties.Label;
+                                STATE_SPEED = "CHECKINT SECTION_NORMAL ";
                                 SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
                             }
                         }
                     }
                 }
             }
-            return robot;
+           
         }
         public int CheckSafeDistance() // KIểm tra khoản cách an toàn/ nếu đang trong vùng close với robot khác thì giảm tốc độ, chuyển sang chế độ dò risk area
         {
@@ -252,137 +260,6 @@ namespace SeldatMRMS.Management
                 RobotUnityRiskList.Remove(NameID);
             }
         }
-        public void DetectTouchedPosition(RobotUnity robot) // determine traffic state
-        {
-
-            Point thCV = Global_Object.CoorCanvas(TopHeader());
-            Point mhCV = Global_Object.CoorCanvas(MiddleHeader());
-            Point mhCV1 = MiddleHeaderCv1();
-            Point mhCV2 = MiddleHeaderCv2();
-            Point mhCV3 = MiddleHeaderCv3();
-            Point bhCV = Global_Object.CoorCanvas(BottomHeader());
-            //if (robot.FindHeaderIntersectsRiskAreaHeader(this.TopHeader()) || robot.FindHeaderIntersectsRiskAreaHeader(this.MiddleHeader())|| robot.FindHeaderIntersectsRiskAreaHeader(this.BottomHeader()))
-            /*  if (robot.FindHeaderIntersectsRiskAreaHeaderCv(thCV) || robot.FindHeaderIntersectsRiskAreaHeaderCv(mhCV) || robot.FindHeaderIntersectsRiskAreaHeaderCv(bhCV)
-                )
-              {
-                  TrafficBehaviorStateTracking = TrafficBehaviorState.HEADER_TOUCH_HEADER;
-                  robotLogOut.ShowTextTraffic(this.properties.Label + " =>" + TrafficBehaviorStateTracking + " " + robot.properties.Label);
-              }
-              // else if (robot.FindHeaderIntersectsRiskAreaTail(this.TopHeader()) || robot.FindHeaderIntersectsRiskAreaTail(this.MiddleHeader()) || robot.FindHeaderIntersectsRiskAreaTail(this.BottomHeader()))
-
-
-              else if (robot.FindHeaderIntersectsRiskAreaTailCv(thCV) || robot.FindHeaderIntersectsRiskAreaTailCv(mhCV) || robot.FindHeaderIntersectsRiskAreaTailCv(bhCV) )
-              {
-                  TrafficBehaviorStateTracking = TrafficBehaviorState.HEADER_TOUCH_TAIL;
-                  robotLogOut.ShowTextTraffic(this.properties.Label + " =>" + TrafficBehaviorStateTracking + " " + robot.properties.Label);
-              }
-              //   else if (robot.FindHeaderIntersectsRiskAreaRightSide(this.TopHeader())|| robot.FindHeaderIntersectsRiskAreaRightSide(this.MiddleHeader())|| robot.FindHeaderIntersectsRiskAreaRightSide(this.BottomHeader()))
-              else if (robot.FindHeaderIntersectsRiskAreaRightSideCv(thCV) || robot.FindHeaderIntersectsRiskAreaRightSideCv(mhCV) || robot.FindHeaderIntersectsRiskAreaRightSideCv(bhCV) 
-
-                  )
-
-              {
-                  TrafficBehaviorStateTracking = TrafficBehaviorState.HEADER_TOUCH_SIDE;
-                  robotLogOut.ShowTextTraffic(this.properties.Label + " =>" + TrafficBehaviorStateTracking + " " + robot.properties.Label);
-              }
-              //  else if (robot.FindHeaderIntersectsRiskAreaLeftSide(this.TopHeader()) || robot.FindHeaderIntersectsRiskAreaLeftSide(this.MiddleHeader()) || robot.FindHeaderIntersectsRiskAreaLeftSide(this.BottomHeader()))
-              else if (robot.FindHeaderIntersectsRiskAreaLeftSideCv(thCV) || robot.FindHeaderIntersectsRiskAreaLeftSideCv(mhCV) || robot.FindHeaderIntersectsRiskAreaLeftSideCv(bhCV) 
-                                 )
-              {
-                  TrafficBehaviorStateTracking = TrafficBehaviorState.HEADER_TOUCH_SIDE;
-                  robotLogOut.ShowTextTraffic(this.properties.Label + " =>" + TrafficBehaviorStateTracking + " " + robot.properties.Label);
-              }
-              */
-
-            //if (robot.FindHeaderIntersectsRiskAreaHeader(this.TopHeader()) || robot.FindHeaderIntersectsRiskAreaHeader(this.MiddleHeader())|| robot.FindHeaderIntersectsRiskAreaHeader(this.BottomHeader()))
-            if (robot.FindHeaderIntersectsRiskAreaHeaderCv(thCV) || robot.FindHeaderIntersectsRiskAreaHeaderCv(mhCV) || robot.FindHeaderIntersectsRiskAreaHeaderCv(bhCV)
-               || robot.FindHeaderIntersectsRiskAreaHeaderCv(mhCV1) || robot.FindHeaderIntersectsRiskAreaHeaderCv(mhCV2) || robot.FindHeaderIntersectsRiskAreaHeaderCv(mhCV3))
-            {
-                TrafficBehaviorStateTracking = TrafficBehaviorState.HEADER_TOUCH_HEADER;
-                //  robotLogOut.ShowTextTraffic(this.properties.Label + " =>" + TrafficBehaviorStateTracking + " " + robot.properties.Label);
-            }
-            // else if (robot.FindHeaderIntersectsRiskAreaTail(this.TopHeader()) || robot.FindHeaderIntersectsRiskAreaTail(this.MiddleHeader()) || robot.FindHeaderIntersectsRiskAreaTail(this.BottomHeader()))
-            else if (robot.FindHeaderIntersectsRiskAreaTailCv(thCV) || robot.FindHeaderIntersectsRiskAreaTailCv(mhCV) || robot.FindHeaderIntersectsRiskAreaTailCv(bhCV) ||
-                robot.FindHeaderIntersectsRiskAreaTailCv(mhCV1) || robot.FindHeaderIntersectsRiskAreaTailCv(mhCV2) || robot.FindHeaderIntersectsRiskAreaTailCv(mhCV3))
-            {
-                TrafficBehaviorStateTracking = TrafficBehaviorState.HEADER_TOUCH_TAIL;
-                // robotLogOut.ShowTextTraffic(this.properties.Label + " =>" + TrafficBehaviorStateTracking + " " + robot.properties.Label);
-            }
-            //   else if (robot.FindHeaderIntersectsRiskAreaRightSide(this.TopHeader())|| robot.FindHeaderIntersectsRiskAreaRightSide(this.MiddleHeader())|| robot.FindHeaderIntersectsRiskAreaRightSide(this.BottomHeader()))
-            /* else if (robot.FindHeaderIntersectsRiskAreaRightSideCv(thCV) || robot.FindHeaderIntersectsRiskAreaRightSideCv(mhCV) || robot.FindHeaderIntersectsRiskAreaRightSideCv(bhCV) ||
-                 robot.FindHeaderIntersectsRiskAreaRightSideCv(mhCV1) || robot.FindHeaderIntersectsRiskAreaRightSideCv(mhCV2) || robot.FindHeaderIntersectsRiskAreaRightSideCv(mhCV3)
-                 )
-
-             {
-                 TrafficBehaviorStateTracking = TrafficBehaviorState.HEADER_TOUCH_SIDE;
-             //  robotLogOut.ShowTextTraffic(this.properties.Label + " =>" + TrafficBehaviorStateTracking + " " + robot.properties.Label);
-             }
-             //  else if (robot.FindHeaderIntersectsRiskAreaLeftSide(this.TopHeader()) || robot.FindHeaderIntersectsRiskAreaLeftSide(this.MiddleHeader()) || robot.FindHeaderIntersectsRiskAreaLeftSide(this.BottomHeader()))
-             else if (robot.FindHeaderIntersectsRiskAreaLeftSideCv(thCV) || robot.FindHeaderIntersectsRiskAreaLeftSideCv(mhCV) || robot.FindHeaderIntersectsRiskAreaLeftSideCv(bhCV) ||
-                 robot.FindHeaderIntersectsRiskAreaLeftSideCv(mhCV1) || robot.FindHeaderIntersectsRiskAreaLeftSideCv(mhCV2) || robot.FindHeaderIntersectsRiskAreaLeftSideCv(mhCV3)
-                 )
-             {
-                 TrafficBehaviorStateTracking = TrafficBehaviorState.HEADER_TOUCH_SIDE;
-              //robotLogOut.ShowTextTraffic(this.properties.Label + " =>" + TrafficBehaviorStateTracking + " " + robot.properties.Label);
-             }*/
-
-
-        }
-        /*   public void TrafficBehavior(RobotUnity robot)
-           {
-               switch (TrafficBehaviorStateTracking)
-               {
-                   case TrafficBehaviorState.HEADER_TOUCH_NOTOUCH:
-                       SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
-                     // robotLogOut.ShowTextTraffic(this.properties.Label + " => NORMAL");
-                       // robot speed normal;
-                       break;
-                   case TrafficBehaviorState.HEADER_TOUCH_HEADER:
-                       // Find condition priority
-                       // index level of road
-                       // procedure Flag is set
-
-                       if (prioritLevel.OnAuthorizedPriorityProcedure)
-                       {
-                           SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
-                           // SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
-                           //TrafficBehaviorStateTracking = TrafficBehaviorState.MODE_FREE;
-                           // robotModeFree = robot;
-                           //  robotLogOut.ShowTextTraffic(this.properties.Label + " => STOP");
-                       }
-                       else
-                       {
-
-                           if (prioritLevel.IndexOnMainRoad < robot.prioritLevel.IndexOnMainRoad)
-                           {
-                               SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
-                               //  robotLogOut.ShowTextTraffic(this.properties.Label + " => STOP");
-                           }
-                           else
-                           {
-                               SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
-                              // SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
-                               // robotLogOut.ShowTextTraffic(this.properties.Label + " => STOP");
-                           }
-                       }
-
-                       break;
-                   case TrafficBehaviorState.HEADER_TOUCH_TAIL:
-                       SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
-                       //TrafficBehaviorStateTracking = TrafficBehaviorState.MODE_FREE;
-                       //robotModeFree = robot;
-                    // robotLogOut.ShowTextTraffic(this.properties.Label+ " => STOP");
-                       // robot stop
-                       break;
-                   case TrafficBehaviorState.HEADER_TOUCH_SIDE:
-                       SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
-                       //TrafficBehaviorStateTracking = TrafficBehaviorState.MODE_FREE;
-                      // robotModeFree = robot;
-                 //   robotLogOut.ShowTextTraffic(this.properties.Label+ " => STOP");
-                       break;
-
-               }
-           }*/
         public void TurnOnSupervisorTraffic(bool onflagtraffic)
         {
             onFlagSupervisorTraffic = onflagtraffic;
@@ -406,28 +283,6 @@ namespace SeldatMRMS.Management
                 onFlagSafeSmallcircle = false;
 
             }
-        }
-        public void TurnOnCtrlSelfTraffic(bool _onflagSelftraffic)
-        {
-            this.onFlagSelfTraffic = _onflagSelftraffic;
-        }
-        public void SetTrafficAtCheckIn(bool onset) // khi robot tai check in
-        {
-            /* if (onset)
-             {
-                 onFlagSupervisorTraffic = false;
-                 UpdateRiskAraParams(0, DfL2, DfWS, DfDistanceInter);
-             }*/
-            /* else
-             {
-                 onFlagSupervisorTraffic = true;
-                 UpdateRiskAraParams(DfL1, DfL2, DfWS, DfDistanceInter);
-             }*/
-
-        }
-        public void ReDrawRobotGrapphic()
-        {
-
         }
         public void TrafficUpdate()
         {
@@ -453,64 +308,22 @@ namespace SeldatMRMS.Management
                             L2Cv = rZR.L2 * properties.Scale;
                             WSCv = rZR.WS * properties.Scale;
                             DistInterCv = rZR.distance * properties.Scale;
-
-                            
-
-
                             //UpdateRiskAraParams(rZR.L1, rZR.L2, rZR.WS, rZR.distance);
                         }
                         else
                         {
                             UpdateRiskAraParams(DfL1, DfL2, DfWS, DfDistanceInter);
                         }
-                        //SupervisorTraffic();
-                       // SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
                          RobotBehavior();
                     }
                     // giám sát an toàn
 
                 }
                 catch { Console.WriteLine("TrafficRobotUnity Error in TrafficUpdate"); }
-                Thread.Sleep(500);
+                Thread.Sleep(50);
             }
 
         }
-        /* protected override void SupervisorTraffic()
-         {
-             if (onFlagSelfTraffic)
-             {
-                 int numMode = CheckSafeDistance();
-                 if (numMode == 0)
-                 {
-                     if (RobotUnityRiskList.Count > 0)
-                     {
-                         RobotUnityRiskList.Clear();
-                     }
-                     TrafficBehaviorStateTracking = TrafficBehaviorState.HEADER_TOUCH_NOTOUCH;
-                     TrafficBehavior(null);
-                 }
-                 else if(numMode==1)
-                 {
-                     SetSpeed(RobotSpeedLevel.ROBOT_SPEED_SLOW);
-                    // robotLogOut.ShowTextTraffic("Slow Motion");
-                 }
-                 else if (numMode==2)
-                 {
-                     RobotUnity robot = CheckIntersection(true);
-                    // if (robot != null)
-                    // {
-                    //     DetectTouchedPosition(robot);
-                    //     TrafficBehavior(robot);
-                    // }
-                 }
-
-             }
-             else
-             {
-                 SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
-             }
-         }*/
-
         // Finding has any Robot in Zone that Robot is going to come
         public bool FindRobotInWorkingZone(Point anyPoint)
         {
@@ -616,12 +429,14 @@ namespace SeldatMRMS.Management
         // + vòng tròn xanh tượng trưng xin vào đường chính từ đường nhỏ giao với đường chính, nếu có robot nào xuất hiện trong vòng tròn nhỏ robot vẽ vòng tròn xnh phải đứng lại ưu tiên cho robot khác làm việc
         // + vòng tròn vàng mức ưu tiên cai nhất, nó xuất hiện và được vẻ ra khi robot trong khu vực đường lớn giao và đang làm nhiệm vụ dò line. robot nào xu61t hiện trong vòng tròn này buột phải ngưng mọi hoạt động
 
+        public String TyprPlaceStr = "";
         public void RobotBehavior()
         {
             RobotBahaviorAtAnyPlace robotBahaviorAtAnyPlace = RobotBahaviorAtAnyPlace.ROBOT_PLACE_IDLE;
             TypeZone _type = trafficManagementService.GetTypeZone(properties.pose.Position, 0, 200);
+            TyprPlaceStr = _type + "";
             //onFlagDetectLine = true;
-            if(_type== TypeZone.READY)
+            if (_type== TypeZone.READY)
             {
                 robotBahaviorAtAnyPlace = RobotBahaviorAtAnyPlace.ROBOT_PLACE_HIGHWAY;
                 //SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
@@ -645,20 +460,11 @@ namespace SeldatMRMS.Management
             switch (robotBahaviorAtAnyPlace)
             {
                 case RobotBahaviorAtAnyPlace.ROBOT_PLACE_IDLE:
-                    //  SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
-                    SetSafeSmallcircle(true);
+                    CheckIntersection(true);
                     break;
                 case RobotBahaviorAtAnyPlace.ROBOT_PLACE_HIGHWAY:
-                    /*SetSafeSmallcircle(true);
-                    SetSafeBluecircle(false);
-                    SetSafeYellowcircle(false);*/
-                    if (CheckYellowCircle())
-                    {
-                       
-                        //SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
-                    }
-                    else
-                    {
+                    if (!CheckYellowCircle())
+                    { 
                         // mở vòng tròn nhỏ vá kiểm tra va chạm
                         SetSafeSmallcircle(true);
                         SetSafeBluecircle(false);
@@ -705,20 +511,20 @@ namespace SeldatMRMS.Management
                     {
                          if (FindHeaderInsideCircleArea(r.MiddleHeaderCv(), cB, Radius_B) || FindHeaderInsideCircleArea(Global_Object.CoorCanvas(r.properties.pose.Position), cB, Radius_B))
                         {
-                            STATE_SPEED = "BLUEC_STOP"+ r.properties.Label;
+                            STATE_SPEED = "BLUEC_STOP "+ r.properties.Label;
                             SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
                             break;
                         }
                         else
                         {
-                            STATE_SPEED = "BLUEC_NORMAL" + r.properties.Label;
+                            STATE_SPEED = "BLUEC_NORMAL ";
                             SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
                         }
 
                     }
                     else
                     {
-                        STATE_SPEED = "BLUEC_NORMAL";
+                        STATE_SPEED = "BLUEC_NORMAL ";
                         SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
                     }
                 }

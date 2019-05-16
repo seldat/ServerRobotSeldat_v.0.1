@@ -276,44 +276,6 @@ namespace SelDatUnilever_Ver1._00.Management.TrafficManager
             }
             return false;
         }
-        /*public void LoadConfigureZone()
-        {
-            string name = "Area";
-            String path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Configure.xlsx");
-            MessageBox.Show(path);
-            string constr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
-                            path +
-                            ";Extended Properties='Excel 12.0 XML;HDR=YES;';";
-            OleDbConnection con = new OleDbConnection(constr);
-            OleDbCommand oconn = new OleDbCommand("Select * From [" + name + "$]", con);
-            con.Open();
-
-            OleDbDataAdapter sda = new OleDbDataAdapter(oconn);
-            DataTable data = new DataTable();
-            sda.Fill(data);
-            double x, y;
-            foreach (DataRow row in data.Rows)
-            {
-                ZoneRegister zone = new ZoneRegister();
-                zone.NameId = row.Field<string>("Name");
-                zone.Index = int.Parse(row.Field<string>("Index"));
-                x = double.Parse(row.Field<string>("Point1").Split(',')[0]);
-                y = double.Parse(row.Field<string>("Point1").Split(',')[1]);
-                zone.Point1 = new Point(x, y);
-                x = double.Parse(row.Field<string>("Point2").Split(',')[0]);
-                y = double.Parse(row.Field<string>("Point2").Split(',')[1]);
-                zone.Point2 = new Point(x, y);
-                x = double.Parse(row.Field<string>("Point3").Split(',')[0]);
-                y = double.Parse(row.Field<string>("Point3").Split(',')[1]);
-                zone.Point3 = new Point(x, y);
-                x = double.Parse(row.Field<string>("Point4").Split(',')[0]);
-                y = double.Parse(row.Field<string>("Point4").Split(',')[1]);
-                zone.Point4 = new Point(x, y);
-                zone.Detail = row.Field<string>("Detail_vn");
-                ZoneRegisterList.Add(zone.NameId, zone);
-            }
-            con.Close();
-        }*/
 
         public ZoneRegister Find(Point p, double min, double max)// sử dụng với chỉ số mặt định sẽ được bỏ qua
         {
