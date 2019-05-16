@@ -36,7 +36,7 @@ namespace SeldatMRMS
         const UInt32 TIME_OUT_ROBOT_RECONNECT_SERVER = 60000 * 10;
         const UInt32 TIME_COUNT_GET_BAT_LEVEL = 1000;
         const UInt32 TIME_DELAY_RELEASE_CHARGE = 60000 * 5;
-        const UInt32 BATTERY_FULL_LEVEL = 9; /*Never battery full 100%*/
+        const UInt32 BATTERY_FULL_LEVEL = 99; /*Never battery full 100%*/
         private UInt32 timeCountGetBatLevel = 0;
         public override event Action<Object> ReleaseProcedureHandler;
         // public override event Action<Object> ErrorProcedureHandler;
