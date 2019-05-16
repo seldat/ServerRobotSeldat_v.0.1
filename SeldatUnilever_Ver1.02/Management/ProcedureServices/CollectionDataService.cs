@@ -25,7 +25,8 @@ namespace SelDatUnilever_Ver1
             F = 200, // Free pallet
             W = 201, // Have Pallet
             P = 202,
-            H =203
+            H =203,
+            R =204
 
         }
         //public int planID { get; set; }

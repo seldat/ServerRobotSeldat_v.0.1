@@ -484,7 +484,7 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
                     product.productId = order.productId;
                     product.productDetailId = order.productDetailId;
                     // chu y sua 
-                    product.palletStatus = PalletStatus.W.ToString(); // W
+                    product.palletStatus = PalletStatus.R.ToString(); // W
                     order.dataRequest = product.ToString();
                     order.status = StatusOrderResponseCode.PENDING;
                     PendingOrderList.Add(order);

@@ -386,12 +386,22 @@ namespace SeldatMRMS {
         {
             Task.Run(() => {
                 String path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "OrderItemInProc.txt");
+                String pathsave = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "OrderItemInProc_"+DateTime.Now.ToString("dd_MM_yyyy_hh_ss")+".txt");
+
                 if (!File.Exists(path))
                     File.Create(path);
                 if (File.ReadAllBytes(path).Length > 3000000) // lon 3M thi xoa bot
                 {
-                    String[] lines = File.ReadAllLines(path); 
-                    Array.Clear(lines, 0, 615);
+                    String[] lines = File.ReadAllLines(path);
+                    try
+                    {
+                        String[] texstr = new String[2 * 615];
+                        Array.Copy(lines, texstr, 2 * 615);
+                        foreach (string text in texstr)
+                            File.AppendAllText(pathsave, text);
+                    }
+                    catch { }
+                    Array.Clear(lines, 0, 2 * 615);
                 }
                 File.AppendAllText(path, DateTime.Now.ToString("yyyyMMdd HH:mm:ss tt >> ") + JsonConvert.SerializeObject(order) + Environment.NewLine);
                 Thread.Sleep(1000);
