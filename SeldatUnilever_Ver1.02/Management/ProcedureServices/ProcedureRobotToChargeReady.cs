@@ -104,7 +104,6 @@ namespace SeldatMRMS
             ProcedureRobotToCharger RbToChar = (ProcedureRobotToCharger)ojb;
             RobotUnity rb = RbToChar.robot;
             ErrorCodeCharger result;
-            McuCtrl mcuCtrl = new McuCtrl(rb);
             robot.ShowText(" Start -> " + procedureCode);
             while (ProRun)
             {
@@ -258,7 +257,7 @@ namespace SeldatMRMS
                             if (timeCountGetBatLevel >= TIME_COUNT_GET_BAT_LEVEL)
                             {
                                 timeCountGetBatLevel = 0;
-                                result = mcuCtrl.GetBatteryLevel(ref batLevel);
+                                result = rb.mcuCtrl.GetBatteryLevel(ref batLevel);
                                 Console.WriteLine("=================****+++++bat level {0}+++++++++++++++++++", batLevel.data[0]);
                                 if (ErrorCodeCharger.TRUE == result)
                                 {
@@ -332,11 +331,11 @@ namespace SeldatMRMS
 
                         try
                         {
-                            if (true == mcuCtrl.TurnOnPcRobot())
+                            if (true == rb.mcuCtrl.TurnOnPcRobot())
                             {
                                 robot.ShowText("Turn on pc");
                                 Thread.Sleep(45000);
-                                robot.ShowText("Reconect server");
+                                robot.ShowText("Reconnect server");
                                 rb.Start(rb.properties.Url);
                                 StateRobotToCharge = RobotGoToCharge.ROBCHAR_ROBOT_WAITTING_RECONNECTING;
                                 robot.ShowText("ROBCHAR_ROBOT_WAITTING_RECONNECTING");
@@ -576,6 +575,7 @@ namespace SeldatMRMS
                         robot.SetSafeBluecircle(false);
                         robot.SetSafeSmallcircle(false);
                         robot.TurnOnSupervisorTraffic(false);
+                        rb.mcuCtrl.TurnOffLampRb();
                         rb.PreProcedureAs = ProcedureControlAssign.PRO_READY;
                         // if (errorCode == ErrorCode.RUN_OK) {
                         ReleaseProcedureHandler(this);

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SeldatMRMS.Communication;
+using SeldatUnilever_Ver1._02.Management.McuCom;
 using SeldatUnilever_Ver1._02.Management.RobotManagent;
 using SelDatUnilever_Ver1._00.Management;
 using SelDatUnilever_Ver1._00.Management.ChargerCtrl;
@@ -17,7 +18,7 @@ namespace SeldatMRMS.Management.RobotManagent
 
     public class RobotUnityControl : RosSocket
     {
-        
+        public McuCtrl mcuCtrl;
         public event Action<int> FinishStatesCallBack;
         public event Action<LaserErrorCode> AGVLaserErrorCallBack;
         public event Action<LaserWarningCode> AGVLaserWarningCallBack;
@@ -228,7 +229,6 @@ namespace SeldatMRMS.Management.RobotManagent
             timerCheckKeepAlive.AutoReset = true;
             timerCheckKeepAlive.Enabled = true;
             robotLogOut = new RobotLogOut();
-            
         }
         public virtual void setColorRobotStatus(RobotStatusColorCode rsc, RobotUnity robotTemp)
         {

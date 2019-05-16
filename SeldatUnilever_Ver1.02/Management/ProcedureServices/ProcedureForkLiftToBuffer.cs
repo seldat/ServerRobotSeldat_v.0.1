@@ -136,6 +136,7 @@ namespace SeldatMRMS
             DoorService ds = FlToBuf.door;
             TrafficManagementService Traffic = FlToBuf.Traffic;
             ForkLiftToMachineInfo flToMachineInfo = new ForkLiftToMachineInfo();
+            rb.mcuCtrl.TurnOnLampRb();
             robot.ShowText(" Start -> " + procedureCode);
             //  StateForkLift = ForkLift.FORBUF_IDLE;
             while (ProRun)

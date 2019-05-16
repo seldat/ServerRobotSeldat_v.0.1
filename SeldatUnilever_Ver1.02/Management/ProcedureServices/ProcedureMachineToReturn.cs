@@ -73,6 +73,7 @@ namespace SeldatMRMS
             RobotUnity rb = BfToRe.robot;
             DataMachineToReturn p = BfToRe.points;
             TrafficManagementService Traffic = BfToRe.Traffic;
+            rb.mcuCtrl.TurnOnLampRb();
             robot.ShowText(" Start -> " + procedureCode);
             while (ProRun)
             {

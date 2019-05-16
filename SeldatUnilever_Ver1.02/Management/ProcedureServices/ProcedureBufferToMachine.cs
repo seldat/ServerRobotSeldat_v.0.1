@@ -117,6 +117,7 @@ namespace SeldatMRMS
             robot.ShowText(" Start -> " + procedureCode);
             //GetFrontLineBuffer(false);
             //  ProRun = false;
+            rb.mcuCtrl.TurnOnLampRb();
             while (ProRun)
             {
                 switch (StateBufferToMachine)

@@ -18,6 +18,8 @@ using System.Windows.Forms;
 using static SeldatMRMS.Management.RobotManagent.RobotBaseService;
 using static SeldatMRMS.Management.RobotManagent.RobotUnityControl;
 using static SelDatUnilever_Ver1._00.Management.ChargerCtrl.ChargerCtrl;
+using SelDatUnilever_Ver1._00.Management.ChargerCtrl;
+using SeldatUnilever_Ver1._02.Management.McuCom;
 
 namespace SeldatMRMS.Management.RobotManagent
 {
@@ -73,6 +75,10 @@ namespace SeldatMRMS.Management.RobotManagent
             r1.Initialize(this.canvas);
             r1.UpdateProperties(prop1);
             r1.ConnectionStatusHandler += ConnectionStatusHandler;
+            r1.mcuCtrl = new McuCtrl(r1);
+            //r1.mcuCtrl.TurnOnLampRb();
+            //Thread.Sleep(1000);
+            //r1.mcuCtrl.TurnOffLampRb();
             PropertiesRobotUnity_List.Add(r1.properties);
             RobotUnityRegistedList.Add(r1.properties.NameId, r1);
 
@@ -110,6 +116,7 @@ namespace SeldatMRMS.Management.RobotManagent
             RobotUnity r2 = new RobotUnity();
             r2.Initialize(this.canvas);
             r2.UpdateProperties(prop2);
+            r2.mcuCtrl = new McuCtrl(r2);
             r2.ConnectionStatusHandler += ConnectionStatusHandler;
             PropertiesRobotUnity_List.Add(r2.properties);
             RobotUnityRegistedList.Add(r2.properties.NameId, r2);
@@ -147,6 +154,7 @@ namespace SeldatMRMS.Management.RobotManagent
             RobotUnity r3 = new RobotUnity();
             r3.Initialize(this.canvas);
             r3.UpdateProperties(prop3);
+            r3.mcuCtrl = new McuCtrl(r3);
             r3.ConnectionStatusHandler += ConnectionStatusHandler;
             PropertiesRobotUnity_List.Add(r3.properties);
             RobotUnityRegistedList.Add(r3.properties.NameId, r3);

@@ -74,6 +74,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
             RobotUnity rb = FlToMach.robot;
             DoorService ds = FlToMach.door;
             TrafficManagementService Traffic = FlToMach.Traffic;
+            rb.mcuCtrl.TurnOnLampRb();
             robot.ShowText(" Start -> " + procedureCode);
             while (ProRun)
             {
