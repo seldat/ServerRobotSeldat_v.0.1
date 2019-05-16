@@ -32,10 +32,11 @@ namespace SeldatMRMS
         DataReceive statusCharger;
         Stopwatch sw = new Stopwatch();
         const UInt32 TIME_OUT_WAIT_TURNOFF_PC = 60000 * 5;
-        const UInt32 TIME_OUT_WAIT_STATE = 60000 * 2;
+        const UInt32 TIME_OUT_WAIT_STATE = 60000;
         const UInt32 TIME_OUT_ROBOT_RECONNECT_SERVER = 60000 * 10;
         const UInt32 TIME_COUNT_GET_BAT_LEVEL = 1000;
         const UInt32 TIME_DELAY_RELEASE_CHARGE = 60000 * 5;
+        const UInt32 BATTERY_FULL_LEVEL = 9; /*Never battery full 100%*/
         private UInt32 timeCountGetBatLevel = 0;
         public override event Action<Object> ReleaseProcedureHandler;
         // public override event Action<Object> ErrorProcedureHandler;
@@ -155,6 +156,7 @@ namespace SeldatMRMS
                     case RobotGoToCharge.ROBCHAR_ROBOT_WAITTING_CUTOFF_POWER_PC:
                         if (true != rb.properties.IsConnected)
                         {
+                            rb.Dispose();
                             robot.ShowText("Sleep 30s waitting turnoff power");
                             Thread.Sleep(30000);
                             StateRobotToCharge = RobotGoToCharge.ROBCHAR_ROBOT_START_CHARGE;
@@ -207,19 +209,23 @@ namespace SeldatMRMS
                                 if (result == ErrorCodeCharger.ERROR_CONNECT)
                                 {
                                     errorCode = ErrorCode.CONNECT_CHARGER_ERROR;
+                                    robot.ShowText("CONNECT_CHARGER_ERROR");
                                 }
                                 else
                                 {
                                     errorCode = ErrorCode.CONTACT_CHARGER_ERROR;
+                                    robot.ShowText("CONTACT_CHARGER_ERROR");
                                 }
                                 CheckUserHandleError(this);
-                                //StateRobotToCharge = RobotGoToCharge.ROBCHAR_FINISHED_CHARGEBATTERY;
+                                StateRobotToCharge = RobotGoToCharge.ROBCHAR_ROBOT_START_CHARGE;
                             }
                         }
                         catch (System.Exception)
                         {
                             errorCode = ErrorCode.CONNECT_CHARGER_ERROR;
+                            robot.ShowText("CONNECT_CHARGER_ERROR");
                             CheckUserHandleError(this);
+                            StateRobotToCharge = RobotGoToCharge.ROBCHAR_ROBOT_START_CHARGE;
                         }
                         break; //robot tiep xuc tram sac        
                     //case RobotGoToCharge.ROBCHAR_ROBOT_ALLOW_CUTOFF_POWER_ROBOT:
@@ -256,9 +262,9 @@ namespace SeldatMRMS
                                 Console.WriteLine("=================****+++++bat level {0}+++++++++++++++++++", batLevel.data[0]);
                                 if (ErrorCodeCharger.TRUE == result)
                                 {
-                                    if (batLevel.data[0] >= 99)
+                                    if (batLevel.data[0] >= BATTERY_FULL_LEVEL)
                                     {
-                                        Thread.Sleep((int)TIME_DELAY_RELEASE_CHARGE);
+                                        //Thread.Sleep((int)TIME_DELAY_RELEASE_CHARGE);
                                         StateRobotToCharge = RobotGoToCharge.ROBCHAR_FINISHED_CHARGEBATTERY;
                                         robot.ShowText("ROBCHAR_FINISHED_CHARGEBATTERY");
                                     }
@@ -328,7 +334,9 @@ namespace SeldatMRMS
                         {
                             if (true == mcuCtrl.TurnOnPcRobot())
                             {
-                                Thread.Sleep(10000);
+                                robot.ShowText("Turn on pc");
+                                Thread.Sleep(45000);
+                                robot.ShowText("Reconect server");
                                 rb.Start(rb.properties.Url);
                                 StateRobotToCharge = RobotGoToCharge.ROBCHAR_ROBOT_WAITTING_RECONNECTING;
                                 robot.ShowText("ROBCHAR_ROBOT_WAITTING_RECONNECTING");
@@ -378,7 +386,7 @@ namespace SeldatMRMS
                         break;
                     case RobotGoToCharge.ROBCHAR_ROBOT_RELEASED:
                         robot.robotTag = RobotStatus.IDLE;
-                        rb.PreProcedureAs = ProcedureControlAssign.PRO_CHARGE;
+                        rb.PreProcedureAs = ProcedureControlAssign.PRO_READY;
                         // if (errorCode == ErrorCode.RUN_OK) {
                         ReleaseProcedureHandler(this);
                         // } else {
