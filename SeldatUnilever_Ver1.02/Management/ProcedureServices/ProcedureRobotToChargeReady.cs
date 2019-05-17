@@ -76,6 +76,7 @@ namespace SeldatMRMS
         public void Start(RobotGoToCharge state = RobotGoToCharge.ROBCHAR_ROBOT_GOTO_CHARGER)
         {
             order = new OrderItem();
+            order.typeReq = TyeRequest.TYPEREQUEST_CHARGE;
             robot.robotTag = RobotStatus.CHARGING;
             errorCode = ErrorCode.RUN_OK;
             robot.ProcedureAs = ProcedureControlAssign.PRO_CHARGE;
@@ -472,6 +473,7 @@ namespace SeldatMRMS
         public void Start(RobotGoToReady state = RobotGoToReady.ROBREA_ROBOT_GOTO_FRONTLINE_READYSTATION)
         {
             order = new OrderItem();
+            order.typeReq = TyeRequest.TYPEREQUEST_GOTO_READY;
             errorCode = ErrorCode.RUN_OK;
             robot.robotTag = RobotStatus.WORKING;
             robot.ProcedureAs = ProcedureControlAssign.PRO_READY;
@@ -591,7 +593,6 @@ namespace SeldatMRMS
                         SaveOrderItem(order);
                         break;
                     case RobotGoToReady.ROBREA_ROBOT_WAITINGREADY_FORCERELEASED:
-
                         // add to wait task;
                         robot.robotTag = RobotStatus.IDLE;
                         ReleaseProcedureHandler(this);

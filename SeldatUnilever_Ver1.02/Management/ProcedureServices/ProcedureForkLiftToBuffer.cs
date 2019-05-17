@@ -66,8 +66,8 @@ namespace SeldatMRMS
         public void Start(ForkLift state = ForkLift.FORBUF_ROBOT_GOTO_CHECKIN_GATE)
         {
             // public void Start (ForkLiftToBuffer state = ForkLiftToBuffer.FORBUF_ROBOT_RELEASED) {
-           
-            errorCode = ErrorCode.RUN_OK;
+            
+             errorCode = ErrorCode.RUN_OK;
             robot.ProcedureAs = ProcedureControlAssign.PRO_FORKLIFT_TO_BUFFER;
             StateForkLift = state;
 
@@ -82,6 +82,7 @@ namespace SeldatMRMS
         }
         public void Destroy()
         {
+            Global_Object.onFlagDoorBusy = false;
             ProRunStopW = false;
             robot.orderItem = null;
             robot.robotTag = RobotStatus.IDLE;
@@ -366,7 +367,7 @@ namespace SeldatMRMS
                         }
                         break;
                     case ForkLift.FORBUF_ROBOT_WAITTING_GOTO_CHECKIN_BUFFER: // doi robot di den khu vuc checkin cua vung buffer
-
+                        Global_Object.onFlagDoorBusy = false;
                         if (!Traffic.HasRobotUnityinArea("GATE_CHECKOUT", robot))
                         {
                             Global_Object.onFlagRobotComingGateBusy = false;

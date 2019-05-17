@@ -46,6 +46,7 @@ namespace SeldatMRMS.Management.RobotManagent
             ROBOT_STATUS_DISCONNECT,
             ROBOT_STATUS_CONNECT,
             ROBOT_STATUS_RECONNECT,
+            ROBOT_STATUS_CHARGING,
             ROBOT_STATUS_CAN_NOTGET_DATA
         }
         public struct Props
@@ -562,8 +563,13 @@ namespace SeldatMRMS.Management.RobotManagent
                 }
                 else
                 {
-                    setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_DISCONNECT);
+                    if(properties.RequestChargeBattery)
+                        setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_CHARGING);
+                    else
+                        setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_DISCONNECT);
+
                 }
+
 
                 //  if (properties.IsConnected)
                 {

@@ -50,6 +50,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
         }
         public void Destroy()
         {
+            Global_Object.onFlagDoorBusy = false;
             ProRunStopW = false;
             robot.orderItem = null;
             robot.SwitchToDetectLine(false);
@@ -260,6 +261,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                     case ForkLiftToMachine.FORMACH_ROBOT_WAITTING_CAME_FRONTLINE_MACHINE:
                         try
                         {
+                            Global_Object.onFlagDoorBusy = false;
                             if (!Traffic.HasRobotUnityinArea("GATE_CHECKOUT", robot))
                             {
                                 Global_Object.onFlagRobotComingGateBusy = false;

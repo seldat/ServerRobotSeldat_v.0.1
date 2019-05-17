@@ -279,6 +279,11 @@ namespace SeldatMRMS.Management.RobotManagent
                                 robotTemp.border.Background = new SolidColorBrush(Colors.YellowGreen);
                                 break;
                             }
+                        case RobotStatusColorCode.ROBOT_STATUS_CHARGING:
+                            {
+                                robotTemp.border.Background = new SolidColorBrush(Colors.LightGreen);
+                                break;
+                            }
                     }
                 });
             }

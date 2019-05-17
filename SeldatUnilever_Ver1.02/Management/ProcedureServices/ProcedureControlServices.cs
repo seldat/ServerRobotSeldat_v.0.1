@@ -403,7 +403,7 @@ namespace SeldatMRMS {
                     catch { }
                     Array.Clear(lines, 0, 2 * 615);
                 }
-                File.AppendAllText(path, DateTime.Now.ToString("yyyyMMdd HH:mm:ss tt >> ") + JsonConvert.SerializeObject(order) + Environment.NewLine);
+                File.AppendAllText(path,JsonConvert.SerializeObject(order) + Environment.NewLine);
                 Thread.Sleep(1000);
             }
             );

@@ -72,6 +72,8 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
             TYPEREQUEST_CLEAR_FORLIFT_TO_BUFFER = 11,
             TYPEREQUEST_FORLIFT_TO_MACHINE = 12, // santao jujeng cap bottle
             TYPEREQUEST_WMS_RETURNPALLET_BUFFER = 13, // santao jujeng cap bottle
+            TYPEREQUEST_CHARGE = 14, // santao jujeng cap bottle
+            TYPEREQUEST_GOTO_READY = 15, // santao jujeng cap bottle
         }
         public enum TabletConTrol
         {
@@ -215,10 +217,18 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
                 int typeReq = (int)results["typeReq"];
                 if (typeReq == (int)TyeRequest.TYPEREQUEST_FORLIFT_TO_BUFFER)
                 {
-                    if(Global_Object.onFlagRobotComingGateBusy)
+                    if (PendingOrderList.Count==0)
+                    {
+                        if(Global_Object.onFlagDoorBusy)
+                        {
+                            statusOrderResponse = new StatusOrderResponse() { status = (int)StatusOrderResponseCode.ORDER_STATUS_DOOR_BUSY, ErrorMessage = "" };
+                            return statusOrderResponse;
+                        }
+                    }
+                    else
                     {
                         statusOrderResponse = new StatusOrderResponse() { status = (int)StatusOrderResponseCode.ORDER_STATUS_DOOR_BUSY, ErrorMessage = "" };
-                         return statusOrderResponse;
+                        return statusOrderResponse;
                     }
                     OrderItem order = new OrderItem();
                     order.typeReq = (TyeRequest)typeReq;
@@ -263,7 +273,15 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
                 }
                 if (typeReq == (int)TyeRequest.TYPEREQUEST_FORLIFT_TO_MACHINE)
                 {
-                    if (Global_Object.onFlagRobotComingGateBusy)
+                    if (PendingOrderList.Count == 0)
+                    {
+                        if (Global_Object.onFlagDoorBusy)
+                        {
+                            statusOrderResponse = new StatusOrderResponse() { status = (int)StatusOrderResponseCode.ORDER_STATUS_DOOR_BUSY, ErrorMessage = "" };
+                            return statusOrderResponse;
+                        }
+                    }
+                    else
                     {
                         statusOrderResponse = new StatusOrderResponse() { status = (int)StatusOrderResponseCode.ORDER_STATUS_DOOR_BUSY, ErrorMessage = "" };
                         return statusOrderResponse;
