@@ -3,11 +3,13 @@ using SeldatMRMS.Management.TrafficManager;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using static SelDatUnilever_Ver1._00.Management.TrafficManager.TrafficRounterService;
 
 namespace SeldatMRMS.Management
@@ -122,6 +124,7 @@ namespace SeldatMRMS.Management
         public bool onFlagSafeYellowcircle = false;
         public bool onFlagSafeBluecircle = false;
         public bool onFlagSafeSmallcircle = false;
+        public bool onFlagSafeOrgancircle = false;
 
         private Dictionary<String, RobotUnity> RobotUnityRiskList = new Dictionary<string, RobotUnity>();
         private TrafficBehaviorState TrafficBehaviorStateTracking;
@@ -164,7 +167,7 @@ namespace SeldatMRMS.Management
         {
             this.trafficManagementService = trafficManagementService;
         }
-        public void CheckIntersection(bool turnon)
+        public void CheckIntersection(bool turnon, bool sameindexRoad=false)
         {
             
             if (turnon)
@@ -195,15 +198,25 @@ namespace SeldatMRMS.Management
                             if (onTouchR || onTouch1 || onTouch2)
                             {
                                 //  robotLogOut.ShowTextTraffic(r.properties.Label+" => CheckIntersection");   
-                                if (r.onFlagSafeBluecircle)
+                                if (sameindexRoad)
                                 {
-                                     STATE_SPEED = "CHECKINT_WORKING_SECTION_NORMAL [FLAG] " + r.properties.Label;
-                                     SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
+                                    STATE_SPEED = "CHECKINT_WORKING_SECTION_STOP SAME INDEX " + r.properties.Label;
+                                    SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
+                                    delay(5000);
                                 }
                                 else
                                 {
-                                    STATE_SPEED = "CHECKINT_WORKING_SECTION_STOP " + r.properties.Label;
-                                    SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
+                                    if (r.onFlagSafeBluecircle)
+                                    {
+                                        STATE_SPEED = "CHECKINT_WORKING_SECTION_NORMAL [FLAG] " + r.properties.Label;
+                                        SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
+                                    }
+                                    else
+                                    {
+                                        STATE_SPEED = "CHECKINT_WORKING_SECTION_STOP " + r.properties.Label;
+                                        SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
+                                        delay(5000);
+                                    }
                                 }
                                 break;
                             }
@@ -212,6 +225,7 @@ namespace SeldatMRMS.Management
                                 //  robotLogOut.ShowTextTraffic(r.properties.Label+" => CheckIntersection");
                                 STATE_SPEED = "CHECKINT_WORKING_SECTION_SLOW " + r.properties.Label;
                                 SetSpeed(RobotSpeedLevel.ROBOT_SPEED_SLOW);
+                               
                             }
                             else
                             {
@@ -228,6 +242,15 @@ namespace SeldatMRMS.Management
                 }
             }
            
+        }
+        public void delay(int ms)
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            while (true)
+            {
+                if (sw.ElapsedMilliseconds > ms) break;
+            }
         }
         public int CheckSafeDistance() // KIểm tra khoản cách an toàn/ nếu đang trong vùng close với robot khác thì giảm tốc độ, chuyển sang chế độ dò risk area
         {
@@ -294,6 +317,7 @@ namespace SeldatMRMS.Management
                 Radius_S = 0;
                 Radius_B = 0;
                 Radius_Y = 0;
+                Radius_O= 0;
                 onFlagSafeSmallcircle = false;
 
             }
@@ -446,6 +470,7 @@ namespace SeldatMRMS.Management
         public String TyprPlaceStr = "";
         public void RobotBehavior()
         {
+            
             RobotBahaviorAtAnyPlace robotBahaviorAtAnyPlace = RobotBahaviorAtAnyPlace.ROBOT_PLACE_IDLE;
             TypeZone _type = trafficManagementService.GetTypeZone(properties.pose.Position, 0, 200);
             TyprPlaceStr = _type + "";
@@ -478,28 +503,35 @@ namespace SeldatMRMS.Management
                     break;
                 case RobotBahaviorAtAnyPlace.ROBOT_PLACE_HIGHWAY:
                     if (!CheckYellowCircle())
-                    { 
+                    {
                         // mở vòng tròn nhỏ vá kiểm tra va chạm
+                        SetSafeOrgancircle(false);
                         SetSafeSmallcircle(true);
                         SetSafeBluecircle(false);
                         SetSafeYellowcircle(false);
-                        CheckIntersection(true);
+                        if (checkOrgancCircle())
+                            break;
+                        else
+                            CheckIntersection(true);
                     }
                     break;
                 case RobotBahaviorAtAnyPlace.ROBOT_PLACE_ROAD:
                     // kiem tra vong tròn xanh
                     SetSafeSmallcircle(true);
+                    SetSafeOrgancircle(true);
                     SetSafeBluecircle(true);
                     CheckBlueCircle();
                     CheckYellowCircle();
                     break;
                 case RobotBahaviorAtAnyPlace.ROBOT_PLACE_HIGHWAY_DETECTLINE:
-                   // SetSafeSmallcircle(true);
+                    // SetSafeSmallcircle(true);
+                    SetSafeOrgancircle(true);
                     SetSafeBluecircle(false);
                     SetSafeYellowcircle(true);
                     SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
                     break;
                 case RobotBahaviorAtAnyPlace.ROBOT_PLACE_BUFFER:
+                    SetSafeOrgancircle(false);
                     SetSafeSmallcircle(false);
                     SetSafeBluecircle(false);
                     SetSafeYellowcircle(false);
@@ -508,6 +540,34 @@ namespace SeldatMRMS.Management
                     break;
             }
         }
+
+      
+        public bool checkOrgancCircle()
+        {
+            bool flagInsideOrgancCircle = false;
+            foreach (RobotUnity r in RobotUnitylist)
+            {
+                // kiểm tra có robot chinh  nó có nằm trong vòng tròn vàng nào không nếu có ngưng\
+                if (r.properties.Label.Equals(this.properties.Label)) continue;
+                if (r.onFlagSafeOrgancircle)
+                {
+
+                    Point cc = Global_Object.CoorCanvas(properties.pose.Position);
+                    String robot = properties.Label;
+                    String robot2 = r.properties.Label;
+                    Point md = MiddleHeaderCv();
+                    if (FindHeaderInsideCircleArea(md,cc,  r.Radius_O))
+                    {
+                        STATE_SPEED = "ORGANC_STOP";
+                        SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
+                        delay(5000);
+                        flagInsideOrgancCircle = true;
+                        break;
+                    }
+                }
+            }
+            return flagInsideOrgancCircle;
+        }
         public void CheckBlueCircle() // khi robot bặt vòng tròn xanh. chính nó phải ngưng nếu dò ra có robot nào trong vùng vòng tròn này ngược lại với vòng tròn vàng
         {
             foreach (RobotUnity r in RobotUnitylist)
@@ -515,7 +575,7 @@ namespace SeldatMRMS.Management
                 if (r.prioritLevel.IndexOnMainRoad == prioritLevel.IndexOnMainRoad)
                 {
                     // va chạm vòng tròn an toàn nhỏ ra quyết định ngưng robot
-                    CheckIntersection(true);
+                    CheckIntersection(true,true);
                 }
                 else
                 {
@@ -527,6 +587,7 @@ namespace SeldatMRMS.Management
                         {
                             STATE_SPEED = "BLUEC_STOP "+ r.properties.Label;
                             SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
+                            delay(5000);
                             break;
                         }
                         else
@@ -603,6 +664,7 @@ namespace SeldatMRMS.Management
                     {
                         STATE_SPEED = "YELLOWC_STOP";
                         SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
+                        delay(5000);
                         flagInsideYellowCircle = true;
                         break;
                     }
@@ -633,6 +695,15 @@ namespace SeldatMRMS.Management
             else
                 Radius_S = 0;
             onFlagSafeSmallcircle = flagonoff;
+        }
+
+        public void SetSafeOrgancircle(bool flagonoff)
+        {
+            if (flagonoff)
+                Radius_O = 25;
+            else
+                Radius_O = 0;
+            onFlagSafeOrgancircle = flagonoff;
         }
         public void SwitchToDetectLine(bool flagonoff)
         {

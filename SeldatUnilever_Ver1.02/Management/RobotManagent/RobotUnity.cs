@@ -29,6 +29,7 @@ namespace SeldatMRMS.Management.RobotManagent
         Path safetyArea;
         Ellipse SmallCircleArea;
         Ellipse BlueCircleArea;
+        Ellipse OrganCircleArea;
         Ellipse YellowCircleArea;
         double angle = 0.0f;
         public Point org = new Point(600, 350);
@@ -306,6 +307,10 @@ namespace SeldatMRMS.Management.RobotManagent
             BlueCircleArea.Stroke = new SolidColorBrush(Colors.Blue);
             canvas.Children.Add(BlueCircleArea);
 
+            OrganCircleArea = new Ellipse();
+            OrganCircleArea.Stroke = new SolidColorBrush(Colors.Orange);
+            canvas.Children.Add(OrganCircleArea);
+
             YellowCircleArea = new Ellipse();
             YellowCircleArea.Stroke = new SolidColorBrush(Colors.OrangeRed);
             canvas.Children.Add(YellowCircleArea);
@@ -469,14 +474,17 @@ namespace SeldatMRMS.Management.RobotManagent
                 connectItem.IsEnabled = false;
                 disconnectItem.IsEnabled = true;
                 MessageBox.Show("Để robot có thể tiếp tục hãy add Robot vào Ready Mode hoặc TaskWait Mode !");
-                Radius_S = 4 * properties.Scale;
-                Radius_B = 4 * properties.Scale;
-                Radius_Y = 4 * properties.Scale;
-                Center_S = 0;
-                Center_B = 3 * properties.Scale;
-                Center_Y = 3 * properties.Scale;
+
                 SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
             }
+            Radius_S = 4 * properties.Scale;
+            Radius_B = 4 * properties.Scale;
+            Radius_Y = 4 * properties.Scale;
+            Radius_O = 3 * properties.Scale;
+            Center_S = 0;
+            Center_B = 3 * properties.Scale;
+            Center_Y = 3 * properties.Scale;
+            Center_O = -3 * properties.Scale;
         }
         private void DisConnectMenu(object sender, RoutedEventArgs e)
         {
@@ -507,10 +515,12 @@ namespace SeldatMRMS.Management.RobotManagent
             setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_DISCONNECT);
             Radius_S =0;
             Radius_B = 0;
+            Radius_O = 0;
             Radius_Y = 0;
             Center_S = 0;
             Center_B = 0;
             Center_Y = 0;
+            Center_O = 0;
         }
         public void SetOnOffTrafficMenu(object sender, RoutedEventArgs e)
         {
@@ -677,6 +687,29 @@ namespace SeldatMRMS.Management.RobotManagent
                             TranslateTransform tr = new TranslateTransform(0, 0);
                             BlueCircleArea.RenderTransform = tr;
                         }
+
+                        if (onFlagSafeOrgancircle)
+                        {
+                            OrganCircleArea.Width = 2 * Radius_O;
+                            OrganCircleArea.Height = 2 * Radius_O;
+
+                            Point cc = CenterOnLineCv(0);
+                            TranslateTransform tr = new TranslateTransform(cc.X - (2 * Radius_O / 2), cc.Y - (2 * Radius_O / 2));
+                            OrganCircleArea.RenderTransform = tr;
+                            Console.WriteLine(tr.X+" / " + tr.Y);
+                          
+                        }
+                        else
+                        {
+                            OrganCircleArea.Width = Radius_O;
+                            OrganCircleArea.Height = Radius_O;
+
+                            Point cc = CenterOnLineCv(0);
+                            TranslateTransform tr = new TranslateTransform(0, 0);
+                            OrganCircleArea.RenderTransform = tr;
+                        }
+
+
 
 
                     }));

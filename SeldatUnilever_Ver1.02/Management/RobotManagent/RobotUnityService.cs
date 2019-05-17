@@ -47,11 +47,13 @@ namespace SeldatMRMS.Management.RobotManagent
         public double DfDistInterCv = 40;
 
         public double Radius_S;
+        public double Radius_O;
         public double Radius_B;
         public double Radius_Y;
         public double Center_S;
         public double Center_B;
         public double Center_Y;
+        public double Center_O;
 
         public RobotUnityService()
         {
@@ -353,7 +355,7 @@ namespace SeldatMRMS.Management.RobotManagent
         }
         public bool FindHeaderInsideCircleArea(Point pheader, Point center, double r)
         {
-            Point ccPoint = Global_Object.CoorCanvas(properties.pose.Position);
+            
             double leftSideEq = (pheader.X - center.X) * (pheader.X - center.X) + (pheader.Y - center.Y) * (pheader.Y - center.Y);
             valueBigC = Math.Sqrt(leftSideEq) + "";
             if (Math.Sqrt(leftSideEq) <= r)
