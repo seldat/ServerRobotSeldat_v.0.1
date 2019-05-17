@@ -198,14 +198,6 @@ namespace SeldatMRMS.Management
                             if (onTouchR || onTouch1 || onTouch2)
                             {
                                 //  robotLogOut.ShowTextTraffic(r.properties.Label+" => CheckIntersection");   
-                                if (sameindexRoad)
-                                {
-                                    STATE_SPEED = "CHECKINT_WORKING_SECTION_STOP SAME INDEX " + r.properties.Label;
-                                    SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
-                                    delay(5000);
-                                }
-                                else
-                                {
                                     if (r.onFlagSafeBluecircle)
                                     {
                                         STATE_SPEED = "CHECKINT_WORKING_SECTION_NORMAL [FLAG] " + r.properties.Label;
@@ -217,7 +209,6 @@ namespace SeldatMRMS.Management
                                         SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
                                         delay(5000);
                                     }
-                                }
                                 break;
                             }
                             else if (onTouch0)
@@ -517,7 +508,7 @@ namespace SeldatMRMS.Management
                     break;
                 case RobotBahaviorAtAnyPlace.ROBOT_PLACE_ROAD:
                     // kiem tra vong tròn xanh
-                    SetSafeSmallcircle(true);
+                    SetSafeSmallcircle(false);
                     SetSafeOrgancircle(true);
                     SetSafeBluecircle(true);
                     CheckBlueCircle();
@@ -551,8 +542,8 @@ namespace SeldatMRMS.Management
                 if (r.properties.Label.Equals(this.properties.Label)) continue;
                 if (r.onFlagSafeOrgancircle)
                 {
-
-                    Point cc = Global_Object.CoorCanvas(properties.pose.Position);
+                    Point cc = r.CenterOnLineCv(-10);
+                    //Point cc = Global_Object.CoorCanvas(properties.pose.Position);
                     String robot = properties.Label;
                     String robot2 = r.properties.Label;
                     Point md = MiddleHeaderCv();
@@ -565,6 +556,11 @@ namespace SeldatMRMS.Management
                         break;
                     }
                 }
+                else
+                {
+                    STATE_SPEED = "ORGANC_NORMAL";
+                    SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
+                }
             }
             return flagInsideOrgancCircle;
         }
@@ -574,8 +570,7 @@ namespace SeldatMRMS.Management
             {
                 if (r.prioritLevel.IndexOnMainRoad == prioritLevel.IndexOnMainRoad)
                 {
-                    // va chạm vòng tròn an toàn nhỏ ra quyết định ngưng robot
-                    CheckIntersection(true,true);
+                    checkOrgancCircle();
                 }
                 else
                 {

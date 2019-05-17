@@ -1,4 +1,5 @@
 ﻿using SeldatMRMS.RobotView;
+using SeldatUnilever_Ver1._02.Management.RobotManagent;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -27,10 +28,11 @@ namespace SeldatMRMS.Management.RobotManagent
         Ellipse headerPoint2;
         Ellipse headerPoint3;
         Path safetyArea;
-        Ellipse SmallCircleArea;
-        Ellipse BlueCircleArea;
-        Ellipse OrganCircleArea;
-        Ellipse YellowCircleArea;
+
+        SafeCircle smallCircle;
+        SafeCircle blueCircle;
+        SafeCircle yellowCircle;
+        SafeCircle orangeCircle;
         double angle = 0.0f;
         public Point org = new Point(600, 350);
         public double rad = 0;
@@ -299,21 +301,10 @@ namespace SeldatMRMS.Management.RobotManagent
             canvas.Children.Add(headerPoint3);
             setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_DISCONNECT);
 
-            SmallCircleArea = new Ellipse();
-            SmallCircleArea.Stroke = new SolidColorBrush(Colors.Black);
-            canvas.Children.Add(SmallCircleArea);
-
-            BlueCircleArea = new Ellipse();
-            BlueCircleArea.Stroke = new SolidColorBrush(Colors.Blue);
-            canvas.Children.Add(BlueCircleArea);
-
-            OrganCircleArea = new Ellipse();
-            OrganCircleArea.Stroke = new SolidColorBrush(Colors.Orange);
-            canvas.Children.Add(OrganCircleArea);
-
-            YellowCircleArea = new Ellipse();
-            YellowCircleArea.Stroke = new SolidColorBrush(Colors.OrangeRed);
-            canvas.Children.Add(YellowCircleArea);
+            smallCircle = new SafeCircle(canvas,Colors.Black,1);
+            blueCircle = new SafeCircle(canvas, Colors.Blue, 1);
+            yellowCircle = new SafeCircle(canvas, Colors.YellowGreen, 1);
+            orangeCircle = new SafeCircle(canvas, Colors.Orange, 1);
             new Thread(() => {
                 while (true)
                 {
@@ -482,9 +473,9 @@ namespace SeldatMRMS.Management.RobotManagent
             Radius_Y = 4 * properties.Scale;
             Radius_O = 3 * properties.Scale;
             Center_S = 0;
-            Center_B = 3 * properties.Scale;
-            Center_Y = 3 * properties.Scale;
-            Center_O = -3 * properties.Scale;
+            Center_B = 4 * properties.Scale;
+            Center_Y = 4 * properties.Scale;
+            Center_O = -1 * properties.Scale;
         }
         private void DisConnectMenu(object sender, RoutedEventArgs e)
         {
@@ -579,31 +570,17 @@ namespace SeldatMRMS.Management.RobotManagent
                         setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_DISCONNECT);
 
                 }
-
-
-                //  if (properties.IsConnected)
-                {
-
-                    //Render Robot
                     this.border.Dispatcher.BeginInvoke(new System.Threading.ThreadStart(() =>
                     {
 
                         props.rbRotateTransform.Angle = -properties.pose.Angle;
                         Point cPoint = Global_Object.CoorCanvas(properties.pose.Position);
-                        // Console.WriteLine("Robot : " + cPoint.X + " / " + cPoint.Y);
-                        //props.rbTranslate = new TranslateTransform(cPoint.X, cPoint.Y);
-
                         props.rbTranslate = new TranslateTransform(cPoint.X - (border.Width / 2), cPoint.Y - (border.Height / 2));
-                        //  Console.WriteLine("----------");
-                        //  Console.WriteLine("Translate : " + props.rbTranslate.X + " / "+ props.rbTranslate.Y);
-
                         props.rbTransformGroup.Children[1] = props.rbTranslate;
                         //Render Status
                         props.contentRotateTransform.Angle = (properties.pose.Angle);
                         props.contentTranslate = new TranslateTransform(0, 0);
                         props.contentTransformGroup.Children[1] = props.contentTranslate;
-                        // headerPoint.RenderTransform = new TranslateTransform(MiddleHeader().X-5, MiddleHeader().Y-5);
-                        // headerPoint.RenderTransform = new TranslateTransform(Global_Object.CoorCanvas(MiddleHeader()).X-5, Global_Object.CoorCanvas(MiddleHeader()).Y+0.5);
                         headerPoint.RenderTransform = new TranslateTransform(MiddleHeaderCv().X - 2.5, MiddleHeaderCv().Y - 1);
                         headerPoint1.RenderTransform = new TranslateTransform(MiddleHeaderCv1().X - 2.5, MiddleHeaderCv1().Y - 1);
                         headerPoint2.RenderTransform = new TranslateTransform(MiddleHeaderCv2().X - 2.5, MiddleHeaderCv2().Y - 1);
@@ -634,87 +611,46 @@ namespace SeldatMRMS.Management.RobotManagent
 
                         if (onFlagSafeSmallcircle)
                         {
-                            SmallCircleArea.Width = 2 * Radius_S;
-                            SmallCircleArea.Height = 2 * Radius_S;
-
-                            TranslateTransform tr = new TranslateTransform(cPoint.X - (2 * Radius_S / 2), cPoint.Y - (2 * Radius_S / 2));
-                            SmallCircleArea.RenderTransform = tr;
+                            smallCircle.Set(cPoint, new Point(0, 0), new Point(Radius_S, Radius_S));
                         }
                         else
                         {
-
-                            SmallCircleArea.Width = Radius_S;
-                            SmallCircleArea.Height = Radius_S;
-
-                            TranslateTransform tr = new TranslateTransform(0, 0);
-                            SmallCircleArea.RenderTransform = tr;
+                            smallCircle.Set(cPoint, new Point(0, 0), new Point(Radius_S, Radius_S));
                         }
-
                         if (onFlagSafeYellowcircle)
                         {
-                            YellowCircleArea.Width = 2 * Radius_Y;
-                            YellowCircleArea.Height = 2 * Radius_Y;
-
-                            Point cc = CenterOnLineCv(30);
-                            TranslateTransform tr = new TranslateTransform(cc.X - (2 * Radius_Y / 2), cc.Y - (2 * Radius_Y / 2));
-                            YellowCircleArea.RenderTransform = tr;
+                            Point cc = CenterOnLineCv(Center_Y);
+                            yellowCircle.Set(cc, new Point(0,0), new Point(Radius_Y, Radius_Y));
                         }
                         else
                         {
-                            YellowCircleArea.Width = Radius_Y;
-                            YellowCircleArea.Height = Radius_Y;
-
-                            Point cc = CenterOnLineCv(30);
-                            TranslateTransform tr = new TranslateTransform(0, 0);
-                            YellowCircleArea.RenderTransform = tr;
+                            Point cc = CenterOnLineCv(Center_Y);
+                            yellowCircle.Set(cPoint, cc, new Point(Radius_Y, Radius_Y));
+                           
                         }
-
                         if (onFlagSafeBluecircle)
                         {
-                            BlueCircleArea.Width = 2 * Radius_B;
-                            BlueCircleArea.Height = 2 * Radius_B;
-
-                            Point cc = CenterOnLineCv(30);
-                            TranslateTransform tr = new TranslateTransform(cc.X - (2 * Radius_B / 2), cc.Y - (2 * Radius_B / 2));
-                            BlueCircleArea.RenderTransform = tr;
+                            Point cc = CenterOnLineCv(Center_B);
+                            blueCircle.Set(cc, new Point(0, 0), new Point(Radius_B, Radius_B));
                         }
                         else
                         {
-                            BlueCircleArea.Width = Radius_B;
-                            BlueCircleArea.Height = Radius_B;
-
-                            Point cc = CenterOnLineCv(30);
-                            TranslateTransform tr = new TranslateTransform(0, 0);
-                            BlueCircleArea.RenderTransform = tr;
+                            Point cc = CenterOnLineCv(Center_B);
+                            blueCircle.Set(cc, new Point(0, 0), new Point(Radius_B, Radius_B));
                         }
 
                         if (onFlagSafeOrgancircle)
                         {
-                            OrganCircleArea.Width = 2 * Radius_O;
-                            OrganCircleArea.Height = 2 * Radius_O;
+                            Point cc = CenterOnLineCv(Center_O);
+                            orangeCircle.Set(cc, new Point(0, 0), new Point(Radius_O, Radius_O));
 
-                            Point cc = CenterOnLineCv(0);
-                            TranslateTransform tr = new TranslateTransform(cc.X - (2 * Radius_O / 2), cc.Y - (2 * Radius_O / 2));
-                            OrganCircleArea.RenderTransform = tr;
-                            Console.WriteLine(tr.X+" / " + tr.Y);
-                          
                         }
                         else
                         {
-                            OrganCircleArea.Width = Radius_O;
-                            OrganCircleArea.Height = Radius_O;
-
-                            Point cc = CenterOnLineCv(0);
-                            TranslateTransform tr = new TranslateTransform(0, 0);
-                            OrganCircleArea.RenderTransform = tr;
+                            Point cc = CenterOnLineCv(Center_O);
+                            orangeCircle.Set(cc, new Point(0, 0), new Point(Radius_O, Radius_O));
                         }
-
-
-
-
                     }));
-                }
-
             }
             catch { }
 

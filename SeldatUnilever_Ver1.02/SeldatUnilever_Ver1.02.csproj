@@ -286,6 +286,7 @@
     <Compile Include="Management\RobotManagent\RobotUnity.cs" />
     <Compile Include="Management\RobotManagent\RobotUnityControl.cs" />
     <Compile Include="Management\RobotManagent\RobotUnityService.cs" />
+    <Compile Include="Management\RobotManagent\SafeCircle.cs" />
     <Compile Include="Management\RobotManagent\TrafficRobotUnity.cs" />
     <Compile Include="Management\Statistics\Statistics.xaml.cs">
       <DependentUpon>Statistics.xaml</DependentUpon>
