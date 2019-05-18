@@ -305,6 +305,11 @@ namespace SeldatMRMS.Management.RobotManagent
             blueCircle = new SafeCircle(canvas, Colors.Blue, 1);
             yellowCircle = new SafeCircle(canvas, Colors.YellowGreen, 1);
             orangeCircle = new SafeCircle(canvas, Colors.Orange, 1);
+
+            Center_S = 0;
+            Center_B = 40;
+            Center_Y = 10;
+            Center_O = -20;
             new Thread(() => {
                 while (true)
                 {
@@ -468,14 +473,11 @@ namespace SeldatMRMS.Management.RobotManagent
 
                 SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
             }
-            Radius_S = 4 * properties.Scale;
+            /*Radius_S = 4 * properties.Scale;
             Radius_B = 4 * properties.Scale;
             Radius_Y = 4 * properties.Scale;
-            Radius_O = 3 * properties.Scale;
-            Center_S = 0;
-            Center_B = 4 * properties.Scale;
-            Center_Y = 4 * properties.Scale;
-            Center_O = -1 * properties.Scale;
+            Radius_O = 3 * properties.Scale;*/
+     
         }
         private void DisConnectMenu(object sender, RoutedEventArgs e)
         {
@@ -508,10 +510,10 @@ namespace SeldatMRMS.Management.RobotManagent
             Radius_B = 0;
             Radius_O = 0;
             Radius_Y = 0;
-            Center_S = 0;
+           /* Center_S = 0;
             Center_B = 0;
             Center_Y = 0;
-            Center_O = 0;
+            Center_O = 0;*/
         }
         public void SetOnOffTrafficMenu(object sender, RoutedEventArgs e)
         {
@@ -608,48 +610,16 @@ namespace SeldatMRMS.Management.RobotManagent
                         props.rbID.Content = properties.pose.Position.X.ToString("0");
                         props.rbTask.Content = properties.pose.Position.Y.ToString("0");
 
+                        smallCircle.Set(cPoint, new Point(0, 0), new Point(Radius_S, Radius_S));
+   
+                        Point ccY = CenterOnLineCv(Center_Y);
+                        yellowCircle.Set(ccY, new Point(0,0), new Point(Radius_Y, Radius_Y));
 
-                        if (onFlagSafeSmallcircle)
-                        {
-                            smallCircle.Set(cPoint, new Point(0, 0), new Point(Radius_S, Radius_S));
-                        }
-                        else
-                        {
-                            smallCircle.Set(cPoint, new Point(0, 0), new Point(Radius_S, Radius_S));
-                        }
-                        if (onFlagSafeYellowcircle)
-                        {
-                            Point cc = CenterOnLineCv(Center_Y);
-                            yellowCircle.Set(cc, new Point(0,0), new Point(Radius_Y, Radius_Y));
-                        }
-                        else
-                        {
-                            Point cc = CenterOnLineCv(Center_Y);
-                            yellowCircle.Set(cPoint, cc, new Point(Radius_Y, Radius_Y));
-                           
-                        }
-                        if (onFlagSafeBluecircle)
-                        {
-                            Point cc = CenterOnLineCv(Center_B);
-                            blueCircle.Set(cc, new Point(0, 0), new Point(Radius_B, Radius_B));
-                        }
-                        else
-                        {
-                            Point cc = CenterOnLineCv(Center_B);
-                            blueCircle.Set(cc, new Point(0, 0), new Point(Radius_B, Radius_B));
-                        }
-
-                        if (onFlagSafeOrgancircle)
-                        {
-                            Point cc = CenterOnLineCv(Center_O);
-                            orangeCircle.Set(cc, new Point(0, 0), new Point(Radius_O, Radius_O));
-
-                        }
-                        else
-                        {
-                            Point cc = CenterOnLineCv(Center_O);
-                            orangeCircle.Set(cc, new Point(0, 0), new Point(Radius_O, Radius_O));
-                        }
+                        Point ccB = CenterOnLineCv(Center_B);
+                        blueCircle.Set(ccB, new Point(0, 0), new Point(Radius_B, Radius_B));
+                 
+                        Point ccO = CenterOnLineCv(Center_O);
+                        orangeCircle.Set(ccO, new Point(0, 0), new Point(Radius_O, Radius_O));
                     }));
             }
             catch { }

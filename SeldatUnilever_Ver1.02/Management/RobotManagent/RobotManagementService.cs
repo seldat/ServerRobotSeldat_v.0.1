@@ -173,17 +173,17 @@ namespace SeldatMRMS.Management.RobotManagent
             /*r1.properties.pose.Position = new Point(-8,8);
             r1.properties.pose.Angle = 90;
             r1.properties.pose.AngleW = 90 * Math.PI / 180;*/
-            r1.properties.pose.Position = new Point(-9, -3);
+            r1.properties.pose.Position = new Point(-10,-10);
             r1.properties.pose.Angle = -90;
             r1.properties.pose.AngleW = -90 * Math.PI / 180;
 
-            r1.properties.poseRoot.Position = new Point(-8, 8);
+         /*   r1.properties.poseRoot.Position = new Point(-8, 8);
             r1.properties.poseRoot.Angle = 90;
-            r1.properties.poseRoot.AngleW = 90 * Math.PI / 180;
+            r1.properties.poseRoot.AngleW = 90 * Math.PI / 180;*/
 
-            r2.properties.pose.Position = new Point(-5, 1);
-            r2.properties.pose.Angle = -140;
-            r2.properties.pose.AngleW = -140 * Math.PI / 180;
+            r2.properties.pose.Position = new Point(-10, -5);
+            r2.properties.pose.Angle = -80;
+            r2.properties.pose.AngleW = -80 * Math.PI / 180;
             /*  r2.properties.pose.Position = new Point(-5, 8);
               r2.properties.pose.Angle = 90;
               r2.properties.pose.AngleW = 90 * Math.PI / 180;*/

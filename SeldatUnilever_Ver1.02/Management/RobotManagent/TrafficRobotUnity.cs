@@ -143,7 +143,7 @@ namespace SeldatMRMS.Management
             prioritLevel = new PriorityLevel();
             robotRegistryToWorkingZone = new RobotRegistryToWorkingZone();
             robotTag = RobotStatus.IDLE;
-            //robotTag = RobotStatus.WORKING;
+           // robotTag = RobotStatus.WORKING;
             onFlagReadyGo = false;
 
 
@@ -511,7 +511,8 @@ namespace SeldatMRMS.Management
                     SetSafeSmallcircle(false);
                     SetSafeOrgancircle(true);
                     SetSafeBluecircle(true);
-                    CheckBlueCircle();
+                    if (CheckBlueCircle())
+                        break;
                     CheckYellowCircle();
                     break;
                 case RobotBahaviorAtAnyPlace.ROBOT_PLACE_HIGHWAY_DETECTLINE:
@@ -547,7 +548,10 @@ namespace SeldatMRMS.Management
                     String robot = properties.Label;
                     String robot2 = r.properties.Label;
                     Point md = MiddleHeaderCv();
-                    if (FindHeaderInsideCircleArea(md,cc,  r.Radius_O))
+                    Point md1 = MiddleHeaderCv1();
+                    Point md2 = MiddleHeaderCv2();
+                    Point md3 = MiddleHeaderCv3();
+                    if (FindHeaderInsideCircleArea(md,cc,  r.Radius_O) || FindHeaderInsideCircleArea(md1, cc, r.Radius_O) || FindHeaderInsideCircleArea(md2, cc, r.Radius_O))
                     {
                         STATE_SPEED = "ORGANC_STOP";
                         SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
@@ -564,8 +568,9 @@ namespace SeldatMRMS.Management
             }
             return flagInsideOrgancCircle;
         }
-        public void CheckBlueCircle() // khi robot bặt vòng tròn xanh. chính nó phải ngưng nếu dò ra có robot nào trong vùng vòng tròn này ngược lại với vòng tròn vàng
+        public bool CheckBlueCircle() // khi robot bặt vòng tròn xanh. chính nó phải ngưng nếu dò ra có robot nào trong vùng vòng tròn này ngược lại với vòng tròn vàng
         {
+            bool hasRobot = false;
             foreach (RobotUnity r in RobotUnitylist)
             {
                 if (r.prioritLevel.IndexOnMainRoad == prioritLevel.IndexOnMainRoad)
@@ -575,7 +580,7 @@ namespace SeldatMRMS.Management
                 else
                 {
                     // kiểm tra có robot nào nằm trong vòng tròn và trạng thái đang làm việc an toàn này kg?
-                    Point cB = CenterOnLineCv(Center_B);
+                    Point cB = CenterOnLineCv(Center_B); // TRONG TAM CUA NO
                     if(r.robotTag==RobotStatus.WORKING)
                     {
                          if (FindHeaderInsideCircleArea(r.MiddleHeaderCv(), cB, Radius_B) || FindHeaderInsideCircleArea(Global_Object.CoorCanvas(r.properties.pose.Position), cB, Radius_B))
@@ -583,6 +588,7 @@ namespace SeldatMRMS.Management
                             STATE_SPEED = "BLUEC_STOP "+ r.properties.Label;
                             SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
                             delay(5000);
+                            hasRobot = true;
                             break;
                         }
                         else
@@ -599,73 +605,35 @@ namespace SeldatMRMS.Management
                     }
                 }
             }
+            return hasRobot;
         }
-        public bool CheckRobotInCircleEachOther(RobotUnity sR,RobotUnity rR) // Source Robot / Remote Robot
-        {
-            // kiểm tra có robot nào nằm trong vòng tròn và trạng thái đang làm việc an toàn này kg?
-            Point cS = CenterOnLineCv(Center_S);
-            Point mdCV0 = sR.MiddleHeaderCv();
-            Point mdCV1 = sR.MiddleHeaderCv1();
-            Point mdCV2 = sR.MiddleHeaderCv2();
-            Point mdCV3 = sR.MiddleHeaderCv3();
-            Point Rp = Global_Object.CoorCanvas(sR.properties.pose.Position);
-            bool onTouchR = rR.FindHeaderInsideCircleArea(Rp, cS, rR.Radius_S);
-            bool onTouch0 = rR.FindHeaderInsideCircleArea(mdCV0, cS, rR.Radius_S);
-            bool onTouch1 = rR.FindHeaderInsideCircleArea(mdCV1, cS, rR.Radius_S);
-            bool onTouch2 = rR.FindHeaderInsideCircleArea(mdCV2, cS, rR.Radius_S);
-            bool onTouch3 = rR.FindHeaderInsideCircleArea(mdCV3, cS, rR.Radius_S);
-            if (sR.robotTag == RobotStatus.WORKING)
-            {
-                if (onTouchR || onTouch0 || onTouch1 || onTouch2 || onTouch3)
-                {
-                    return true;
-
-                }
-            }
-            return false;
-        }
-        public bool CheckRobotInCircleEachOther(Point [] headerPointArray, RobotUnity rR) // Source Robot / Remote Robot
-        {
-            // kiểm tra có robot nào nằm trong vòng tròn và trạng thái đang làm việc an toàn này kg?
-            Point cS = CenterOnLineCv(Center_S);
-            Point mdCV0 = headerPointArray[0];
-            Point mdCV1 = headerPointArray[1];
-            Point mdCV2 = headerPointArray[2];
-            Point mdCV3 = headerPointArray[3];
-            Point Rp = headerPointArray[4];
-            bool onTouchR = rR.FindHeaderInsideCircleArea(Rp, cS, rR.Radius_S);
-            bool onTouch0 = rR.FindHeaderInsideCircleArea(mdCV0, cS, rR.Radius_S);
-            bool onTouch1 = rR.FindHeaderInsideCircleArea(mdCV1, cS, rR.Radius_S);
-            bool onTouch2 = rR.FindHeaderInsideCircleArea(mdCV2, cS, rR.Radius_S);
-            bool onTouch3 = rR.FindHeaderInsideCircleArea(mdCV3, cS, rR.Radius_S);
-            if (onTouchR || onTouch0 || onTouch1 || onTouch2 || onTouch3)
-            {
-                    return true;
-
-            }
-            return false;
-        }
+       
 
         public bool CheckYellowCircle() // khi robot bặt vòng tròn vàng. tất cả robot khác ngưng nếu dò ra có robot nào trong vùng vòng tròn này
         {
-            bool flagInsideYellowCircle = false;
+            bool hasRobot = false;
             foreach (RobotUnity r in RobotUnitylist)
             {
                 // kiểm tra có robot chinh  nó có nằm trong vòng tròn vàng nào không nếu có ngưng
                 if (r.onFlagSafeYellowcircle)
                 {
-                    Point cY = CenterOnLineCv(Center_Y);
+                    Point cY = r.CenterOnLineCv(Center_Y); // TRONG TAM ROBOT KHAC
                     if (r.FindHeaderInsideCircleArea(MiddleHeaderCv(), cY, r.Radius_Y) )
                     {
                         STATE_SPEED = "YELLOWC_STOP";
                         SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
                         delay(5000);
-                        flagInsideYellowCircle = true;
+                        hasRobot = true;
                         break;
+                    }
+                    else
+                    {
+                        STATE_SPEED = "YELLOWC_NO_NORMAL";
+                        SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
                     }
                 }
             }
-            return flagInsideYellowCircle;
+            return hasRobot;
         }
         public void SetSafeYellowcircle(bool flagonoff)
         {
@@ -686,7 +654,7 @@ namespace SeldatMRMS.Management
         public void SetSafeSmallcircle(bool flagonoff)
         {
             if (flagonoff)
-                Radius_S = 40;
+                Radius_S = 30;
             else
                 Radius_S = 0;
             onFlagSafeSmallcircle = flagonoff;
