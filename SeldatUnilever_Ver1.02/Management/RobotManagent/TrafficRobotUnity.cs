@@ -142,8 +142,8 @@ namespace SeldatMRMS.Management
             RobotUnitylist = new List<RobotUnity>();
             prioritLevel = new PriorityLevel();
             robotRegistryToWorkingZone = new RobotRegistryToWorkingZone();
-            robotTag = RobotStatus.IDLE;
-           // robotTag = RobotStatus.WORKING;
+          robotTag = RobotStatus.IDLE;
+          //  robotTag = RobotStatus.WORKING;
             onFlagReadyGo = false;
 
 

@@ -170,24 +170,22 @@ namespace SeldatMRMS.Management.RobotManagent
 
             r3.TurnOnSupervisorTraffic(false);
 
-            /*r1.properties.pose.Position = new Point(-8,8);
+            r1.properties.pose.Position = new Point(-8,8);
             r1.properties.pose.Angle = 90;
-            r1.properties.pose.AngleW = 90 * Math.PI / 180;*/
-            r1.properties.pose.Position = new Point(-10,-10);
-            r1.properties.pose.Angle = -90;
-            r1.properties.pose.AngleW = -90 * Math.PI / 180;
+            r1.properties.pose.AngleW = 90 * Math.PI / 180;
+         /*   r1.properties.pose.Position = new Point(0.16,1.34);
+            r1.properties.pose.Angle = 0;
+            r1.properties.pose.AngleW = 0 * Math.PI / 180;*/
 
          /*   r1.properties.poseRoot.Position = new Point(-8, 8);
             r1.properties.poseRoot.Angle = 90;
             r1.properties.poseRoot.AngleW = 90 * Math.PI / 180;*/
 
-            r2.properties.pose.Position = new Point(-10, -5);
-            r2.properties.pose.Angle = -80;
-            r2.properties.pose.AngleW = -80 * Math.PI / 180;
-            /*  r2.properties.pose.Position = new Point(-5, 8);
+          
+             r2.properties.pose.Position = new Point(-5, 8);
               r2.properties.pose.Angle = 90;
-              r2.properties.pose.AngleW = 90 * Math.PI / 180;*/
-
+              r2.properties.pose.AngleW = 90 * Math.PI / 180;
+            
 
             r3.properties.pose.Position = new Point(-2, 8);
             r3.properties.pose.Angle =90;
