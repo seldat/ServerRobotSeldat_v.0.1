@@ -170,28 +170,32 @@ namespace SeldatMRMS.Management.RobotManagent
 
             r3.TurnOnSupervisorTraffic(false);
 
-            r1.properties.pose.Position = new Point(-8,8);
+
+            r1.properties.pose.Position = new Point(-8, 8);
             r1.properties.pose.Angle = 90;
             r1.properties.pose.AngleW = 90 * Math.PI / 180;
-         /*   r1.properties.pose.Position = new Point(0.16,1.34);
-            r1.properties.pose.Angle = 0;
-            r1.properties.pose.AngleW = 0 * Math.PI / 180;*/
 
-         /*   r1.properties.poseRoot.Position = new Point(-8, 8);
+            r1.properties.poseRoot.Position = new Point(-8, 8);
             r1.properties.poseRoot.Angle = 90;
-            r1.properties.poseRoot.AngleW = 90 * Math.PI / 180;*/
+            r1.properties.poseRoot.AngleW = 90 * Math.PI / 180;
 
-          
-             r2.properties.pose.Position = new Point(-5, 8);
-              r2.properties.pose.Angle = 90;
-              r2.properties.pose.AngleW = 90 * Math.PI / 180;
-            
+            r2.properties.pose.Position = new Point(-5, 8);
+            r2.properties.pose.Angle = 90;
+            r2.properties.pose.AngleW = 90 * Math.PI / 180;
+
+            r2.properties.poseRoot.Position = new Point(-5, 8);
+            r2.properties.poseRoot.Angle = 90;
+            r2.properties.poseRoot.AngleW = 90 * Math.PI / 180;
 
             r3.properties.pose.Position = new Point(-2, 8);
-            r3.properties.pose.Angle =90;
+            r3.properties.pose.Angle = 90;
             r3.properties.pose.AngleW = 90 * Math.PI / 180;
 
-          
+            r3.properties.poseRoot.Position = new Point(-2, 8);
+            r3.properties.poseRoot.Angle = 90;
+            r3.properties.poseRoot.AngleW = 90 * Math.PI / 180;
+
+
 
             r1.Registry(trafficManagementService);
             r2.Registry(trafficManagementService);
@@ -378,10 +382,11 @@ namespace SeldatMRMS.Management.RobotManagent
         }
         public void AddRobotUnityWaitTaskList(RobotUnity robot)
         {
-                if (!RobotUnityWaitTaskList.Contains(robot))
-                {
-                    RobotUnityWaitTaskList.Add(robot);
-                }
+            if (!RobotUnityWaitTaskList.Contains(robot))
+            {
+                RobotUnityWaitTaskList.Add(robot);
+            }
+            robot.mcuCtrl.TurnOnLampRb();
         }
         public void RemoveRobotUnityWaitTaskList(RobotUnity robot)
         {
@@ -453,6 +458,7 @@ namespace SeldatMRMS.Management.RobotManagent
             {
                 RobotUnityReadyList.Add(robot);
             }
+            robot.mcuCtrl.TurnOffLampRb();
         }
         
         public ResultRobotReady GetRobotUnityReadyItem0()

@@ -403,7 +403,14 @@ namespace SeldatMRMS {
                     catch { }
                     Array.Clear(lines, 0, 2 * 615);
                 }
-                File.AppendAllText(path,JsonConvert.SerializeObject(order) + Environment.NewLine);
+                try
+                {
+                    File.AppendAllText(path, JsonConvert.SerializeObject(order) + Environment.NewLine);
+                }
+                catch {
+                    Console.WriteLine("save file fail");
+                }
+                
                 Thread.Sleep(1000);
             }
             );

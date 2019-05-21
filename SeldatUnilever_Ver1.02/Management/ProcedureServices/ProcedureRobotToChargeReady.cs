@@ -594,7 +594,7 @@ namespace SeldatMRMS
                         break;
                     case RobotGoToReady.ROBREA_ROBOT_WAITINGREADY_FORCERELEASED:
                         // add to wait task;
-                        robot.robotTag = RobotStatus.IDLE;
+                        //robot.robotTag = RobotStatus.IDLE;
                         ReleaseProcedureHandler(this);
                         robot.setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_OK);
                         procedureCode = ProcedureControlServices.ProcedureCode.PROC_CODE_ROBOT_WAITINGTO_READY;
