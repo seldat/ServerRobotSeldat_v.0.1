@@ -127,8 +127,8 @@ namespace DoorControllerService
         private StateCtrl stateCtrlDoorBack;
         //public Stopwatch elapsedTimeFront_;
         //public Stopwatch elapsedTimeBack_;
-        private const UInt32 TIME_OUT_WAIT_DOOR_FRONT = 20000;
-        private const UInt32 TIME_OUT_WAIT_DOOR_BACK = 20000;
+        private const UInt32 TIME_OUT_WAIT_DOOR_FRONT = 8000;
+        private const UInt32 TIME_OUT_WAIT_DOOR_BACK = 8000;
         private const UInt32 NUM_TRY_OPEN_DOOR = 10;
         private const UInt32 NUM_TRY_CLOSE_DOOR = 10;
         private UInt32 numTryOpen = 0;
