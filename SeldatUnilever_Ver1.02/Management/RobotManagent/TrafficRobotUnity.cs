@@ -167,9 +167,9 @@ namespace SeldatMRMS.Management
         {
             this.trafficManagementService = trafficManagementService;
         }
-        public void CheckIntersection(bool turnon, bool sameindexRoad=false)
+        public bool CheckIntersection(bool turnon, bool sameindexRoad=false)
         {
-            
+            bool onstop = false;
             if (turnon)
             {
                 if (RobotUnitylist.Count > 0)
@@ -200,14 +200,15 @@ namespace SeldatMRMS.Management
                                 //  robotLogOut.ShowTextTraffic(r.properties.Label+" => CheckIntersection");   
                                     if (r.onFlagSafeBluecircle)
                                     {
-                                        STATE_SPEED = "CHECKINT_WORKING_SECTION_NORMAL [FLAG] " + r.properties.Label;
-                                        SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
+                                       /* STATE_SPEED = "CHECKINT_WORKING_SECTION_NORMAL [FLAG] " + r.properties.Label;
+                                        SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL*/
                                     }
                                     else
                                     {
                                         STATE_SPEED = "CHECKINT_WORKING_SECTION_STOP " + r.properties.Label;
                                         SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
                                         delay(5000);
+                                        onstop = true;
                                     }
                                 break;
                             }
@@ -216,22 +217,26 @@ namespace SeldatMRMS.Management
                                 //  robotLogOut.ShowTextTraffic(r.properties.Label+" => CheckIntersection");
                                 STATE_SPEED = "CHECKINT_WORKING_SECTION_SLOW " + r.properties.Label;
                                 SetSpeed(RobotSpeedLevel.ROBOT_SPEED_SLOW);
-                               
+                                onstop = true;
+                                delay(5000);
+                                break;
+
                             }
-                            else
+                          /*  else
                             {
                                 STATE_SPEED = "CHECKINT_WORKING_SECTION_NORMAL ";
                                 SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
-                            }
+                            }*/
                         }
-                        else
+                      /*  else
                         {
                             STATE_SPEED = "CHECKINT_IDLE_SECTION_NORMAL ";
                             SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
-                        }
+                        }*/
                     }
                 }
             }
+            return onstop;
            
         }
         public void delay(int ms)
@@ -494,7 +499,13 @@ namespace SeldatMRMS.Management
                     SetSafeSmallcircle(true);
                     SetSafeBluecircle(false);
                     SetSafeYellowcircle(false);
-                    CheckIntersection(true);
+                    if (CheckIntersection(true))
+                        break;
+                    else
+                    {
+                        STATE_SPEED = "CHECKINT_WORKING_SECTION_NORMAL ";
+                        SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
+                    }
                     break;
                 case RobotBahaviorAtAnyPlace.ROBOT_PLACE_HIGHWAY:
                     if (!CheckYellowCircle())
@@ -506,8 +517,13 @@ namespace SeldatMRMS.Management
                         SetSafeYellowcircle(false);
                         if (checkOrgancCircle())
                             break;
+                        else if (CheckIntersection(true))
+                            break;
                         else
-                            CheckIntersection(true);
+                        {
+                            STATE_SPEED = "CHECKINT_WORKING_SECTION_NORMAL ";
+                            SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
+                        }
                     }
                     break;
                 case RobotBahaviorAtAnyPlace.ROBOT_PLACE_ROAD:
@@ -517,7 +533,13 @@ namespace SeldatMRMS.Management
                     SetSafeBluecircle(true);
                     if (CheckBlueCircle())
                         break;
-                    CheckYellowCircle();
+                    if (CheckYellowCircle())
+                        break;
+                    else
+                    {
+                        STATE_SPEED = "CHECKINT_WORKING_SECTION_NORMAL ";
+                        SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
+                    }
                     break;
                 case RobotBahaviorAtAnyPlace.ROBOT_PLACE_HIGHWAY_DETECTLINE:
                     // SetSafeSmallcircle(true);
@@ -531,7 +553,13 @@ namespace SeldatMRMS.Management
                     SetSafeSmallcircle(false);
                     SetSafeBluecircle(false);
                     SetSafeYellowcircle(false);
-                    CheckIntersection(false);
+                    if (CheckIntersection(false))
+                        break;
+                    else
+                    {
+                        STATE_SPEED = "CHECKINT_WORKING_SECTION_NORMAL ";
+                        SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
+                    }
                     // tắt vòng tròn nhỏ
                     break;
             }
@@ -540,7 +568,7 @@ namespace SeldatMRMS.Management
       
         public bool checkOrgancCircle()
         {
-            bool flagInsideOrgancCircle = false;
+            bool onstop = false;
             foreach (RobotUnity r in RobotUnitylist)
             {
                 // kiểm tra có robot chinh  nó có nằm trong vòng tròn vàng nào không nếu có ngưng\
@@ -560,26 +588,30 @@ namespace SeldatMRMS.Management
                         STATE_SPEED = "ORGANC_STOP";
                         SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
                         delay(5000);
-                        flagInsideOrgancCircle = true;
+                        onstop = true;
                         break;
                     }
                 }
-                else
+              /*  else
                 {
                     STATE_SPEED = "ORGANC_NORMAL";
                     SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
-                }
+                }*/
             }
-            return flagInsideOrgancCircle;
+            return onstop;
         }
         public bool CheckBlueCircle() // khi robot bặt vòng tròn xanh. chính nó phải ngưng nếu dò ra có robot nào trong vùng vòng tròn này ngược lại với vòng tròn vàng
         {
-            bool hasRobot = false;
+            bool onStop = false;
             foreach (RobotUnity r in RobotUnitylist)
             {
                 if (r.prioritLevel.IndexOnMainRoad == prioritLevel.IndexOnMainRoad)
                 {
-                    checkOrgancCircle();
+                    if (checkOrgancCircle())
+                    {
+                        onStop = true;
+                        break;
+                    }
                 }
                 else
                 {
@@ -592,30 +624,30 @@ namespace SeldatMRMS.Management
                             STATE_SPEED = "BLUEC_STOP "+ r.properties.Label;
                             SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
                             delay(5000);
-                            hasRobot = true;
+                            onStop = true;
                             break;
                         }
-                        else
+                       /* else
                         {
                             STATE_SPEED = "BLUEC_WORKING_NORMAL ";
                             SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
-                        }
+                        }*/
 
                     }
-                    else
+                   /* else
                     {
                         STATE_SPEED = "BLUEC_IDLE_NORMAL ";
                         SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
-                    }
+                    }*/
                 }
             }
-            return hasRobot;
+            return onStop;
         }
        
 
         public bool CheckYellowCircle() // khi robot bặt vòng tròn vàng. tất cả robot khác ngưng nếu dò ra có robot nào trong vùng vòng tròn này
         {
-            bool hasRobot = false;
+            bool onstop = false;
             foreach (RobotUnity r in RobotUnitylist)
             {
                 // kiểm tra có robot chinh  nó có nằm trong vòng tròn vàng nào không nếu có ngưng
@@ -627,17 +659,17 @@ namespace SeldatMRMS.Management
                         STATE_SPEED = "YELLOWC_STOP";
                         SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
                         delay(5000);
-                        hasRobot = true;
+                        onstop = true;
                         break;
                     }
-                    else
+                 /*   else
                     {
                         STATE_SPEED = "YELLOWC_NO_NORMAL";
                         SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
-                    }
+                    }*/
                 }
             }
-            return hasRobot;
+            return onstop;
         }
         public void SetSafeYellowcircle(bool flagonoff)
         {
