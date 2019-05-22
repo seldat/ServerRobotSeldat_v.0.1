@@ -165,18 +165,18 @@ namespace DoorControllerService
             switch (type)
             {
                 case DoorType.DOOR_FRONT:
-                    //if((this.stateCtrlDoorFront == StateCtrl.DOOR_ST_IDLE)|| (this.stateCtrlDoorFront == StateCtrl.DOOR_ST_ERROR)||
-                    //(this.stateCtrlDoorFront == StateCtrl.DOOR_ST_OPEN_FRONT_SUCCESS)|| (this.stateCtrlDoorFront == StateCtrl.DOOR_ST_CLOSE_DOOR_FRONT_SUCCESS))
-                    //{
-                    this.stateCtrlDoorFront = StateCtrl.DOOR_ST_OPEN_FRONT;
-                    //}
+                    if ((this.stateCtrlDoorFront == StateCtrl.DOOR_ST_IDLE) || (this.stateCtrlDoorFront == StateCtrl.DOOR_ST_ERROR) ||
+                    (this.stateCtrlDoorFront == StateCtrl.DOOR_ST_OPEN_FRONT_SUCCESS) || (this.stateCtrlDoorFront == StateCtrl.DOOR_ST_CLOSE_DOOR_FRONT_SUCCESS))
+                    {
+                        this.stateCtrlDoorFront = StateCtrl.DOOR_ST_OPEN_FRONT;
+                    }
                     break;
                 case DoorType.DOOR_BACK:
-                    //if ((this.stateCtrlDoorBack == StateCtrl.DOOR_ST_IDLE) || (this.stateCtrlDoorBack == StateCtrl.DOOR_ST_ERROR) ||
-                    //(this.stateCtrlDoorBack == StateCtrl.DOOR_ST_OPEN_DOOR_BACK_SUCCESS) || (this.stateCtrlDoorBack == StateCtrl.DOOR_ST_CLOSE_DOOR_BACK_SUCCESS))
-                    //{
-                    this.stateCtrlDoorBack = StateCtrl.DOOR_ST_OPEN_DOOR_BACK;
-                    //}
+                    if ((this.stateCtrlDoorBack == StateCtrl.DOOR_ST_IDLE) || (this.stateCtrlDoorBack == StateCtrl.DOOR_ST_ERROR) ||
+                    (this.stateCtrlDoorBack == StateCtrl.DOOR_ST_OPEN_DOOR_BACK_SUCCESS) || (this.stateCtrlDoorBack == StateCtrl.DOOR_ST_CLOSE_DOOR_BACK_SUCCESS))
+                    {
+                        this.stateCtrlDoorBack = StateCtrl.DOOR_ST_OPEN_DOOR_BACK;
+                    }
                     break;
                 default:
                     break;
