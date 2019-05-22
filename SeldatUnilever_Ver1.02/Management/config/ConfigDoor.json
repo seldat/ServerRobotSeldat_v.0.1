@@ -1,0 +1,62 @@
+[
+  {
+    "PointCheckInGate": {
+      "Position": "2.54,-6.78",
+      "VFbx": 0.0,
+      "VFby": 0.0,
+      "VFbw": 0.0,
+      "VCtrlx": 0.0,
+      "VCtrly": 0.0,
+      "VCtrlw": 0.0,
+      "AngleW": 1.5707963267948966,
+      "Angle": 90.0
+    },
+    "PointFrontLine": {
+      "Position": "17.88,0.7",
+      "VFbx": 0.0,
+      "VFby": 0.0,
+      "VFbw": 0.0,
+      "VCtrlx": 0.0,
+      "VCtrly": 0.0,
+      "VCtrlw": 0.0,
+      "AngleW": 0.0,
+      "Angle": 0.0
+    },
+    "Ip": "192.168.1.240",
+    "Port": 8081,
+    "Id": 1,
+    "PointCheckInGateStr": "2.54,-6.78,90",
+    "PointFrontLineStr": "17.88,0.7,0",
+    "infoPallet": "{\"pallet\":0,\"dir_main\":1,\"dir_out\":1,\"bay\":1,\"hasSubLine\":\"no\",\"line_ord\":0,\"dir_sub\":0,\"row\":0}"
+  },
+  {
+    "PointCheckInGate": {
+      "Position": "2.54,-6.78",
+      "VFbx": 0.0,
+      "VFby": 0.0,
+      "VFbw": 0.0,
+      "VCtrlx": 0.0,
+      "VCtrly": 0.0,
+      "VCtrlw": 0.0,
+      "AngleW": 1.5707963267948966,
+      "Angle": 90.0
+    },
+    "PointFrontLine": {
+      "Position": "17.88,0.7",
+      "VFbx": 0.0,
+      "VFby": 0.0,
+      "VFbw": 0.0,
+      "VCtrlx": 0.0,
+      "VCtrly": 0.0,
+      "VCtrlw": 0.0,
+      "AngleW": 0.0,
+      "Angle": 0.0
+    },
+    "Ip": "192.168.1.241",
+    "Port": 8081,
+    "Id": 2,
+    "PointCheckInGateStr": "2.54,-6.78,90",
+    "PointFrontLineStr": "17.88,0.7,0",
+    "infoPallet": "{\"pallet\":1,\"dir_main\":1,\"dir_out\":1,\"bay\":1,\"hasSubLine\":\"no\",\"line_ord\":0,\"dir_sub\":0,\"row\":0}"
+  }
+]

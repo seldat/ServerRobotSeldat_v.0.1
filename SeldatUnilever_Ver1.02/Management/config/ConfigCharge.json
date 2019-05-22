@@ -1,0 +1,41 @@
+[
+  {
+    "PointFrontLine": {
+      "Position": "3.25,0.69",
+      "AngleW": 3.1415926535897931,
+      "Angle": 180.0
+    },
+    "Ip": "192.168.1.200",
+    "Port": 8081,
+    "Id": 1,
+    "IdStr": 0,
+    "PointFrontLineStr": "-2.75,0.69,180",
+    "PointOfPallet": "{\"pallet\":2,\"bay\":1,\"dir_sub\":0,\"dir_main\":1,\"dir_out\":1,\"line_ord\":0,\"hasSubLine\":\"no\",\"row\":0}"
+  },
+  {
+    "PointFrontLine": {
+      "Position": "0.25,0.69",
+      "AngleW": 3.1415926535897931,
+      "Angle": 180.0
+    },
+    "Ip": "192.168.1.201",
+    "Port": 8081,
+    "Id": 2,
+    "IdStr": 0,
+    "PointFrontLineStr": "0.25,0.69,180",
+    "PointOfPallet": "{\"pallet\":2,\"bay\":1,\"dir_sub\":0,\"dir_main\":1,\"dir_out\":1,\"line_ord\":0,\"hasSubLine\":\"no\",\"row\":0}"
+  },
+  {
+    "PointFrontLine": {
+      "Position": "-2.75,0.69",
+      "AngleW": 3.1415926535897931,
+      "Angle": 180.0
+    },
+    "Ip": "192.168.1.202",
+    "Port": 8081,
+    "Id": 3,
+    "IdStr": 0,
+    "PointFrontLineStr": "3.25,0.69,180",
+    "PointOfPallet": "{\"pallet\":2,\"bay\":1,\"dir_sub\":0,\"dir_main\":1,\"dir_out\":1,\"line_ord\":0,\"hasSubLine\":\"no\",\"row\":0}"
+  }
+]

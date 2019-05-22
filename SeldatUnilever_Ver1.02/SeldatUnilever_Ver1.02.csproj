@@ -494,6 +494,12 @@
       <DependentUpon>SetLineParams.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Communication\Communication.zip" />
+    <None Include="Management\config\ConfigCharge.json" />
+    <None Include="Management\config\ConfigDoor.json" />
+    <None Include="Management\config\ConfigRiskZone.json" />
+    <None Include="Management\config\ConfigRobot.json" />
+    <None Include="Management\config\ConfigTrafficZone.json" />
+    <None Include="Management\config\ConfigZone.json" />
     <None Include="Management\DeviceManagement\Machine.Json" />
     <None Include="Management\DoorServices\DoorServices.zip" />
     <None Include="Management\Media\8400001A_small5M2.stl" />
