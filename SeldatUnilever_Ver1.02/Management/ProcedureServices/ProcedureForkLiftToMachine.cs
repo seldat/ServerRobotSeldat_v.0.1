@@ -316,7 +316,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                         robot.orderItem = null;
                         //Global_Object.onFlagDoorBusy = false;
                         robot.SwitchToDetectLine(false);
-                        robot.robotTag = RobotStatus.IDLE;
+                  //      robot.robotTag = RobotStatus.IDLE;
                         robot.ReleaseWorkingZone();
                      
                         rb.PreProcedureAs = ProcedureControlAssign.PRO_FORKLIFT_TO_MACHINE;

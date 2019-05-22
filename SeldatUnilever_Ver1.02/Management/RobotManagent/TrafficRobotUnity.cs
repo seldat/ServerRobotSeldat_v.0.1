@@ -490,6 +490,10 @@ namespace SeldatMRMS.Management
             switch (robotBahaviorAtAnyPlace)
             {
                 case RobotBahaviorAtAnyPlace.ROBOT_PLACE_IDLE:
+                    SetSafeOrgancircle(false);
+                    SetSafeSmallcircle(true);
+                    SetSafeBluecircle(false);
+                    SetSafeYellowcircle(false);
                     CheckIntersection(true);
                     break;
                 case RobotBahaviorAtAnyPlace.ROBOT_PLACE_HIGHWAY:

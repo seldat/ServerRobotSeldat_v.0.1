@@ -330,7 +330,7 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                         }
                         break;
                     case ProcessAssignTaskReady.PROC_READY_ASSIGN_ANTASK:
-                        if (!robotatready.CheckRobotWorkinginReady() || !trafficService.HasRobotUnityinArea("RD5"))
+                        if (!robotatready.CheckRobotWorkinginReady() || !trafficService.HasRobotUnityinArea("RD5") || !trafficService.HasRobotUnityinArea("OPZ"))
                         {
                             robotatready.TurnOnSupervisorTraffic(true);
                             Console.WriteLine(processAssignTaskReady);

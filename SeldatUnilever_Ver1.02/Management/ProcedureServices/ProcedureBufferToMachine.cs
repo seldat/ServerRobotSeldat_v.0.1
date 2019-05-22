@@ -379,7 +379,7 @@ namespace SeldatMRMS
                         robot.orderItem = null;
                         robot.SwitchToDetectLine(false);
                         // Release WorkinZone Robot
-                        robot.robotTag = RobotStatus.IDLE;
+                   //   robot.robotTag = RobotStatus.IDLE;
                         rb.PreProcedureAs = ProcedureControlAssign.PRO_BUFFER_TO_MACHINE;
                         // if (errorCode == ErrorCode.RUN_OK) {
                         ReleaseProcedureHandler(this);

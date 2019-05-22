@@ -359,7 +359,7 @@ namespace SeldatMRMS
                     case BufferToReturn.BUFRET_ROBOT_RELEASED: // trả robot về robotmanagement để nhận quy trình mới
                         robot.orderItem = null;
                         robot.SwitchToDetectLine(false);
-                        robot.robotTag = RobotStatus.IDLE;
+                       // robot.robotTag = RobotStatus.IDLE;
                         robot.ReleaseWorkingZone();
                         rb.PreProcedureAs = ProcedureControlAssign.PRO_BUFFER_TO_RETURN;
                         // if (errorCode == ErrorCode.RUN_OK) {

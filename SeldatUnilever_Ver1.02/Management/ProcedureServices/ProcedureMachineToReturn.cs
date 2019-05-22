@@ -322,7 +322,7 @@ namespace SeldatMRMS
                         break;
                     case MachineToReturn.MACRET_ROBOT_RELEASED: // trả robot về robotmanagement để nhận quy trình mới
                         robot.orderItem = null;
-                        robot.robotTag = RobotStatus.IDLE;
+                     //   robot.robotTag = RobotStatus.IDLE;
                         rb.PreProcedureAs = ProcedureControlAssign.PRO_MACHINE_TO_RETURN;
                         // if (errorCode == ErrorCode.RUN_OK) {
                         ReleaseProcedureHandler(this);
