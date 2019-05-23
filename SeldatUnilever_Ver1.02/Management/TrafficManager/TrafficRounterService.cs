@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using static SeldatMRMS.Management.TrafficRobotUnity;
 
 namespace SelDatUnilever_Ver1._00.Management.TrafficManager
 {
@@ -324,15 +325,17 @@ namespace SelDatUnilever_Ver1._00.Management.TrafficManager
             }
             return index;
         }
-        public int FindAmoutOfRobotUnityinArea(String areaName)
+        public int FindAmoutOfRobotUnityinArea(String AreaName)
         {
             int amout = 0;
             foreach (RobotUnity r in RobotUnityListOnTraffic)
             {
-
-                if (ExtensionService.IsInPolygon(ZoneRegisterList["areaName"].GetZone(), r.properties.pose.Position))
+                if (ZoneRegisterList.ContainsKey(AreaName))
                 {
-                    amout++;
+                    if (ExtensionService.IsInPolygon(ZoneRegisterList[AreaName].GetZone(), r.properties.pose.Position))
+                    {
+                        amout++;
+                    }
                 }
             }
             return amout;
@@ -469,35 +472,43 @@ namespace SelDatUnilever_Ver1._00.Management.TrafficManager
             catch { }
             return hasRobot;
         }
-        public bool HasRobotUnityinArea(String AreaName)
+        public bool HasRobotUnityinArea(String zoneName)
         {
             bool hasRobot = false;
             foreach (RobotUnity r in RobotUnityListOnTraffic) // xác định robot có trong khu vực
             {
-
-                if (ExtensionService.IsInPolygon(ZoneRegisterList[AreaName].GetZone(), r.properties.pose.Position))
+                if (r.robotTag == RobotStatus.WORKING)
                 {
-                    hasRobot = true;
-                    break;
+                    if (ZoneRegisterList.ContainsKey(zoneName))
+                    {
+                        if (ExtensionService.IsInPolygon(ZoneRegisterList[zoneName].GetZone(), r.properties.pose.Position))
+                        {
+                            hasRobot = true;
+                            break;
+                        }
+                    }
                 }
             }
             return hasRobot;
         }
-        public bool HasRobotUnityinArea(String AreaName, RobotUnity robot)
+        public bool HasRobotUnityinArea(String zoneName, RobotUnity robot)
         {
             bool hasRobot = false;
-            if (ExtensionService.IsInPolygon(ZoneRegisterList[AreaName].GetZone(), robot.properties.pose.Position))
+            if (ZoneRegisterList.ContainsKey(zoneName))
             {
-                hasRobot = true;
+                if (ExtensionService.IsInPolygon(ZoneRegisterList[zoneName].GetZone(), robot.properties.pose.Position))
+                {
+                    hasRobot = true;
+                }
             }
             return hasRobot;
         }
-        public bool RobotIsInArea(String AreaName, Point position)
+        public bool RobotIsInArea(String zoneName, Point position)
         {
             bool ret = false;
             foreach (var r in ZoneRegisterList.Values) // xác định khu vực đến
             {
-                if (r.NameId.Equals(AreaName))
+                if (r.NameId.Equals(zoneName))
                 {
                     if (ExtensionService.IsInPolygon(r.GetZone(), position))
                     {

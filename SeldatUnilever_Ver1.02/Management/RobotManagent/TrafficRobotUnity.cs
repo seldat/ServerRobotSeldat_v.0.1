@@ -216,7 +216,7 @@ namespace SeldatMRMS.Management
                             {
                                 //  robotLogOut.ShowTextTraffic(r.properties.Label+" => CheckIntersection");
                                 STATE_SPEED = "CHECKINT_WORKING_SECTION_SLOW " + r.properties.Label;
-                                SetSpeed(RobotSpeedLevel.ROBOT_SPEED_SLOW);
+                                SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
                                 onstop = true;
                                 delay(5000);
                                 break;
@@ -503,7 +503,7 @@ namespace SeldatMRMS.Management
                         break;
                     else
                     {
-                        STATE_SPEED = "CHECKINT_WORKING_SECTION_NORMAL ";
+                        STATE_SPEED = "ROBOT_PLACE_IDLE_NORMAL ";
                         SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
                     }
                     break;
@@ -521,7 +521,7 @@ namespace SeldatMRMS.Management
                             break;
                         else
                         {
-                            STATE_SPEED = "CHECKINT_WORKING_SECTION_NORMAL ";
+                            STATE_SPEED = "ROBOT_PLACE_HIGHWAY_NORMAL ";
                             SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
                         }
                     }
@@ -537,7 +537,7 @@ namespace SeldatMRMS.Management
                         break;
                     else
                     {
-                        STATE_SPEED = "CHECKINT_WORKING_SECTION_NORMAL ";
+                        STATE_SPEED = "ROBOT_PLACE_ROAD_NORMAL ";
                         SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
                     }
                     break;
@@ -557,7 +557,7 @@ namespace SeldatMRMS.Management
                         break;
                     else
                     {
-                        STATE_SPEED = "CHECKINT_WORKING_SECTION_NORMAL ";
+                        STATE_SPEED = "ROBOT_PLACE_BUFFER_NORMAL ";
                         SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
                     }
                     // tắt vòng tròn nhỏ

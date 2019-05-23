@@ -303,7 +303,7 @@ namespace SeldatMRMS.Management.RobotManagent
 
             smallCircle = new SafeCircle(canvas,Colors.Black,1);
             blueCircle = new SafeCircle(canvas, Colors.Blue, 1);
-            yellowCircle = new SafeCircle(canvas, Colors.YellowGreen, 1);
+            yellowCircle = new SafeCircle(canvas, Colors.Red, 1);
             orangeCircle = new SafeCircle(canvas, Colors.Orange, 1);
 
             Center_S = 0;

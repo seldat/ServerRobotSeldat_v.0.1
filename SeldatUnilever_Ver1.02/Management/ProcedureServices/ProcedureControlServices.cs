@@ -272,6 +272,7 @@ namespace SeldatMRMS {
             Debug (obj,"ErrorCode -> " + getStringError(p.errorCode));
             robot.RegistrySolvedForm(this);
             selectHandleError = SelectHandleError.CASE_ERROR_EXIT;
+            robot.ShowText("CASE_ERROR_EXIT");
             while (keepRun)
             {
                 switch (selectHandleError)

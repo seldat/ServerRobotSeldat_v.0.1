@@ -613,27 +613,30 @@ namespace SeldatMRMS
         // xác định còn task trong order
         public bool DetermineHasTaskWaitingAnRobotAvailable()
         {
-            
-            List<DeviceItem> deviceList = deviceService.GetDeviceItemList();
-           if (deviceList.Count>0)
+            try
             {
-                int cntAmoutOrderItem = 0;
-                foreach (DeviceItem item in deviceList)
+                List<DeviceItem> deviceList = deviceService.GetDeviceItemList();
+                if (deviceList.Count > 0)
                 {
-                    if(item.PendingOrderList.Count>0)
+                    int cntAmoutOrderItem = 0;
+                    foreach (DeviceItem item in deviceList)
                     {
-                        cntAmoutOrderItem++;
+                        if (item.PendingOrderList.Count > 0)
+                        {
+                            cntAmoutOrderItem++;
+                        }
                     }
+                    if (cntAmoutOrderItem > 0) //
+                    {
+                        if (robotService.RobotUnityWaitTaskList.Count > 0 || robotService.RobotUnityReadyList.Count > 0)
+                            return false;
+                        else
+                            return true;
+                    }
+
                 }
-                if (cntAmoutOrderItem >0) //
-                {
-                    if (robotService.RobotUnityWaitTaskList.Count > 0 || robotService.RobotUnityReadyList.Count > 0)
-                        return false;
-                    else
-                        return true;
-                }
-               
             }
+            catch { }
             return false;
         }
         public override void FinishStatesCallBack(Int32 message)

@@ -330,14 +330,17 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                         }
                         break;
                     case ProcessAssignTaskReady.PROC_READY_ASSIGN_ANTASK:
-                        if (!robotatready.CheckRobotWorkinginReady() || !trafficService.HasRobotUnityinArea("RD5") || !trafficService.HasRobotUnityinArea("OPZ"))
+                        if (!robotatready.CheckRobotWorkinginReady() )
                         {
-                            robotatready.TurnOnSupervisorTraffic(true);
-                            Console.WriteLine(processAssignTaskReady);
-                            SelectProcedureItem(robotatready, orderItem_ready);
-                            deviceItemsList[0].RemoveFirstOrder();
-                            MoveElementToEnd(); // sort Task List
-                            processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_CHECK_ROBOT_OUTSIDEREADY;
+                            if (!trafficService.HasRobotUnityinArea("RD5") && !trafficService.HasRobotUnityinArea("OPZ"))
+                            {
+                                robotatready.TurnOnSupervisorTraffic(true);
+                                Console.WriteLine(processAssignTaskReady);
+                                SelectProcedureItem(robotatready, orderItem_ready);
+                                deviceItemsList[0].RemoveFirstOrder();
+                                MoveElementToEnd(); // sort Task List
+                                processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_CHECK_ROBOT_OUTSIDEREADY;
+                            }
                         }
                         break;
                     case ProcessAssignTaskReady.PROC_READY_SET_TRAFFIC_RISKAREA_ON:
