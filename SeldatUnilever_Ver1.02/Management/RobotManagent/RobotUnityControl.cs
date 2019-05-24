@@ -333,7 +333,7 @@ namespace SeldatMRMS.Management.RobotManagent
             StandardInt32 batVal = (StandardInt32) message;
             properties.BatteryLevelRb = batVal.data;
             if (properties.RequestChargeBattery == false) {
-                if (properties.BatteryLevelRb < properties.BatteryLowLevel) {
+                if (properties.BatteryLevelRb <= properties.BatteryLowLevel) {
                     properties.RequestChargeBattery = true;
                 }
             } else {
