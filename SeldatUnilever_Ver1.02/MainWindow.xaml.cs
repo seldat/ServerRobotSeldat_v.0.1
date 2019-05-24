@@ -343,8 +343,8 @@ namespace SeldatUnilever_Ver1._02
             btn_Stop.IsEnabled = false;
             btn_Play_icon.Foreground = new SolidColorBrush(Colors.Green);
             btn_Stop_icon.Foreground = new SolidColorBrush(Colors.Red);
-            unityService.assigmentTaskService.Dispose();
-
+            //unityService.assigmentTaskService.Dispose();
+            Global_Object.onAcceptDevice = false;
         }
 
         private void btn_Play_Click(object sender, RoutedEventArgs e)
@@ -354,7 +354,7 @@ namespace SeldatUnilever_Ver1._02
             btn_Stop.IsEnabled = true;
             btn_Play_icon.Foreground = new SolidColorBrush(Colors.Red);
             btn_Stop_icon.Foreground = new SolidColorBrush(Colors.Green);
-            unityService.assigmentTaskService.Start();
+            Global_Object.onAcceptDevice = true;
         }
 
         private void btn_RiskArea_Click(object sender, RoutedEventArgs e)

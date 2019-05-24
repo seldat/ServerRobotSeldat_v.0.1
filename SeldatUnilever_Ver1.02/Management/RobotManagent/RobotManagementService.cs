@@ -64,7 +64,7 @@ namespace SeldatMRMS.Management.RobotManagent
             prop1.ipMcuCtrl = "192.168.1.211";
             prop1.portMcuCtrl = 8081;
             prop1.DistInter = 8;
-            prop1.BatteryLowLevel =BAT_LOW_LEVEL;
+            prop1.BatteryLowLevel = 25;// BAT_LOW_LEVEL;
             prop1.RequestChargeBattery = false;
             prop1.Width = 1.8;
             prop1.Height = 2.5;
@@ -517,12 +517,12 @@ namespace SeldatMRMS.Management.RobotManagent
         }
         public void Stop()
         {
-            foreach (RobotUnity r in RobotUnityReadyList)
+            foreach (RobotUnity r in RobotUnityRegistedList.Values)
                 r.SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
         }
         public void Run()
         {
-            foreach (RobotUnity r in RobotUnityReadyList)
+            foreach (RobotUnity r in RobotUnityRegistedList.Values)
                 r.SetSpeed(RobotSpeedLevel.ROBOT_SPEED_NORMAL);
         }
         public void RemoveRobotUnityRegistedList(String nameID)

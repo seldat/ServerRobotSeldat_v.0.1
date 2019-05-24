@@ -40,7 +40,7 @@ namespace SeldatMRMS
         public static int userAuthor = -2;
         public static bool onFlagRobotComingGateBusy = false;
         public static bool onFlagDoorBusy = false;
-
+        public static bool onAcceptDevice = false;
 
         public static string messageDuplicated = "{0} is duplicated.";
         public static string messageSaveSucced = "Save operation succeeded.";

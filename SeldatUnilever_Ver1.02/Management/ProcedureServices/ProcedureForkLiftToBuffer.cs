@@ -370,6 +370,7 @@ namespace SeldatMRMS
                         Global_Object.onFlagDoorBusy = false;
                         if (!Traffic.HasRobotUnityinArea("GATE_CHECKOUT", robot))
                         {
+                            robot.ShowText("RELEASED ZONE");
                             Global_Object.onFlagRobotComingGateBusy = false;
                             robot.ReleaseWorkingZone();
                         }

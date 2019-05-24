@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Threading;
 using Newtonsoft.Json.Linq;
+using SeldatMRMS;
 using SeldatUnilever_Ver1._02;
 using SelDatUnilever_Ver1._00.Communication;
 using SelDatUnilever_Ver1._00.Communication.HttpServerRounter;
@@ -66,22 +67,30 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
         }
         public override void handlePOSTRequest(HttpProcessor p, StreamReader inputData)
         {
-            String data = inputData.ReadToEnd();
-            JObject results = JObject.Parse(data);
-            String userName = (String)results["userName"];
             StatusOrderResponse statusOrder = null;
-            if (HasDeviceItemAt(userName) >= 0)
+            if (Global_Object.onAcceptDevice)
             {
-                statusOrder= FindDeviceItem(userName).ParseData(data);
-                
+                String data = inputData.ReadToEnd();
+                JObject results = JObject.Parse(data);
+                String userName = (String)results["userName"];
+               
+                if (HasDeviceItemAt(userName) >= 0)
+                {
+                    statusOrder = FindDeviceItem(userName).ParseData(data);
+
+                }
+                else
+                {
+                    DeviceItem deviceItem = new DeviceItem(this.mainWindow);
+                    deviceItem.userName = userName;
+                    statusOrder = deviceItem.ParseData(data);
+                    deviceItemList.Add(deviceItem);
+
+                }
             }
             else
             {
-                DeviceItem deviceItem = new DeviceItem(this.mainWindow);
-                deviceItem.userName = userName;
-                statusOrder=deviceItem.ParseData(data);
-                deviceItemList.Add(deviceItem);
-                
+                statusOrder.status = (int)StatusOrderResponseCode.ORDER_STATUS_RESPONSE_ERROR_DATA;
             }
             if(statusOrder.status==(int)StatusOrderResponseCode.ORDER_STATUS_RESPONSE_SUCCESS)
             {

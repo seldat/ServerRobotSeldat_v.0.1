@@ -65,6 +65,8 @@ namespace SeldatMRMS.Management.UnityService
 
             //assigmentTaskService.Start();
             MessageBox.Show("Bấm Start Để Bắt Đầu !");
+
+            assigmentTaskService.Start();
         }
         public void Dispose()
         {
