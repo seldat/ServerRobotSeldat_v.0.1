@@ -631,7 +631,14 @@ namespace SeldatMRMS
                         if (robotService.RobotUnityWaitTaskList.Count > 0 || robotService.RobotUnityReadyList.Count > 0)
                             return false;
                         else
-                            return true;
+                        {
+                            if(!Traffic.HasRobotUnityinArea("READY", robot))
+                            {
+                                return true;
+                            }
+                        }
+
+                          
                     }
 
                 }
@@ -639,6 +646,7 @@ namespace SeldatMRMS
             catch { }
             return false;
         }
+      //  !Traffic.HasRobotUnityinArea("GATE_CHECKOUT", robot)
         public override void FinishStatesCallBack(Int32 message)
         {
             this.resCmd = (ResponseCommand)message;
