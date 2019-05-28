@@ -62,7 +62,7 @@ namespace SeldatMRMS.Management.RobotManagent
                 else
                 {
                     timeOutReConnection = 0;
-                    Dispose();
+                   // Dispose();
                 }
             }
         }

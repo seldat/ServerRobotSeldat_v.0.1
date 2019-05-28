@@ -336,7 +336,7 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                             bool opz = trafficService.HasRobotUnityinArea("OPA3");
                             Console.WriteLine("----------");
                             Console.WriteLine(rd5 + "  "+opz);
-                            if (!trafficService.HasRobotUnityinArea("RD5") && !trafficService.HasRobotUnityinArea("OPA3"))
+                            if (!trafficService.HasRobotUnityinArea("RD5") && !trafficService.HasRobotUnityinArea("OPA3") && !trafficService.HasRobotUnityinArea("READY") )
                             {
                                 robotatready.TurnOnSupervisorTraffic(true);
                                 Console.WriteLine(processAssignTaskReady);

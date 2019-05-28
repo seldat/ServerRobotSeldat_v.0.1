@@ -260,9 +260,22 @@ namespace SeldatUnilever_Ver1._02
 
         private void Btn_MapReCenter_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(unityService.robotManagementService.RobotUnityRegistedList.Count + "");
+            /*MessageBox.Show(unityService.robotManagementService.RobotUnityRegistedList.Count + "");
 
             unityService.assigmentTaskService.AssignTaskGoToReady(unityService.robotManagementService.RobotUnityRegistedList.ElementAt(0).Value);
+            */
+            String wstr = "Cảnh Báo!";
+            String txtstr = "Xóa Trạng Thái Cổng ! ";
+            MessageBoxButton msgb = MessageBoxButton.YesNo;
+            var result = MessageBox.Show(txtstr,wstr,msgb);
+            if(result== MessageBoxResult.Yes)
+            {
+                Global_Object.onFlagDoorBusy = false;
+            }
+            else if(result == MessageBoxResult.No)
+            {
+                Global_Object.onFlagDoorBusy = true;
+            }
         }
 
         private void Ctrl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -427,6 +440,22 @@ namespace SeldatUnilever_Ver1._02
                     DeviceItem devI = unityService.deviceRegistrationService.deviceItemList.Find(item => item.userName == orderItem.userName);
                     devI.ReorderCallBack(orderItem);
             });
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            String wstr = "Cảnh Báo!";
+            String txtstr = "Kiểm tra trạng thái robot khi đóng chương trình ! ";
+            MessageBoxButton msgb = MessageBoxButton.YesNo;
+            var result = MessageBox.Show(txtstr, wstr, msgb);
+            if (result == MessageBoxResult.Yes)
+            {
+                Environment.Exit(0);
+            }
+            else if (result == MessageBoxResult.No)
+            {
+               
+            }
         }
     }
 }

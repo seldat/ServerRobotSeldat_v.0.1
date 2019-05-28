@@ -21,7 +21,8 @@ namespace SeldatMRMS.Management.RobotManagent
             PRO_CHARGE,
             PRO_READY,
             PRO_FORKLIFT_TO_MACHINE,
-            PRO_IDLE
+            PRO_IDLE,
+            PRO_WAIT_TASK
         }
         public enum RobotInModeCode
         {

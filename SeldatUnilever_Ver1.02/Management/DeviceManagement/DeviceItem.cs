@@ -92,6 +92,8 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
             public OrderItem() { }
             public String userName { get; set; }
             public String robot { get; set; }
+            public TyeRequest typeReq { get; set; } // FL: ForkLift// BM: BUFFER MACHINE // PR: Pallet return
+
             public StatusOrderResponseCode status { get; set; }
             private String OrderId { get; set; }
             public int planId { get; set; }
@@ -101,8 +103,7 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
             public int productDetailId { get; set; }
        
 
-            public TyeRequest typeReq { get; set; } // FL: ForkLift// BM: BUFFER MACHINE // PR: Pallet return
-            public String activeDate;
+              public String activeDate;
             public String dateTime { get; set; }
 
             public int timeWorkId;

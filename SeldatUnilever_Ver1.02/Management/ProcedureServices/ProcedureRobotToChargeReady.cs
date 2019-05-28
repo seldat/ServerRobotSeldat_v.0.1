@@ -595,7 +595,7 @@ namespace SeldatMRMS
                     case RobotGoToReady.ROBREA_ROBOT_WAITINGREADY_FORCERELEASED:
                         // add to wait task;
                         //robot.robotTag = RobotStatus.IDLE;
-                        ReleaseProcedureHandler(this);
+
                         robot.setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_OK);
                         procedureCode = ProcedureControlServices.ProcedureCode.PROC_CODE_ROBOT_WAITINGTO_READY;
                         ProRun = false;
@@ -604,6 +604,8 @@ namespace SeldatMRMS
                         order.endTimeProcedure = DateTime.Now;
                         order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalMinutes;
                         SaveOrderItem(order);
+                        rb.PreProcedureAs = ProcedureControlAssign.PRO_WAIT_TASK;
+                        ReleaseProcedureHandler(this);
                         break;
                 }
                 Thread.Sleep(5);

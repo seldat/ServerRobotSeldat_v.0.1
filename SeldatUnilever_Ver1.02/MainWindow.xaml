@@ -7,7 +7,9 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:SeldatUnilever_Ver1._02"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="600">
+        Title="MainWindow" Height="450" Width="600"
+        Closing="Window_Closing"
+        >
     <Grid x:Name="myManagementWindow">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>

@@ -409,7 +409,9 @@ namespace SeldatMRMS.Management.RobotManagent
                     "ValueR BigC:" + valueBigC + Environment.NewLine+
                     "RobotTag:" + robotTag + Environment.NewLine+
                     "CheckGate: " + robotRegistryToWorkingZone.onRobotwillCheckInsideGate + Environment.NewLine+
-                    "Order: "+ OrderStr +Environment.NewLine;
+                    "Order: "+ OrderStr +Environment.NewLine+
+                    "Battery Level: " + properties.BatteryLevelRb + Environment.NewLine
+                    ;
             }
             catch { }
         }

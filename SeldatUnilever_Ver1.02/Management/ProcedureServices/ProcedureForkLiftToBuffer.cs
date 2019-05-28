@@ -500,6 +500,7 @@ namespace SeldatMRMS
                     case ForkLift.FORMAC_ROBOT_WAITTING_CAME_FRONTLINE_MACHINE:
                         try
                         {
+                            Global_Object.onFlagDoorBusy = false;
                             if (!Traffic.HasRobotUnityinArea("GATE_CHECKOUT", robot))
                             {
                                 robot.ReleaseWorkingZone();
