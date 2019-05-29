@@ -44,44 +44,16 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
         {
             while(Alive)
             {
-                AssignTask();
+                AssignWaitTask();
                 AssignTaskAtReady();
-                Task.Delay(500);
+              //  Task.Delay(500);
             }
         }
         OrderItem orderItem_wait = null;
         RobotUnity robotwait = null;
         int cntOrderNull_wait = 1;
-        public void AssignTask()
+        public void AssignWaitTask()
         {
-
-           
-           // while (Alive)
-            {
-
-#if false
-                //procedureService.doorService.DoorMezzamineUp.Open(DoorType.DOOR_FRONT);
-                //Thread.Sleep(3000);
-                //procedureService.doorService.DoorMezzamineUp.Close(DoorType.DOOR_FRONT);
-                //Thread.Sleep(3000);
-                //procedureService.doorService.DoorMezzamineUp.Open(DoorType.DOOR_BACK);
-                //Thread.Sleep(3000);
-                //procedureService.doorService.DoorMezzamineUp.Close(DoorType.DOOR_BACK);
-                //Thread.Sleep(3000);
-                //procedureService.doorService.DoorMezzamineReturn.Open(DoorType.DOOR_FRONT);
-                //Thread.Sleep(1000);
-                //procedureService.doorService.DoorMezzamineReturn.Close(DoorType.DOOR_FRONT);
-                //Thread.Sleep(1000);
-                //procedureService.doorService.DoorMezzamineReturn.Open(DoorType.DOOR_BACK);
-                //Thread.Sleep(1000);
-                //procedureService.doorService.DoorMezzamineReturn.Close(DoorType.DOOR_BACK);
-                //Thread.Sleep(1000);
-                procedureService.doorService.DoorMezzamineUp.LampOn(DoorType.DOOR_FRONT);
-                Thread.Sleep(2000);
-                procedureService.doorService.DoorMezzamineUp.LampOff(DoorType.DOOR_FRONT);
-                Thread.Sleep(2000);
-#else
-                //Console.WriteLine(processAssignAnTaskWait);
                 switch (processAssignAnTaskWait)
                 {
                     case ProcessAssignAnTaskWait.PROC_ANY_IDLE:
@@ -202,9 +174,7 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                         break;
 
                 }
-#endif
-                Thread.Sleep(100);
-            }
+               Thread.Sleep(200);
         }
         public void SelectProcedureItem(RobotUnity robot, OrderItem orderItem)
         {
@@ -238,11 +208,6 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
             RobotUnity robotatready = null;
         public void AssignTaskAtReady()
         {
-           
-            //while (Alive)
-            {
-
-                //Console.WriteLine(processAssignTaskReady);
                 switch (processAssignTaskReady)
                 {
                     case ProcessAssignTaskReady.PROC_READY_IDLE:
@@ -332,11 +297,8 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                     case ProcessAssignTaskReady.PROC_READY_ASSIGN_ANTASK:
                         if (!robotatready.CheckRobotWorkinginReady() )
                         {
-                            bool rd5 = trafficService.HasRobotUnityinArea("RD5");
-                            bool opz = trafficService.HasRobotUnityinArea("OPA3");
-                            Console.WriteLine("----------");
-                            Console.WriteLine(rd5 + "  "+opz);
-                            if (!trafficService.HasRobotUnityinArea("RD5") && !trafficService.HasRobotUnityinArea("OPA3") && !trafficService.HasRobotUnityinArea("READY") )
+                            //  if (!trafficService.HasRobotUnityinArea("RD5") && !trafficService.HasRobotUnityinArea("OPA3") && !trafficService.HasRobotUnityinArea("READY") )
+                            if (!trafficService.HasRobotUnityinArea("ATR"))
                             {
                                 robotatready.TurnOnSupervisorTraffic(true);
                                 Console.WriteLine(processAssignTaskReady);
@@ -363,9 +325,7 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
 
                         break;
                 }
-                Thread.Sleep(100);
-            }
-
+                Thread.Sleep(200);
         }
         public bool FindRobotUnitySameOrderItem(String userName)
         {

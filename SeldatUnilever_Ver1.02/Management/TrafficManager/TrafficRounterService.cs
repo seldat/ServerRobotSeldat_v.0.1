@@ -44,6 +44,7 @@ namespace SelDatUnilever_Ver1._00.Management.TrafficManager
             OPZS, // Operation Zone
             GATE_CHECKOUT,
             GATE_CHECKINT,
+            TEMP
 
         }
         public ListCollectionView Grouped_PropertiesTrafficZoneList { get; private set; }

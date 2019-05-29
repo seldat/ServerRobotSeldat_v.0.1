@@ -50,6 +50,7 @@ namespace SeldatMRMS.Management
         {
             IDLE,
             WORKING,
+            READYGO,
             CHARGING,
             READY
 
