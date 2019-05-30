@@ -397,11 +397,13 @@ namespace SeldatMRMS.Management
         // set zonename Robot will working
         public void SetWorkingZone(String nameZone)
         {
+            robotLogOut.ShowText("","Zone Registered : "+ nameZone);
             robotRegistryToWorkingZone.SetZone(nameZone);
         }
         // release zonename Robot out
         public void ReleaseWorkingZone()
         {
+            robotLogOut.ShowText("", "Zone Released : ");
             robotRegistryToWorkingZone.Release();
         }
         // ứng xử tai check in zone với bắt vị trí anypoint

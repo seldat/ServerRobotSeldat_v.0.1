@@ -150,48 +150,12 @@ namespace SeldatMRMS
                     case ForkLift.FORBUF_ROBOT_GOTO_CHECKIN_GATE: //gui toa do di den khu vuc checkin cong
                         if (rb.PreProcedureAs == ProcedureControlAssign.PRO_READY)
                         {
-                            if (false == robot.CheckInGateFromReadyZoneBehavior(ds.config.PointFrontLine.Position))
+                            if (false == rb.CheckInGateFromReadyZoneBehavior(ds.config.PointFrontLine.Position))
                             {
                                 robot.robotTag = RobotStatus.WORKING;
-                                if (rb.SendCmdPosPallet(RequestCommandPosPallet.REQUEST_GOBACK_FRONTLINE_TURN_LEFT))
+                                robot.ShowText("FORBUF_ROBOT_GOTO_BACK_FRONTLINE_READY");
+                                StateForkLift = ForkLift.FORBUF_ROBOT_GOTO_BACK_FRONTLINE_READY;
 
-
-                                {
-                                    Stopwatch sw = new Stopwatch();
-                                    sw.Start();
-                                    do
-                                    {
-                                        if (resCmd == ResponseCommand.RESPONSE_FINISH_GOBACK_FRONTLINE)
-
-                                        {
-                                            resCmd = ResponseCommand.RESPONSE_NONE;
-                                            if (rb.SendPoseStamped(ds.config.PointFrontLine))
-                                            {
-                                                StateForkLift = ForkLift.FORBUF_ROBOT_WAITTING_GOTO_GATE;
-                                                robot.ShowText("FORBUF_ROBOT_WAITTING_GOTO_GATE");
-                                                break;
-                                            }
-                                            
-                                        }
-                                        else if (resCmd == ResponseCommand.RESPONSE_ERROR)
-                                        {
-                                            errorCode = ErrorCode.DETECT_LINE_ERROR;
-                                            CheckUserHandleError(this);
-                                            break;
-
-
-                                        }
-                                        if (sw.ElapsedMilliseconds > TIME_OUT_WAIT_GOTO_FRONTLINE)
-                                        {
-                                            errorCode = ErrorCode.DETECT_LINE_ERROR;
-                                            CheckUserHandleError(this);
-                                            break;
-                                        }
-                                        Thread.Sleep(100);
-                                    } while (ProRunStopW);
-                                    sw.Stop();
-
-                                }
                             }
                         }
                         else
@@ -216,10 +180,49 @@ namespace SeldatMRMS
                             }
                         }
                  
-                            break;
-                        
-                
-                        case ForkLift.FORBUF_ROBOT_WAITTING_GOTO_CHECKIN_GATE:
+                        break;
+
+                    case ForkLift.FORBUF_ROBOT_GOTO_BACK_FRONTLINE_READY:
+
+                        if (rb.SendCmdPosPallet(RequestCommandPosPallet.REQUEST_GOBACK_FRONTLINE_TURN_LEFT))
+                        {
+                            Stopwatch sw = new Stopwatch();
+                            sw.Start();
+                            do
+                            {
+                                if (resCmd == ResponseCommand.RESPONSE_FINISH_GOBACK_FRONTLINE)
+
+                                {
+                                    resCmd = ResponseCommand.RESPONSE_NONE;
+                                    if (rb.SendPoseStamped(ds.config.PointFrontLine))
+                                    {
+                                        StateForkLift = ForkLift.FORBUF_ROBOT_WAITTING_GOTO_GATE;
+                                        robot.ShowText("FORBUF_ROBOT_WAITTING_GOTO_GATE");
+                                        break;
+                                    }
+
+                                }
+                                else if (resCmd == ResponseCommand.RESPONSE_ERROR)
+                                {
+                                    errorCode = ErrorCode.DETECT_LINE_ERROR;
+                                    CheckUserHandleError(this);
+                                    break;
+
+
+                                }
+                                if (sw.ElapsedMilliseconds > TIME_OUT_WAIT_GOTO_FRONTLINE)
+                                {
+                                    errorCode = ErrorCode.DETECT_LINE_ERROR;
+                                    CheckUserHandleError(this);
+                                    break;
+                                }
+                                Thread.Sleep(100);
+                            } while (ProRunStopW);
+                            sw.Stop();
+
+                        }
+                        break;
+                   case ForkLift.FORBUF_ROBOT_WAITTING_GOTO_CHECKIN_GATE:
                         if (resCmd == ResponseCommand.RESPONSE_LASER_CAME_POINT)
                         //if ( robot.ReachedGoal())
                         {
@@ -333,6 +336,7 @@ namespace SeldatMRMS
                                     if (rb.SendPoseStamped(FlToBuf.GetCheckInBuffer(true)))
 
                                     {
+                                        Global_Object.onFlagDoorBusy = false;
                                         StateForkLift = ForkLift.FORBUF_ROBOT_WAITTING_GOTO_CHECKIN_BUFFER;
                                         robot.ShowText("FORBUF_ROBOT_WAITTING_GOTO_CHECKIN_BUFFER");
                                     }
@@ -367,7 +371,7 @@ namespace SeldatMRMS
                         }
                         break;
                     case ForkLift.FORBUF_ROBOT_WAITTING_GOTO_CHECKIN_BUFFER: // doi robot di den khu vuc checkin cua vung buffer
-                        Global_Object.onFlagDoorBusy = false;
+                        //Global_Object.onFlagDoorBusy = false;
                         if (!Traffic.HasRobotUnityinArea("GATE_CHECKOUT", robot))
                         {
                             robot.ShowText("RELEASED ZONE");
@@ -486,6 +490,7 @@ namespace SeldatMRMS
                             rb.prioritLevel.OnAuthorizedPriorityProcedure = false;
                             if (rb.SendPoseStamped(flToMachineInfo.frontLinePose))
                             {
+                                Global_Object.onFlagDoorBusy = false;
                                 StateForkLift = ForkLift.FORMAC_ROBOT_WAITTING_CAME_FRONTLINE_MACHINE;
                                 robot.ShowText("FORMAC_ROBOT_WAITTING_CAME_FRONTLINE_MACHINE");
                             }
@@ -500,7 +505,7 @@ namespace SeldatMRMS
                     case ForkLift.FORMAC_ROBOT_WAITTING_CAME_FRONTLINE_MACHINE:
                         try
                         {
-                            Global_Object.onFlagDoorBusy = false;
+                           // Global_Object.onFlagDoorBusy = false;
                             if (!Traffic.HasRobotUnityinArea("GATE_CHECKOUT", robot))
                             {
                                 robot.ReleaseWorkingZone();

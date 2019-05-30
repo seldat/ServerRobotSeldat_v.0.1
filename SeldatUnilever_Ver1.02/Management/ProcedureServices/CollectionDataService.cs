@@ -6,6 +6,7 @@ using SelDatUnilever_Ver1._00.Communication.HttpBridge;
 using SelDatUnilever_Ver1._00.Management.ProcedureServices;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -163,9 +164,28 @@ namespace SelDatUnilever_Ver1
             // String url = "http://localhost:8080";
             BridgeClientRequest clientRequest=new BridgeClientRequest();
             var data = clientRequest.PostCallAPI(url, dataReq);
-            return data.Result;
+            if(data.Result.Length>0)
+            {
+                return data.Result;
+            }
+            else
+            {
+                delay(1000);
+                return data.Result;
+            }
+                
         }
+        public void delay(int ms)
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            bool responsed = false;
 
+            while (true)
+            {
+                if (sw.ElapsedMilliseconds > ms) break;
+            }
+        }
         public Pose GetCheckInBuffer(bool onPlandId=false)
         {
             Pose poseTemp = null;

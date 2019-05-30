@@ -348,12 +348,13 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
          
                 if (!Global_Object.onFlagRobotComingGateBusy)
                 {
-                    Global_Object.onFlagDoorBusy = true;
+                   // Global_Object.onFlagDoorBusy = true;
                     Global_Object.onFlagRobotComingGateBusy = true;
+                    return false;
                 }
                 else
                     return true;
-            return false;
+            
         }
         public int DetermineAmoutOfDeviceToAssignAnTask()
         {

@@ -90,39 +90,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                             if (false == robot.CheckInGateFromReadyZoneBehavior(ds.config.PointFrontLine.Position))
                             {
                                 robot.robotTag = RobotStatus.WORKING;
-                                if (rb.SendCmdPosPallet(RequestCommandPosPallet.REQUEST_GOBACK_FRONTLINE_TURN_LEFT))
-                                {
-                                    Stopwatch sw = new Stopwatch();
-                                    sw.Start();
-                                    do
-                                    {
-                                        if (resCmd == ResponseCommand.RESPONSE_FINISH_GOBACK_FRONTLINE)
-                                        {
-                                            resCmd = ResponseCommand.RESPONSE_NONE;
-                                            if (rb.SendPoseStamped(ds.config.PointFrontLine))
-                                            {
-                                                StateForkLiftToMachine = ForkLiftToMachine.FORMACH_ROBOT_WAITTING_GOTO_GATE;
-                                                robot.ShowText("FORMACH_ROBOT_WAITTING_GOTO_GATE");
-                                                break;
-                                            }
-                                           
-                                        }
-                                        else if (resCmd == ResponseCommand.RESPONSE_ERROR)
-                                        {
-                                            errorCode = ErrorCode.DETECT_LINE_ERROR;
-                                            CheckUserHandleError(this);
-                                            break;
-                                        }
-                                        if (sw.ElapsedMilliseconds > TIME_OUT_WAIT_GOTO_FRONTLINE)
-                                        {
-                                            errorCode = ErrorCode.DETECT_LINE_ERROR;
-                                            CheckUserHandleError(this);
-                                            break;
-                                        }
-                                        Thread.Sleep(100);
-                                    } while (ProRunStopW);
-                                    sw.Stop();
-                                }
+                                StateForkLiftToMachine = ForkLiftToMachine.FORMACH_ROBOT_GOTO_BACK_FRONTLINE_READY;
                             }
                         }
                         else
@@ -140,6 +108,41 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                                 StateForkLiftToMachine = ForkLiftToMachine.FORMACH_ROBOT_WAITTING_GOTO_CHECKIN_GATE;
                                 robot.ShowText("FORMACH_ROBOT_WAITTING_GOTO_CHECKIN_GATE");
                             }
+                        }
+                        break;
+                    case ForkLiftToMachine.FORMACH_ROBOT_GOTO_BACK_FRONTLINE_READY:
+                        if (rb.SendCmdPosPallet(RequestCommandPosPallet.REQUEST_GOBACK_FRONTLINE_TURN_LEFT))
+                        {
+                            Stopwatch sw = new Stopwatch();
+                            sw.Start();
+                            do
+                            {
+                                if (resCmd == ResponseCommand.RESPONSE_FINISH_GOBACK_FRONTLINE)
+                                {
+                                    resCmd = ResponseCommand.RESPONSE_NONE;
+                                    if (rb.SendPoseStamped(ds.config.PointFrontLine))
+                                    {
+                                        StateForkLiftToMachine = ForkLiftToMachine.FORMACH_ROBOT_WAITTING_GOTO_GATE;
+                                        robot.ShowText("FORMACH_ROBOT_WAITTING_GOTO_GATE");
+                                        break;
+                                    }
+
+                                }
+                                else if (resCmd == ResponseCommand.RESPONSE_ERROR)
+                                {
+                                    errorCode = ErrorCode.DETECT_LINE_ERROR;
+                                    CheckUserHandleError(this);
+                                    break;
+                                }
+                                if (sw.ElapsedMilliseconds > TIME_OUT_WAIT_GOTO_FRONTLINE)
+                                {
+                                    errorCode = ErrorCode.DETECT_LINE_ERROR;
+                                    CheckUserHandleError(this);
+                                    break;
+                                }
+                                Thread.Sleep(100);
+                            } while (ProRunStopW);
+                            sw.Stop();
                         }
                         break;
                     case ForkLiftToMachine.FORMACH_ROBOT_WAITTING_GOTO_CHECKIN_GATE:
@@ -241,10 +244,13 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                             //{
                        
                             rb.prioritLevel.OnAuthorizedPriorityProcedure = false;
-                            rb.SendPoseStamped(FlToMach.GetFrontLineMachine());
-                            StateForkLiftToMachine = ForkLiftToMachine.FORMACH_ROBOT_WAITTING_CAME_FRONTLINE_MACHINE;
-                            robot.ShowText("FORMACH_ROBOT_WAITTING_CAME_FRONTLINE_MACHINE");
-                            //}
+                            if(rb.SendPoseStamped(FlToMach.GetFrontLineMachine()))
+                            {
+                                Global_Object.onFlagDoorBusy = false;
+                                StateForkLiftToMachine = ForkLiftToMachine.FORMACH_ROBOT_WAITTING_CAME_FRONTLINE_MACHINE;
+                                robot.ShowText("FORMACH_ROBOT_WAITTING_CAME_FRONTLINE_MACHINE");
+                            }
+                                //}
                             //else
                             //{
                             //    // errorCode = ErrorCode.CLOSE_DOOR_ERROR;
@@ -261,7 +267,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                     case ForkLiftToMachine.FORMACH_ROBOT_WAITTING_CAME_FRONTLINE_MACHINE:
                         try
                         {
-                            Global_Object.onFlagDoorBusy = false;
+                           // Global_Object.onFlagDoorBusy = false;
                             if (!Traffic.HasRobotUnityinArea("GATE_CHECKOUT", robot))
                             {
                                 robot.ShowText("RELEASED ZONE");

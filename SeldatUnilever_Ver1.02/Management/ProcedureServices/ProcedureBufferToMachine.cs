@@ -291,6 +291,7 @@ namespace SeldatMRMS
                         {
                             if (resCmd == ResponseCommand.RESPONSE_FINISH_GOBACK_FRONTLINE)
                             {
+                                robot.ReleaseWorkingZone();
                                 robot.SwitchToDetectLine(false);
                               
                                 resCmd = ResponseCommand.RESPONSE_NONE;
@@ -428,7 +429,7 @@ namespace SeldatMRMS
             {
                 // reset giao thông và xóa vùng đăng ký
                 robot.SetSafeSmallcircle(true);
-                robot.ReleaseWorkingZone();
+
             }
         }
         protected override void CheckUserHandleError(object obj)

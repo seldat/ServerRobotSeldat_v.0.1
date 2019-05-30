@@ -564,7 +564,6 @@ namespace SeldatMRMS.Management.RobotManagent
                         return false;
                     }
 
-                    return true;
                 }
                 else
                 {

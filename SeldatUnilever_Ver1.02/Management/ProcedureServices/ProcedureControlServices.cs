@@ -70,6 +70,7 @@ namespace SeldatMRMS {
             FORBUF_IDLE,
             FORBUF_ROBOT_GOTO_CHECKIN_GATE, // vị trí check in liệu có quy trình nào tại cổng
             FORBUF_ROBOT_WAITTING_GOTO_CHECKIN_GATE,
+            FORBUF_ROBOT_GOTO_BACK_FRONTLINE_READY,
             FORBUF_ROBOT_CAME_CHECKIN_GATE, // đã đến vị trí, kiem tra khu vuc cong san sang de di vao.
             FORBUF_ROBOT_WAITTING_GOTO_GATE, // doi robot di den khu vuc cong
             FORBUF_ROBOT_CAME_GATE_POSITION, // da den khu vuc cong , gui yeu cau mo cong.
@@ -106,6 +107,7 @@ namespace SeldatMRMS {
         {
            FORMACH_IDLE,
            FORMACH_ROBOT_GOTO_CHECKIN_GATE, // vị trí check in liệu có quy trình nào tại cổng
+           FORMACH_ROBOT_GOTO_BACK_FRONTLINE_READY,
            FORMACH_ROBOT_WAITTING_GOTO_CHECKIN_GATE,
            FORMACH_ROBOT_CAME_CHECKIN_GATE, // đã đến vị trí, kiem tra khu vuc cong san sang de di vao.
            FORMACH_ROBOT_WAITTING_GOTO_GATE, // doi robot di den khu vuc cong
