@@ -27,6 +27,7 @@ namespace SeldatMRMS.Management.RobotManagent
     {
         public const Int32 AmountofRobotUnity = 3;
         private const Int32 BAT_LOW_LEVEL = 15;
+        public static int indexRd = 0;
         public class ResultRobotReady
         {
             public RobotUnity robot;
@@ -463,6 +464,38 @@ namespace SeldatMRMS.Management.RobotManagent
         
         public ResultRobotReady GetRobotUnityReadyItem0()
         {
+#if true
+            ResultRobotReady result = null;
+            if (RobotUnityReadyList.Count > 0)
+            { 
+                do
+                {                       
+                    try
+                    {
+                        if(indexRd >= RobotUnityReadyList.Count){
+                            indexRd = 0;
+                        }
+                        RobotUnity robot = RobotUnityReadyList[indexRd];
+                        if (robot.properties.IsConnected)
+                        {
+                            result = new ResultRobotReady() { robot = robot, onReristryCharge = robot.getBattery() };
+                            if (robot.getBattery())
+                            {
+                                RemoveRobotUnityReadyList(robot);
+                            }
+                            indexRd++;
+                            break;
+                        }
+                    }
+                    catch
+                    {
+                        indexRd = 0;
+                        Console.WriteLine("Error ReadyTask in  RobotManagement Service Remove Robot");
+                    }
+                }while (RobotUnityReadyList.Count < indexRd && RobotUnityReadyList.Count > 0) ;
+            }
+            return result;
+#else
             ResultRobotReady result = null;
             if (RobotUnityReadyList.Count > 0)
             {
@@ -491,6 +524,7 @@ namespace SeldatMRMS.Management.RobotManagent
                 }while (RobotUnityReadyList.Count < index && RobotUnityReadyList.Count > 0) ;
             }
             return result;
+#endif
         }
         public void MoveElementToEnd(Dictionary<String,RobotUnity> dic,int newPos, int oldPos)
         {

@@ -332,9 +332,11 @@ namespace SeldatMRMS.Management.RobotManagent
         private void BatteryVolHandler (Communication.Message message) {
             StandardInt32 batVal = (StandardInt32) message;
             properties.BatteryLevelRb = batVal.data;
+            //robotLogOut.ShowText(this.properties.Label, "BatteryLevelRb[" + batVal.data + "]");
             if (properties.RequestChargeBattery == false) {
                 if (properties.BatteryLevelRb <= properties.BatteryLowLevel) {
                     properties.RequestChargeBattery = true;
+                    robotLogOut.ShowText(this.properties.Label, "RequestChargeBattery");
                 }
             } else {
                 if (properties.BatteryLevelRb > (properties.BatteryLowLevel + delBatterry)) {

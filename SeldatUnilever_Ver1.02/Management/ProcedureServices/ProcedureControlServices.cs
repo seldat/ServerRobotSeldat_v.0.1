@@ -271,7 +271,7 @@ namespace SeldatMRMS {
         protected virtual void CheckUserHandleError (object obj) {
             bool keepRun = true;
             ProcedureControlServices p = (ProcedureControlServices)obj;
-            Debug (obj,"ErrorCode -> " + getStringError(p.errorCode));
+            robot.ShowText ("ErrorCode -> " + getStringError(p.errorCode));
             robot.RegistrySolvedForm(this);
             selectHandleError = SelectHandleError.CASE_ERROR_EXIT;
             robot.ShowText("CASE_ERROR_EXIT");
