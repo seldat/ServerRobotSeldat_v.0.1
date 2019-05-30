@@ -174,7 +174,7 @@ namespace SelDatUnilever_Ver1._00.Management.ComSocket
         {
             bool result = true;
             Stopwatch sw = new Stopwatch();
-            Receive(client);
+            //Receive(this.client);
             sw.Start();
             while (flagConnected == false)
             {
