@@ -270,7 +270,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                            // Global_Object.onFlagDoorBusy = false;
                             if (!Traffic.HasRobotUnityinArea("GATE_CHECKOUT", robot))
                             {
-                                robot.ShowText("RELEASED ZONE");
+                              //  robot.ShowText("RELEASED ZONE");
                                 Global_Object.onFlagRobotComingGateBusy = false;
                                 robot.ReleaseWorkingZone();
                             }

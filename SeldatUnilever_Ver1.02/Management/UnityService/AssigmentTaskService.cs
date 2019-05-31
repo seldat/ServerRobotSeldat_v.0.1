@@ -73,7 +73,7 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                                 }
                                 else
                                 {
-                                    if (deviceItemsList.Count > 0)
+                                    if (DetermineAmoutOfDeviceToAssignAnTask() > 0)
                                     {
                                         processAssignAnTaskWait = ProcessAssignAnTaskWait.PROC_ANY_CHECK_HAS_ANTASK;
                                     }
@@ -101,7 +101,7 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                                 }
                                 else
                                 {
-                                    if (DetermineAmoutOfDeviceToAssignAnTask() > 0)
+                                    /*if (DetermineAmoutOfDeviceToAssignAnTask() > 0)
                                     {
                                         if (FindRobotUnitySameOrderItem(orderItem_wait.userName))
                                         {
@@ -109,7 +109,7 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                                             cntOrderNull_wait++;
                                             break;
                                         }
-                                    }
+                                    }*/
                                 }
 
                             }
@@ -228,7 +228,7 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                                 else
                                 {
                                     //
-                                    if (deviceItemsList.Count > 0)
+                                    if (DetermineAmoutOfDeviceToAssignAnTask() > 0)
                                     {
                                         processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_CHECK_HAS_ANTASK;
                                     }
@@ -255,14 +255,14 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                                 {
                                     // xác định số lượng device đang có task và chỉ phân phối duy nhất 1 task cho một robot trên cùng thời điểm, không có trường hợp nhiểu
                                     // device có task mà nhiều robot cùng nhận task đó
-                                    if (DetermineAmoutOfDeviceToAssignAnTask() > 0)
+                                    /*if (DetermineAmoutOfDeviceToAssignAnTask() > 0)
                                     {
                                         if (FindRobotUnitySameOrderItem(orderItem_ready.userName))
                                         {
                                             MoveElementToEnd();
                                             break;
                                         }
-                                    }
+                                    }*/
                                 }
                             }
                             else
@@ -360,7 +360,7 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
         {
            
             int cntOrderWeight = 0;
-            if(deviceItemsList.Count>1)
+            if(deviceItemsList.Count>0)
             {
                 foreach(DeviceItem item in deviceItemsList)
                 {
