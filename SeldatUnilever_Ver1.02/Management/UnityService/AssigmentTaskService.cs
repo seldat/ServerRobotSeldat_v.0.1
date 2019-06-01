@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using static DoorControllerService.DoorService;
 using static SeldatMRMS.Management.RobotManagent.RobotManagementService;
 using static SeldatMRMS.RegisterProcedureService;
@@ -28,25 +29,33 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
             Alive = true;
             processAssignAnTaskWait = ProcessAssignAnTaskWait.PROC_ANY_GET_ANROBOT_IN_WAITTASKLIST;
             processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_GET_ANROBOT_INREADYLIST;
-           // Task threadprocessAssignAnTaskWait = new Task(AssignTask);
-          //  Task threadprocessAssignTaskReady = new Task(AssignTaskAtReady);
+            Task threadprocessAssignAnTaskWait = new Task(MainProcessAssignTask_Wait);
+            Task threadprocessAssignTaskReady = new Task(MainProcessAssignTask_Ready);
 
-            Task threadprocess = new Task(MainProcessAssignTask);
-            //threadprocessAssignAnTaskWait.Start();
-            //threadprocessAssignTaskReady.Start();
-            threadprocess.Start();
+
+            threadprocessAssignAnTaskWait.Start();
+            threadprocessAssignTaskReady.Start();
+      
         }
         public void Dispose()
         {
             Alive = false;
         }
-        public void MainProcessAssignTask()
+        public void MainProcessAssignTask_Wait()
         {
             while(Alive)
             {
                 AssignWaitTask();
-                AssignTaskAtReady();
               //  Task.Delay(500);
+            }
+        }
+        public void MainProcessAssignTask_Ready()
+        {
+            while (Alive)
+            {
+           
+                AssignTaskAtReady();
+                //  Task.Delay(500);
             }
         }
         OrderItem orderItem_wait = null;
@@ -76,6 +85,10 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                                     if (DetermineAmoutOfDeviceToAssignAnTask() > 0)
                                     {
                                         processAssignAnTaskWait = ProcessAssignAnTaskWait.PROC_ANY_CHECK_HAS_ANTASK;
+                                    }
+                                    else
+                                    {
+                                        processAssignAnTaskWait = ProcessAssignAnTaskWait.PROC_ANY_CHECK_ROBOT_GOTO_READY; // mở lại 
                                     }
 
                                 }
@@ -358,23 +371,29 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
         }
         public int DetermineAmoutOfDeviceToAssignAnTask()
         {
-           
-            int cntOrderWeight = 0;
-            if(deviceItemsList.Count>0)
+            try
             {
-                foreach(DeviceItem item in deviceItemsList)
+                int cntOrderWeight = 0;
+                if (deviceItemsList.Count > 0)
                 {
-                    if(item.PendingOrderList.Count>0)
+                    foreach (DeviceItem item in deviceItemsList)
                     {
-                        cntOrderWeight++;
+                        if (item.PendingOrderList.Count > 0)
+                        {
+                            cntOrderWeight++;
+                        }
+                    }
+                    if (cntOrderWeight > 0) // có nhiều device đang có task
+                    {
+                        return 1; // 
                     }
                 }
-                if(cntOrderWeight>1) // có nhiều device đang có task
-                {
-                    return 1; // 
-                }
             }
-            return 0; // chỉ có 1 device đang có task
+            catch
+            {
+                MessageBox.Show("Loi Cap Task");
+            }
+            return -1; // chỉ có 1 device đang có task
         }
         public void AssignTaskGoToReady(RobotUnity robot)
         {

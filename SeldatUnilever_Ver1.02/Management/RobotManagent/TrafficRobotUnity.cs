@@ -403,7 +403,7 @@ namespace SeldatMRMS.Management
         // release zonename Robot out
         public void ReleaseWorkingZone()
         {
-            robotLogOut.ShowText("", "Zone Released : ");
+            //robotLogOut.ShowText("", "Zone Released : ");
             robotRegistryToWorkingZone.Release();
         }
         // ứng xử tai check in zone với bắt vị trí anypoint

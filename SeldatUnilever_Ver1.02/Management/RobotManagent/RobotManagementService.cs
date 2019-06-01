@@ -442,12 +442,12 @@ namespace SeldatMRMS.Management.RobotManagent
                                         RemoveRobotUnityWaitTaskList(robot);
                                 }
                                 break;
-                    }
+                         }
                         index++;
                     } while (RobotUnityWaitTaskList.Count < index && RobotUnityWaitTaskList.Count > 0);
                 }
       
-            return result;
+                return result;
         }
         public void MoveRobotWaitTask()
         {
