@@ -109,7 +109,7 @@ namespace SeldatMRMS.Management.RobotManagent
                     webSocket.OnOpen += (sender, e) => OnOpenedEvent();
                     webSocket.OnMessage += (sender, e) => recievedOperation((WebSocket)sender, e);
                     webSocket.Connect();
-                    Thread.Sleep(5000);
+                  //  Thread.Sleep(5000);
                     
             }).Start(); 
         }

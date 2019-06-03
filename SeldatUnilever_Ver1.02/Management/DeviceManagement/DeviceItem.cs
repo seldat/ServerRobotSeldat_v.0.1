@@ -231,7 +231,7 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
                         statusOrderResponse = new StatusOrderResponse() { status = (int)StatusOrderResponseCode.ORDER_STATUS_DOOR_BUSY, ErrorMessage = "" };
                         return statusOrderResponse;
                     }
-                    Global_Object.onFlagDoorBusy = true;
+                    
                     OrderItem order = new OrderItem();
                     order.typeReq = (TyeRequest)typeReq;
                     order.userName = (String)results["userName"];
@@ -256,6 +256,7 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
                     order.dateTime = (string)DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss tt");
                     if (Convert.ToInt32(CreatePlanBuffer(order)) > 0)
                     {
+                        Global_Object.onFlagDoorBusy = true;
                         PendingOrderList.Add(order);
                         OrderedItemList.Add(order);
                     }

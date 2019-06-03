@@ -17,7 +17,7 @@
     <sys:String x:Key="MainWindow_Menu_Account_Logout">_Logout</sys:String>
 
     <!--Toolbar-->
-    <sys:String x:Key="MainWindow_Toolbar_MapReCenter">Recenter map</sys:String>
+    <sys:String x:Key="MainWindow_Toolbar_MapReCenter">Reset Gate</sys:String>
     <sys:String x:Key="MainWindow_Toolbar_robotConfigure">Robot Configuration</sys:String>
     <sys:String x:Key="MainWindow_Toolbar_areaConfigure">Area Configuration</sys:String>
 
