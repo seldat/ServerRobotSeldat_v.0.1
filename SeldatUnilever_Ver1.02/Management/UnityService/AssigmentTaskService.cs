@@ -41,6 +41,10 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
         {
             Alive = false;
         }
+        public void Stop()
+        {
+            Alive = false;
+        }
         public void MainProcessAssignTask_Wait()
         {
             while(Alive)

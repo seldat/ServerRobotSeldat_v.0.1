@@ -114,6 +114,34 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
         {
             return deviceItemList;
         }
-
+        public void SaveDeviceOrder()
+        {
+            try
+            {
+                String path = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "SavePendingOrder.txt");
+                if (!File.Exists(path))
+                {
+                    var myfile = File.Create(path);
+                }
+                if(deviceItemList.Count>0)
+                {
+                    foreach(DeviceItem dev in deviceItemList)
+                    {
+                        if(dev.OrderedItemList.Count>0)
+                        {
+                            foreach(OrderItem ord in dev.OrderedItemList)
+                            {
+                                if(ord.status == StatusOrderResponseCode.PENDING)
+                                {
+                                  //  File.AppendAllText(path, ord. Environment.NewLine);
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            }
+            catch { }
+        }
     }
 }

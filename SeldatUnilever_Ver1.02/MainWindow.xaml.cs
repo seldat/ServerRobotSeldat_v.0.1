@@ -351,7 +351,7 @@ namespace SeldatUnilever_Ver1._02
 
         private void btn_Stop_Click(object sender, RoutedEventArgs e)
         {
-            unityService.robotManagementService.Stop();
+            //unityService.robotManagementService.Stop();
             btn_Play.IsEnabled = true;
             btn_Stop.IsEnabled = false;
             btn_Play_icon.Foreground = new SolidColorBrush(Colors.Green);
@@ -445,18 +445,43 @@ namespace SeldatUnilever_Ver1._02
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            String wstr = "Cảnh Báo!";
-            String txtstr = "Kiểm tra trạng thái robot khi đóng chương trình ! ";
-            MessageBoxButton msgb = MessageBoxButton.YesNo;
-            var result = MessageBox.Show(txtstr, wstr, msgb);
-            if (result == MessageBoxResult.Yes)
+
+            if(unityService.robotManagementService.CheckAnyRobotWorking())
             {
-                Environment.Exit(0);
+                String wstr = "Cảnh Báo!";
+                String txtstr = "Đang có robot trong quy trình, Vẫn tiếp tục đóng chương trình? ";
+                MessageBoxButton msgb = MessageBoxButton.YesNo;
+                var result = MessageBox.Show(txtstr, wstr, msgb);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Environment.Exit(0);
+                }
+                else if (result == MessageBoxResult.No)
+                {
+
+                }
             }
-            else if (result == MessageBoxResult.No)
+            else
             {
-               
+                String wstr = "Cảnh Báo!";
+                String txtstr = "Vẫn tiếp tục đóng chương trình? ";
+                MessageBoxButton msgb = MessageBoxButton.YesNo;
+                var result = MessageBox.Show(txtstr, wstr, msgb);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Environment.Exit(0);
+                }
+                else if (result == MessageBoxResult.No)
+                {
+
+                }
             }
+
+        }
+
+        private void Window_Closing_1(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
         }
     }
 }

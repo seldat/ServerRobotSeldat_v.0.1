@@ -20,6 +20,7 @@ using static SeldatMRMS.Management.RobotManagent.RobotUnityControl;
 using static SelDatUnilever_Ver1._00.Management.ChargerCtrl.ChargerCtrl;
 using SelDatUnilever_Ver1._00.Management.ChargerCtrl;
 using SeldatUnilever_Ver1._02.Management.McuCom;
+using static SeldatMRMS.Management.TrafficRobotUnity;
 
 namespace SeldatMRMS.Management.RobotManagent
 {
@@ -563,6 +564,19 @@ namespace SeldatMRMS.Management.RobotManagent
         {
             if (RobotUnityRegistedList.ContainsKey(nameID))
                 RobotUnityRegistedList.Remove(nameID);
+        }
+        public bool CheckAnyRobotWorking()
+        {
+            bool hasrobotworking = false;
+            foreach(RobotUnity robot in RobotUnityRegistedList.Values)
+            {
+                if(robot.robotTag != RobotStatus.IDLE)
+                {
+                    hasrobotworking = true;
+                    break;
+                }
+            }
+            return hasrobotworking;
         }
         public void FixedPropertiesRobotUnity(String nameID,PropertiesRobotUnity properties)
         {
