@@ -271,10 +271,7 @@ namespace SeldatUnilever_Ver1._02
             if(result== MessageBoxResult.Yes)
             {
                 Global_Object.onFlagDoorBusy = false;
-            }
-            else if(result == MessageBoxResult.No)
-            {
-                Global_Object.onFlagDoorBusy = true;
+                Global_Object.onFlagRobotComingGateBusy = false;
             }
         }
 

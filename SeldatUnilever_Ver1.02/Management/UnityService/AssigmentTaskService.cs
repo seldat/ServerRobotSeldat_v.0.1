@@ -363,7 +363,7 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
         public bool DetermineRobotWorkInGate()
         {
          
-                if (!Global_Object.onFlagRobotComingGateBusy)
+                if (!Global_Object.onFlagRobotComingGateBusy )
                 {
                    // Global_Object.onFlagDoorBusy = true;
                     Global_Object.onFlagRobotComingGateBusy = true;

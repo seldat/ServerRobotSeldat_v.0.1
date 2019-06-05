@@ -47,8 +47,12 @@ namespace SeldatMRMS.Management.RobotManagent
         {
             try
             {
-                Close();
-                webSocket.Connect();
+                if (!IsDisposed)
+                {
+                    Close();
+                    webSocket.Connect();
+                }
+                
             }
             catch { }
             /* if (timeOutReConnection++<10)

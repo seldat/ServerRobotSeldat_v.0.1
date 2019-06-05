@@ -66,8 +66,8 @@ namespace SeldatMRMS
         public void Start(ForkLift state = ForkLift.FORBUF_ROBOT_GOTO_CHECKIN_GATE)
         {
             // public void Start (ForkLiftToBuffer state = ForkLiftToBuffer.FORBUF_ROBOT_RELEASED) {
-            
-             errorCode = ErrorCode.RUN_OK;
+            robot.robotTag = RobotStatus.WORKING;
+            errorCode = ErrorCode.RUN_OK;
             robot.ProcedureAs = ProcedureControlAssign.PRO_FORKLIFT_TO_BUFFER;
             StateForkLift = state;
 
@@ -152,7 +152,7 @@ namespace SeldatMRMS
                         {
                             if (false == rb.CheckInGateFromReadyZoneBehavior(ds.config.PointFrontLine.Position))
                             {
-                                robot.robotTag = RobotStatus.WORKING;
+                              
                                 robot.ShowText("FORBUF_ROBOT_GOTO_BACK_FRONTLINE_READY");
                                 StateForkLift = ForkLift.FORBUF_ROBOT_GOTO_BACK_FRONTLINE_READY;
 

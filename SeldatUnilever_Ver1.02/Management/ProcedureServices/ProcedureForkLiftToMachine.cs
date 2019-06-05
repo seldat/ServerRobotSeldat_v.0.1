@@ -37,6 +37,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
         }
         public void Start(ForkLiftToMachine state = ForkLiftToMachine.FORMACH_ROBOT_GOTO_CHECKIN_GATE)
         {
+            robot.robotTag = RobotStatus.WORKING;
             errorCode = ErrorCode.RUN_OK;
             robot.ProcedureAs = ProcedureControlAssign.PRO_FORKLIFT_TO_MACHINE;
             StateForkLiftToMachine = state;

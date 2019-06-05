@@ -394,6 +394,22 @@ namespace SeldatMRMS.Management
             }
             return robot;
         }
+        public bool DetermineRobotInWorkingZone(Point anyPoint, bool check = false)
+        {
+            String nameZone = trafficManagementService.DetermineArea(anyPoint, 0, 200);
+            if (nameZone != "")
+            {
+                foreach (RobotUnity r in RobotUnitylist)
+                {
+                    if (r.robotRegistryToWorkingZone.WorkingZone.Equals(nameZone))
+                    {
+                        return true;
+                    
+                    }
+                }
+            }
+            return false;
+        }
         // set zonename Robot will working
         public void SetWorkingZone(String nameZone)
         {
@@ -428,8 +444,8 @@ namespace SeldatMRMS.Management
         {
             if (anyPoint == null)
                 return true; // un available
-            RobotUnity robot = DetermineRobotInWorkingZone(anyPoint);
-            if (robot != null)
+            bool hasrobot = DetermineRobotInWorkingZone(anyPoint,false);
+            if (hasrobot)
             {
                 return true;
             }
