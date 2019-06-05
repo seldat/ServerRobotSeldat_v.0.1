@@ -164,15 +164,8 @@ namespace SelDatUnilever_Ver1
             // String url = "http://localhost:8080";
             BridgeClientRequest clientRequest=new BridgeClientRequest();
             var data = clientRequest.PostCallAPI(url, dataReq);
-            if(data.Result.Length>0)
-            {
-                return data.Result;
-            }
-            else
-            {
-                delay(1000);
-                return data.Result;
-            }
+            return data.Result;
+        
                 
         }
         public void delay(int ms)
