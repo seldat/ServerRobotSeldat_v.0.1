@@ -21,11 +21,14 @@ namespace SeldatUnilever_Ver1._02.Management.RobotManagent
     public partial class RobotLogOut : Window
     {
         String title;
+
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public RobotLogOut()
         {
             InitializeComponent();
-            
-            
+           
+
         }
         public void SetName(String name)
         {
@@ -33,18 +36,16 @@ namespace SeldatUnilever_Ver1._02.Management.RobotManagent
         }
         public void ShowText(String src, String txt)
         {
-            object obj = new object();
-            lock (obj)
-            {
-                    txt_logout.Dispatcher.Invoke(() =>
-                    {
-                        var mytext = new TextRange(txt_logout.Document.ContentStart, txt_logout.Document.ContentEnd);
-                        if (mytext.Text.Length > 1000000)
-                            txt_logout.Document.Blocks.Clear();
-                        txt_logout.AppendText(DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss tt") +" ["+src+"] ["+ mytext.Text.Length +"] >> " + txt + Environment.NewLine);
-                        
-                    });
-            }
+            Task.Run(() => {
+                txt_logout.Dispatcher.Invoke(() =>
+                {
+                    var mytext = new TextRange(txt_logout.Document.ContentStart, txt_logout.Document.ContentEnd);
+                    if (mytext.Text.Length > 100000)
+                        txt_logout.Document.Blocks.Clear();
+                    txt_logout.AppendText(DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss tt") + " [" + src + "] [" + mytext.Text.Length + "] >> " + txt + Environment.NewLine);
+                    log.Info(DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss tt") + " [" + src + "] [" + mytext.Text.Length + "] >> " + txt + Environment.NewLine);
+                });
+            });
         }
         public void ShowTextTraffic(String txt)
         {

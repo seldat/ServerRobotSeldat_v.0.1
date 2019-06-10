@@ -240,6 +240,55 @@ namespace SeldatMRMS.Management
             return onstop;
            
         }
+
+        public bool CheckInBuffer(bool turnon)
+        {
+            bool onstop = false;
+            if (turnon)
+            {
+                if (RobotUnitylist.Count > 0)
+                {
+                    foreach (RobotUnity r in RobotUnitylist)
+                    {
+                        String lableR = r.properties.Label;
+                        if (r.robotTag == RobotStatus.WORKING)
+                        {
+
+                            Point thCV = TopHeaderCv();
+                            Point mdCV0 = MiddleHeaderCv();
+                            Point mdCV1 = MiddleHeaderCv1();
+                            Point mdCV2 = MiddleHeaderCv2();
+                            Point mdCV3 = MiddleHeaderCv3();
+                            Point bhCV = BottomHeaderCv();
+                            Point Rp = Global_Object.CoorCanvas(this.properties.pose.Position);
+                            // bool onTouch= FindHeaderIntersectsFullRiskArea(this.TopHeader()) | FindHeaderIntersectsFullRiskArea(this.MiddleHeader()) | FindHeaderIntersectsFullRiskArea(this.BottomHeader());
+                            // bool onTouch = r.FindHeaderIntersectsFullRiskAreaCv(thCV) | r.FindHeaderIntersectsFullRiskAreaCv(mdCV) | r.FindHeaderIntersectsFullRiskAreaCv(bhCV);
+                            bool onTouchR = r.FindHeaderInsideCircleArea(Rp, r.Radius_S);
+                            bool onTouch0 = r.FindHeaderInsideCircleArea(mdCV0, r.Radius_S);
+                            bool onTouch1 = r.FindHeaderInsideCircleArea(mdCV1, r.Radius_S);
+                            bool onTouch2 = r.FindHeaderInsideCircleArea(mdCV2, r.Radius_S);
+                            bool onTouch3 = r.FindHeaderInsideCircleArea(mdCV3, r.Radius_S);
+
+                            if (onTouch2 || onTouch3)
+                            {
+                                //  robotLogOut.ShowTextTraffic(r.properties.Label+" => CheckIntersection");   
+                                if (r.onFlagSafeSmallcircle || r.onFlagSafeYellowcircle || r.onFlagSafeOrgancircle)
+                                {
+                                    STATE_SPEED = "CHECKINT_BUFFER_SECTION_STOP " + r.properties.Label;
+                                    SetSpeed(RobotSpeedLevel.ROBOT_SPEED_STOP);
+                                    delay(5000);
+                                    onstop = true;
+                                    break;
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
+            return onstop;
+
+        }
         public void delay(int ms)
         {
             Stopwatch sw = new Stopwatch();
@@ -572,7 +621,7 @@ namespace SeldatMRMS.Management
                     SetSafeSmallcircle(false);
                     SetSafeBluecircle(false);
                     SetSafeYellowcircle(false);
-                    if (CheckIntersection(false))
+                    if (CheckInBuffer(true))
                         break;
                     else
                     {

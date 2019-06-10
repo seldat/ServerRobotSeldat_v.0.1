@@ -280,6 +280,7 @@ namespace SeldatMRMS
                         {
                             if (false == robot.CheckInZoneBehavior(BfToRe.GetFrontLineReturn().Position))
                             {
+                                Global_Object.onFlagRobotComingGateBusy = true;
                                 rb.UpdateRiskAraParams(40, rb.properties.L2, rb.properties.WS, rb.properties.DistInter);
                                 rb.prioritLevel.OnAuthorizedPriorityProcedure = false;
                                 if (rb.SendPoseStamped(BfToRe.GetFrontLineReturn()))
@@ -358,6 +359,7 @@ namespace SeldatMRMS
                         }
                         break;
                     case BufferToReturn.BUFRET_ROBOT_RELEASED: // trả robot về robotmanagement để nhận quy trình mới
+                        Global_Object.onFlagRobotComingGateBusy = false;
                         robot.orderItem = null;
                         robot.SwitchToDetectLine(false);
                        // robot.robotTag = RobotStatus.IDLE;

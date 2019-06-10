@@ -225,6 +225,7 @@ namespace SeldatMRMS
 
                             if (false == robot.CheckInZoneBehavior(BfToRe.GetFrontLineReturn().Position))
                             {
+                                Global_Object.onFlagRobotComingGateBusy = true;
                                 rb.UpdateRiskAraParams(40, rb.properties.L2, rb.properties.WS, rb.properties.DistInter);
                                 rb.prioritLevel.OnAuthorizedPriorityProcedure = false;
                                 if (rb.SendPoseStamped(BfToRe.GetFrontLineReturn()))
@@ -321,6 +322,7 @@ namespace SeldatMRMS
                         }
                         break;
                     case MachineToReturn.MACRET_ROBOT_RELEASED: // trả robot về robotmanagement để nhận quy trình mới
+                        Global_Object.onFlagRobotComingGateBusy = false;
                         robot.orderItem = null;
                      //   robot.robotTag = RobotStatus.IDLE;
                         rb.PreProcedureAs = ProcedureControlAssign.PRO_MACHINE_TO_RETURN;

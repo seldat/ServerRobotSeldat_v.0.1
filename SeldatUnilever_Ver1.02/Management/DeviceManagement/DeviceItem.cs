@@ -335,8 +335,8 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
                 }
                 else if (typeReq == (int)TyeRequest.TYPEREQUEST_BUFFER_TO_MACHINE)
                 {
-                    Console.WriteLine("----------------------------------------------------");
                     Console.WriteLine(dataReq);
+                    Console.WriteLine("-----------------------------");
                     int len = (int)results["length"];
                     int palletAmountInBuffer = (int)results["palletAmount"];
                     int productDetailId = (int)results["productDetailId"];
@@ -346,6 +346,7 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
                     {
                         if (productDetailId == ord.productDetailId)
                         {
+                            if(ord.status==StatusOrderResponseCode.PENDING)
                             cntOrderReg++;
                         }
                     }
@@ -354,8 +355,6 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
                     {
                         if (len <= palletAmountInBuffer) // nếu số lượn yêu cầu nhỏ hơn bằng số pallet có trong buffer add vào orderlist 
                             orderAmount = len;
-                        else // nếu số lượng yêu cầu nhiều hơn số pallet có trong buffer thì add vào orderlist
-                            orderAmount = palletAmountInBuffer;
                     }
                     else if (cntOrderReg >= palletAmountInBuffer) // số lượng yêu cầu trước đó bằng hoặc hơn số lượng yêu cầu hiện tại. không duoc phép đưa vào thêm
                     {
@@ -366,17 +365,13 @@ namespace SelDatUnilever_Ver1._00.Management.DeviceManagement
                     {
                         int availableOrder = palletAmountInBuffer - cntOrderReg; // tính số lượng pallet có thể 
                         int willOrder = availableOrder - len; // số lượng pallet sẽ duoc add thêm vào orederlist
-                        if (willOrder > 0)
-                        {
-                            orderAmount = willOrder;
-                        }
-                        else if (willOrder == 0)
+                        if (willOrder >= 0)
                         {
                             orderAmount = len;
                         }
                         else
                         {
-                            orderAmount = availableOrder;
+                            orderAmount =   len- availableOrder;
                         }
 
                     }

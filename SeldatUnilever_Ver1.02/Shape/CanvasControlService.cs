@@ -793,11 +793,11 @@ namespace SeldatMRMS
         public void ReloadListOrderItems(DeviceItem temp)
         {
             try {
-                if (temp.OrderedItemList.Count > 5)
+                if (temp.OrderedItemList.Count > 100)
                 {
                     foreach (OrderItem item in temp.OrderedItemList)
                     {
-                        if (item.status != StatusOrderResponseCode.PENDING)
+                        if (item.status == StatusOrderResponseCode.ROBOT_ERROR || item.status == StatusOrderResponseCode.NO_BUFFER_DATA)
                         {
                             temp.OrderedItemList.RemoveAt(0);
                             break;

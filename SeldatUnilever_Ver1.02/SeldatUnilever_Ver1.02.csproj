@@ -64,6 +64,9 @@
     <Reference Include="HelixToolkit.Wpf.SharpDX, Version=2.6.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
       <HintPath>..\packages\HelixToolkit.Wpf.SharpDX.2.6.0\lib\net45\HelixToolkit.Wpf.SharpDX.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro.IconPacks, Version=2.3.0.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.IconPacks.2.3.0\lib\net46\MahApps.Metro.IconPacks.dll</HintPath>
     </Reference>
@@ -494,6 +497,9 @@
       <DependentUpon>SetLineParams.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Communication\Communication.zip" />
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Management\config\ConfigCharge.json" />
     <None Include="Management\config\ConfigDoor.json" />
     <None Include="Management\config\ConfigRiskZone.json" />
