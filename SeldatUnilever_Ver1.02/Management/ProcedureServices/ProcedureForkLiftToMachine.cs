@@ -20,6 +20,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
         Thread ProForkLiftToMachine;
         public RobotUnity robot;
         public DoorService door;
+        public bool onFlagResetedGate = false;
         ResponseCommand resCmd;
         TrafficManagementService Traffic;
 
@@ -271,9 +272,13 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                            // Global_Object.onFlagDoorBusy = false;
                             if (!Traffic.HasRobotUnityinArea("GATE_CHECKOUT", robot))
                             {
-                              //  robot.ShowText("RELEASED ZONE");
-                                Global_Object.onFlagRobotComingGateBusy = false;
-                                robot.ReleaseWorkingZone();
+                                //  robot.ShowText("RELEASED ZONE");
+                                if (!onFlagResetedGate)
+                                {
+                                    onFlagResetedGate = true;
+                                    Global_Object.onFlagRobotComingGateBusy = false;
+                                    robot.ReleaseWorkingZone();
+                                }
                             }
                             if (resCmd == ResponseCommand.RESPONSE_LASER_CAME_POINT)
                             //if (robot.ReachedGoal())

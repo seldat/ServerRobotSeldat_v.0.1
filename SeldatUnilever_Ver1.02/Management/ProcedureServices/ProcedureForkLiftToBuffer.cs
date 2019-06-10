@@ -41,6 +41,7 @@ namespace SeldatMRMS
         public DoorService door;
         ResponseCommand resCmd;
         TrafficManagementService Traffic;
+        public bool onFlagResetedGate = false;
         private DeviceRegistrationService deviceService;
 
         public override event Action<Object> ReleaseProcedureHandler;
@@ -338,6 +339,7 @@ namespace SeldatMRMS
                                     {
                                         Global_Object.onFlagDoorBusy = false;
                                         StateForkLift = ForkLift.FORBUF_ROBOT_WAITTING_GOTO_CHECKIN_BUFFER;
+                                        onFlagResetedGate = false;
                                         robot.ShowText("FORBUF_ROBOT_WAITTING_GOTO_CHECKIN_BUFFER");
                                     }
                                     else
@@ -375,8 +377,12 @@ namespace SeldatMRMS
                         if (!Traffic.HasRobotUnityinArea("GATE_CHECKOUT", robot))
                         {
                             //robot.ShowText("RELEASED ZONE");
-                            Global_Object.onFlagRobotComingGateBusy = false;
-                            robot.ReleaseWorkingZone();
+                            if (!onFlagResetedGate)
+                            {
+                                Global_Object.onFlagRobotComingGateBusy = false;
+                                robot.ReleaseWorkingZone();
+                                onFlagResetedGate = true;
+                            }
                         }
                         if (resCmd == ResponseCommand.RESPONSE_LASER_CAME_POINT)
                         //if (rb.checkNewPci())
@@ -493,6 +499,7 @@ namespace SeldatMRMS
                                 Global_Object.onFlagDoorBusy = false;
                                 StateForkLift = ForkLift.FORMAC_ROBOT_WAITTING_CAME_FRONTLINE_MACHINE;
                                 robot.ShowText("FORMAC_ROBOT_WAITTING_CAME_FRONTLINE_MACHINE");
+                                onFlagResetedGate = false;
                             }
                         }
                         catch (System.Exception)
@@ -508,7 +515,12 @@ namespace SeldatMRMS
                            // Global_Object.onFlagDoorBusy = false;
                             if (!Traffic.HasRobotUnityinArea("GATE_CHECKOUT", robot))
                             {
-                                robot.ReleaseWorkingZone();
+                                if (!onFlagResetedGate)
+                                {
+                                    onFlagResetedGate = true;
+                                    Global_Object.onFlagRobotComingGateBusy = false;
+                                    robot.ReleaseWorkingZone();
+                                }
                             }
                             if (resCmd == ResponseCommand.RESPONSE_LASER_CAME_POINT)
                             //if (robot.ReachedGoal())
