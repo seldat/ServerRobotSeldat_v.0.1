@@ -113,6 +113,7 @@ namespace SeldatMRMS.Management.RobotManagent
 
         }
 
+        // giua robot va middle head
         public virtual Point MiddleHeaderCv1()
         {
             double PRx = Global_Object.CoorCanvas(properties.pose.Position).X;
@@ -122,6 +123,8 @@ namespace SeldatMRMS.Management.RobotManagent
             else
                 return new Point(-1, -1);
         }
+
+        // giua middle 1 va middle head
         public virtual Point MiddleHeaderCv2()
         {
             if (L1Cv != 0 && WSCv != 0)
@@ -129,6 +132,7 @@ namespace SeldatMRMS.Management.RobotManagent
             else
                 return new Point(-1, -1);
         }
+        //giua middle 1 va robot
         public virtual Point MiddleHeaderCv3()
         {
             double PRx = Global_Object.CoorCanvas(properties.pose.Position).X;
