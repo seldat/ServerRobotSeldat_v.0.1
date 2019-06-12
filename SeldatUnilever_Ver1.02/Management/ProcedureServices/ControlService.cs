@@ -5,8 +5,10 @@ namespace SeldatMRMS
 {
     public class ControlService:DBProcedureService
     {
+        RobotUnity robot;
        public ControlService(RobotUnity robot):base(robot)
        {
+            this.robot = robot;
             if (robot != null)
             {
                // robot.ZoneHandler += ZoneHandler;
@@ -29,5 +31,11 @@ namespace SeldatMRMS
        public virtual void AcceptDoSomething() { }
         // door control
        public virtual void ReceiveRounterEvent(String message) { }
+        public virtual void KillEvent() {
+            if (robot != null)
+            {
+                robot.FinishStatesCallBack -= FinishStatesCallBack;
+            }
+        }
     }
 }

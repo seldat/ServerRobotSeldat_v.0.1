@@ -188,6 +188,7 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                         // xoa khoi list cho
                         robotManageService.RemoveRobotUnityWaitTaskList(robotwait);
                         processAssignAnTaskWait = ProcessAssignAnTaskWait.PROC_ANY_GET_ANROBOT_IN_WAITTASKLIST;
+                        orderItem_wait.status = StatusOrderResponseCode.DELIVERING;
                         break;
 
                 }
@@ -309,6 +310,7 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                                 SelectProcedureItem(robotatready, orderItem_ready);
                                 deviceItemsList[0].RemoveFirstOrder();
                                 MoveElementToEnd(); // sort Task List
+                                orderItem_ready.status = StatusOrderResponseCode.DELIVERING;
                                 processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_CHECK_ROBOT_OUTSIDEREADY;
                             }
                         }
@@ -325,7 +327,8 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                             // xoa khoi list cho
                             robotManageService.RemoveRobotUnityReadyList(robotatready);
                             processAssignTaskReady = ProcessAssignTaskReady.PROC_READY_GET_ANROBOT_INREADYLIST;
-                        }
+
+                    }
 
                         break;
                 }
@@ -349,15 +352,21 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
         }
         public bool DetermineRobotWorkInGate()
         {
-         
-                if (!Global_Object.onFlagRobotComingGateBusy )
+            if (!this.trafficService.HasRobotUnityinArea("GATE_CHECKOUT"))
+            {
+                Global_Object.onFlagRobotComingGateBusy = true;
+                return false;
+            }
+            return true;
+
+             /*   if (!Global_Object.onFlagRobotComingGateBusy )
                 {
                    // Global_Object.onFlagDoorBusy = true;
                     Global_Object.onFlagRobotComingGateBusy = true;
                     return false;
                 }
                 else
-                    return true;
+                    return true;*/
             
         }
         public int DetermineAmoutOfDeviceToAssignAnTask()

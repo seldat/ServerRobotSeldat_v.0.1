@@ -269,56 +269,68 @@ namespace SeldatMRMS {
         public SelectHandleError selectHandleError;
 
         protected virtual void CheckUserHandleError (object obj) {
-            bool keepRun = true;
             ProcedureControlServices p = (ProcedureControlServices)obj;
-            robot.ShowText ("ErrorCode -> " + getStringError(p.errorCode));
-            robot.RegistrySolvedForm(this);
-            selectHandleError = SelectHandleError.CASE_ERROR_EXIT;
-            robot.ShowText("CASE_ERROR_EXIT");
-            while (keepRun)
-            {
-                switch (selectHandleError)
-                {
-                    case SelectHandleError.CASE_ERROR_WAITTING:
-                        // Global_Object.PlayWarning ();
-                        robot.border.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
-                            new Action(delegate () {
-                                robot.setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_ERROR);
-                                order.status = StatusOrderResponseCode.ROBOT_ERROR;
-                            }));
-                        Thread.Sleep(1000);
-                        break;
-                    case SelectHandleError.CASE_ERROR_CONTINUOUS:
-                        // Global_Object.StopWarning ();
-                        robot.border.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
-                            new Action(delegate () {
-                                robot.setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_RUNNING);
-                            }));
-                        selectHandleError = SelectHandleError.CASE_ERROR_WAITTING;
-                        order.status = StatusOrderResponseCode.DELIVERING;
-                        ProRun = true;
-                        keepRun = false;
-                        break;
-                    case SelectHandleError.CASE_ERROR_EXIT:
-                        // Global_Object.StopWarning ();
-                        robot.border.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
-                            new Action(delegate () {
-                                robot.setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_ERROR);
+            robot.ShowText("ErrorCode -> " + getStringError(p.errorCode));
+            robot.border.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+            new Action(delegate () {
+                robot.setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_ERROR);
+            }));
+            Thread.Sleep(1);
+            robot.border.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+            new Action(delegate () {
+                robot.setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_RUNNING);
+            }));
+            Thread.Sleep(1);
+            /* bool keepRun = true;
+            
+             robot.ShowText ("ErrorCode -> " + getStringError(p.errorCode));
+             robot.RegistrySolvedForm(this);
+             selectHandleError = SelectHandleError.CASE_ERROR_EXIT;
+             robot.ShowText("CASE_ERROR_EXIT");
+             while (keepRun)
+             {
+                 switch (selectHandleError)
+                 {
+                     case SelectHandleError.CASE_ERROR_WAITTING:
+                         // Global_Object.PlayWarning ();
+                         robot.border.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                             new Action(delegate () {
+                                 robot.setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_ERROR);
+                                 order.status = StatusOrderResponseCode.ROBOT_ERROR;
+                             }));
+                         Thread.Sleep(1000);
+                         break;
+                     case SelectHandleError.CASE_ERROR_CONTINUOUS:
+                         // Global_Object.StopWarning ();
+                         robot.border.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                             new Action(delegate () {
+                                 robot.setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_RUNNING);
+                             }));
+                         selectHandleError = SelectHandleError.CASE_ERROR_WAITTING;
+                         order.status = StatusOrderResponseCode.DELIVERING;
+                         ProRun = true;
+                         keepRun = false;
+                         break;
+                     case SelectHandleError.CASE_ERROR_EXIT:
+                         // Global_Object.StopWarning ();
+                         robot.border.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                             new Action(delegate () {
+                                 robot.setColorRobotStatus(RobotStatusColorCode.ROBOT_STATUS_ERROR);
 
-                            }));
-                        order.status = StatusOrderResponseCode.ROBOT_ERROR;
-                        robot.PreProcedureAs = robot.ProcedureAs;
-               
-                        ErrorProcedureHandler(obj);
-                        ProRun = false;
-                        keepRun = false;
-                        break;
-                    default:
-                        break;
-                }
-                Thread.Sleep(500);
-            }
-            selectHandleError = SelectHandleError.CASE_ERROR_WAITTING;
+                             }));
+                         order.status = StatusOrderResponseCode.ROBOT_ERROR;
+                         robot.PreProcedureAs = robot.ProcedureAs;
+
+                         ErrorProcedureHandler(obj);
+                         ProRun = false;
+                         keepRun = false;
+                         break;
+                     default:
+                         break;
+                 }
+                 Thread.Sleep(500);
+             }
+             selectHandleError = SelectHandleError.CASE_ERROR_WAITTING;*/
         }
         protected void Debug (object ojb, string log) {
             ProcedureControlServices pCs = (ProcedureControlServices) ojb;

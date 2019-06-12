@@ -108,7 +108,7 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                                  // chu y sua 
                                  product.palletStatus = PalletStatus.H.ToString(); // W
                                  item.dataRequest = product.ToString();
-                                 item.status = StatusOrderResponseCode.DELIVERING;
+                               //  item.status = StatusOrderResponseCode.DELIVERING;
                                  return item;
                              }
                             // return null;
@@ -120,14 +120,14 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                     }
                     else if (item.typeReq == TyeRequest.TYPEREQUEST_WMS_RETURNPALLET_BUFFER)
                     {
-                          item.status = StatusOrderResponseCode.DELIVERING;
+                         // item.status = StatusOrderResponseCode.DELIVERING;
                           return item;
                     }
                     else if (item.typeReq == TyeRequest.TYPEREQUEST_MACHINE_TO_RETURN)
                     {
                         if (CheckAvailableFrontLineReturn(item) != null)
                         {
-                            item.status = StatusOrderResponseCode.DELIVERING;
+                            //item.status = StatusOrderResponseCode.DELIVERING;
                             return item;
                         }
                         else
@@ -135,7 +135,7 @@ namespace SelDatUnilever_Ver1._00.Management.UnityService
                     }
                     else
                     {
-                        item.status = StatusOrderResponseCode.DELIVERING;
+                        //item.status = StatusOrderResponseCode.DELIVERING;
                     }
                 }
                 catch { }

@@ -345,6 +345,7 @@ namespace SeldatUnilever_Ver1._02.Management.ProcedureServices
                         order.endTimeProcedure = DateTime.Now;
                         order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalMinutes;
                         SaveOrderItem(order);
+                        KillEvent();
                         break;
                     default:
                         break;

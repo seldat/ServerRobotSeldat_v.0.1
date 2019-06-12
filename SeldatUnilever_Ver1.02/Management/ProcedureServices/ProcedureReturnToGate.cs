@@ -343,6 +343,7 @@ namespace SeldatMRMS
                         order.endTimeProcedure = DateTime.Now;
                         order.totalTimeProcedure = order.endTimeProcedure.Subtract(order.startTimeProcedure).TotalMinutes;
                         SaveOrderItem(order);
+                        KillEvent();
                         break;
                     default:
                         break;

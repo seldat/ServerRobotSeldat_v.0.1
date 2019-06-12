@@ -442,6 +442,11 @@ namespace SeldatUnilever_Ver1._02
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if (unityService == null)
+            {
+                Environment.Exit(0);
+                return;
+            }
 
             if(unityService.robotManagementService.CheckAnyRobotWorking())
             {
